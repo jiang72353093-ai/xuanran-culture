@@ -3,505 +3,262 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>渲染文化管理后台</title>
+<title>渲染文化管理</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif;background:#0a0a0a;color:#fff;line-height:1.6}
-input,textarea,button{font-family:inherit}
+body{font-family:Arial,"Microsoft YaHei",sans-serif;background:#0a0a0a;color:#fff;padding:20px}
+.hidden{display:none !important}
 
 /* 登录 */
-#loginPage{position:fixed;top:0;left:0;width:100%;height:100%;background:#0a0a0a;display:flex;align-items:center;justify-content:center;z-index:9999}
-.login-box{width:90%;max-width:360px;padding:40px 30px;background:#111;border:1px solid #222;border-radius:8px;text-align:center}
-.login-box h1{font-size:26px;margin-bottom:8px}
-.login-box .gold{color:#d4a55c}
-.login-box .subtitle{color:#666;margin-bottom:30px;font-size:14px}
-.login-box input{width:100%;padding:12px 15px;background:#1a1a1a;border:1px solid #333;color:#fff;border-radius:4px;font-size:15px;margin-bottom:15px}
-.login-box button{width:100%;padding:14px;background:#d4a55c;color:#000;border:none;border-radius:4px;font-size:16px;font-weight:600;cursor:pointer}
-.login-box .error{color:#ff4444;margin-top:10px;font-size:14px;display:none}
+#loginBox{max-width:300px;margin:100px auto;text-align:center}
+#loginBox h1{margin-bottom:30px;color:#d4a55c}
+#loginBox input{width:100%;padding:12px;margin-bottom:15px;border:1px solid #333;background:#1a1a1a;color:#fff;border-radius:4px}
+#loginBox button{width:100%;padding:12px;background:#d4a55c;color:#000;border:none;border-radius:4px;cursor:pointer;font-weight:bold}
 
 /* 管理面板 */
-#adminPage{display:none;padding:15px;max-width:800px;margin:0 auto}
-.header{display:flex;justify-content:space-between;align-items:center;padding:15px 0;border-bottom:1px solid #222;margin-bottom:20px}
-.header h2{font-size:18px}
-.header .gold{color:#d4a55c}
-.header button{padding:8px 16px;background:transparent;border:1px solid #444;color:#888;border-radius:4px;cursor:pointer;font-size:13px}
+#panel{max-width:800px;margin:0 auto}
+.header{display:flex;justify-content:space-between;align-items:center;margin-bottom:30px;padding-bottom:15px;border-bottom:1px solid #333}
+.header button{padding:8px 16px;background:transparent;border:1px solid #666;color:#fff;cursor:pointer}
 
-/* 区块 */
-.section{background:#111;border:1px solid #222;border-radius:8px;padding:20px;margin-bottom:20px}
-.section h3{color:#d4a55c;font-size:15px;margin-bottom:15px;padding-bottom:10px;border-bottom:1px solid #222}
+.section{background:#111;border:1px solid #222;padding:20px;margin-bottom:20px;border-radius:4px}
+.section h3{color:#d4a55c;margin-bottom:15px}
 
-/* 表单 */
-.form-group{margin-bottom:15px}
-.form-group label{display:block;margin-bottom:5px;color:#888;font-size:13px}
-.form-group input,.form-group textarea{width:100%;padding:10px 12px;background:#1a1a1a;border:1px solid #333;color:#fff;border-radius:4px;font-size:14px}
-.form-group textarea{min-height:60px;resize:vertical}
-.form-row{display:flex;gap:15px}
-.form-row .form-group{flex:1}
-@media(max-width:600px){.form-row{flex-direction:block}}
+input,textarea{width:100%;padding:10px;margin-bottom:10px;border:1px solid #333;background:#1a1a1a;color:#fff;border-radius:4px}
+textarea{height:80px}
 
-/* 作品列表 */
-.work-item{display:flex;gap:12px;padding:12px;background:#1a1a1a;border-radius:6px;margin-bottom:10px;align-items:center}
-.work-thumb{width:80px;height:45px;background:#222;border-radius:4px;display:flex;align-items:center;justify-content:center;color:#555;font-size:11px;overflow:hidden;flex-shrink:0}
-.work-thumb img{width:100%;height:100%;object-fit:cover}
-.work-info{flex:1;min-width:0}
-.work-info .title{font-size:14px;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.work-info .desc{font-size:12px;color:#888;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.work-item button{padding:6px 12px;background:transparent;border:1px solid #ff4444;color:#ff4444;border-radius:4px;cursor:pointer;font-size:12px;flex-shrink:0}
+.work-item{display:flex;gap:10px;padding:10px;background:#1a1a1a;margin-bottom:10px;border-radius:4px;align-items:center}
+.work-info{flex:1}
+.work-info div{font-size:14px}
+.work-info small{color:#888;font-size:12px}
+.delete-btn{padding:5px 10px;background:#ff4444;color:#fff;border:none;border-radius:4px;cursor:pointer}
 
-.add-btn{width:100%;padding:12px;background:transparent;border:2px dashed #333;color:#888;border-radius:6px;cursor:pointer;margin-bottom:15px}
-.add-btn:active{border-color:#d4a55c;color:#d4a55c}
+.add-btn{width:100%;padding:15px;background:transparent;border:2px dashed #444;color:#888;margin-bottom:15px;cursor:pointer}
 
-/* 发布 */
-.publish-section{background:#0d0d0d;border:1px solid #333;border-radius:8px;padding:20px;margin-top:20px}
-.publish-section h4{color:#d4a55c;margin-bottom:8px}
-.publish-section p{color:#666;font-size:12px;margin-bottom:15px}
-.publish-section input{width:100%;padding:10px 12px;background:#1a1a1a;border:1px solid #333;color:#fff;border-radius:4px;margin-bottom:12px;font-size:14px}
-.publish-section button{width:100%;padding:12px;background:#2ea043;color:#fff;border:none;border-radius:4px;font-size:15px;cursor:pointer}
+.publish-box{background:#0a0a0a;border:1px solid #333;padding:20px;margin-top:20px}
+.publish-box button{width:100%;padding:12px;background:#2ea043;color:#fff;border:none;border-radius:4px;cursor:pointer;margin-top:10px}
 
-/* 弹窗 */
-.modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);z-index:10000;align-items:center;justify-content:center;padding:20px}
-.modal.show{display:flex}
-.modal-content{background:#111;border:1px solid #333;border-radius:8px;width:100%;max-width:450px;padding:25px;max-height:90vh;overflow-y:auto}
-.modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
-.modal-header h3{font-size:16px}
-.modal-close{background:none;border:none;color:#888;font-size:24px;cursor:pointer}
-.modal button{width:100%;padding:12px;background:#d4a55c;color:#000;border:none;border-radius:4px;font-size:15px;cursor:pointer;margin-top:10px}
-
-/* 提示 */
-.toast{position:fixed;top:20px;left:50%;transform:translateX(-50%) translateY(-100px);background:#d4a55c;color:#000;padding:12px 25px;border-radius:4px;font-weight:500;transition:transform 0.3s;z-index:10001}
-.toast.show{transform:translateX(-50%) translateY(0)}
+#msg{position:fixed;top:20px;left:50%;transform:translateX(-50%);background:#d4a55c;color:#000;padding:10px 20px;border-radius:4px;display:none}
 </style>
 </head>
 <body>
 
-<!-- 登录页 -->
-<div id="loginPage">
-  <div class="login-box">
-    <h1>渲染<span class="gold">文化</span></h1>
-    <p class="subtitle">网站管理后台</p>
-    <input type="password" id="pwd" placeholder="请输入密码">
-    <button onclick="login()">登 录</button>
-    <p class="error" id="err">密码错误</p>
-  </div>
+<!-- 登录 -->
+<div id="loginBox">
+  <h1>渲染文化</h1>
+  <input type="password" id="pwd" placeholder="密码">
+  <button onclick="login()">登录</button>
 </div>
 
-<!-- 管理页 -->
-<div id="adminPage">
+<!-- 管理面板 -->
+<div id="panel" class="hidden">
   <div class="header">
-    <h2>渲染<span class="gold">文化</span> - 管理后台</h2>
+    <h2>管理后台</h2>
     <button onclick="logout()">退出</button>
   </div>
 
-  <!-- 作品管理 -->
+  <!-- 作品 -->
   <div class="section">
     <h3>作品管理</h3>
-    <button class="add-btn" onclick="openModal()">+ 添加新作品</button>
-    <div id="worksList"></div>
+    <button class="add-btn" onclick="showAdd()">+ 添加作品</button>
+    <div id="workList"></div>
+  </div>
+
+  <!-- 添加作品表单 -->
+  <div class="section hidden" id="addForm">
+    <h3>添加新作品</h3>
+    <input type="text" id="t1" placeholder="作品标题">
+    <input type="text" id="t2" placeholder="作品描述">
+    <input type="text" id="t3" placeholder="B站视频链接">
+    <input type="text" id="t4" placeholder="封面图片URL（选填）">
+    <button onclick="saveWork()" style="background:#d4a55c;color:#000;padding:10px 20px;border:none;border-radius:4px;cursor:pointer">保存</button>
+    <button onclick="hideAdd()" style="background:transparent;border:1px solid #666;color:#fff;padding:10px 20px;border-radius:4px;cursor:pointer;margin-left:10px">取消</button>
   </div>
 
   <!-- 公司信息 -->
   <div class="section">
     <h3>公司信息</h3>
-    <div class="form-row">
-      <div class="form-group">
-        <label>公司名称</label>
-        <input type="text" id="cName" value="成都渲染文化传媒有限公司">
-      </div>
-      <div class="form-group">
-        <label>品牌口号</label>
-        <input type="text" id="cTagline" value="用电影语言讲述品牌故事">
-      </div>
-    </div>
-    <div class="form-group">
-      <label>公司简介</label>
-      <textarea id="cDesc">成都渲染文化传媒有限公司，成立于2019年，是一家专注于影像创作的专业团队。</textarea>
-    </div>
-    <div class="form-row">
-      <div class="form-group">
-        <label>年数</label>
-        <input type="text" id="sYears" value="5+">
-      </div>
-      <div class="form-group">
-        <label>项目数</label>
-        <input type="text" id="sProjects" value="200+">
-      </div>
-    </div>
-    <div class="form-group">
-      <label>获赞收藏</label>
-      <input type="text" id="sLikes" value="2.5万+">
-    </div>
+    <input type="text" id="c1" value="成都渲染文化传媒有限公司" placeholder="公司名称">
+    <input type="text" id="c2" value="用电影语言讲述品牌故事" placeholder="品牌口号">
+    <textarea id="c3" placeholder="公司简介">成都渲染文化传媒有限公司，成立于2019年，是一家专注于影像创作的专业团队。</textarea>
+    <input type="text" id="c4" value="5+" placeholder="年数" style="width:30%;display:inline-block;margin-right:5%">
+    <input type="text" id="c5" value="200+" placeholder="项目数" style="width:30%;display:inline-block;margin-right:5%">
+    <input type="text" id="c6" value="2.5万+" placeholder="获赞收藏" style="width:30%;display:inline-block">
   </div>
 
   <!-- 联系方式 -->
   <div class="section">
     <h3>联系方式</h3>
-    <div class="form-row">
-      <div class="form-group">
-        <label>电话</label>
-        <input type="text" id="cPhone" value="185 8249 3173">
-      </div>
-      <div class="form-group">
-        <label>微信</label>
-        <input type="text" id="cWechat" placeholder="选填">
-      </div>
-    </div>
-    <div class="form-group">
-      <label>邮箱</label>
-      <input type="text" id="cEmail" placeholder="选填">
-    </div>
+    <input type="text" id="p1" value="185 8249 3173" placeholder="电话">
+    <input type="text" id="p2" placeholder="微信（选填）">
+    <input type="text" id="p3" placeholder="邮箱（选填）">
   </div>
 
   <!-- 发布 -->
-  <div class="publish-section">
-    <h4>发布网站</h4>
-    <p>输入 GitHub Token 后点击发布</p>
-    <input type="password" id="token" placeholder="ghp_xxxxxxxxxxxx">
-    <button onclick="publish()">🚀 发布网站</button>
+  <div class="publish-box">
+    <h3 style="color:#d4a55c;margin-bottom:10px">发布网站</h3>
+    <input type="password" id="token" placeholder="GitHub Token (ghp_xxxxxxxxxxxx)">
+    <button onclick="publish()">发布到网站</button>
   </div>
 </div>
 
-<!-- 添加作品弹窗 -->
-<div class="modal" id="modal">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h3>添加作品</h3>
-      <button class="modal-close" onclick="closeModal()">×</button>
-    </div>
-    <div class="form-group">
-      <label>作品标题 *</label>
-      <input type="text" id="mTitle" placeholder="例如：361° 品牌 TVC">
-    </div>
-    <div class="form-group">
-      <label>作品描述</label>
-      <input type="text" id="mDesc" placeholder="简短描述">
-    </div>
-    <div class="form-group">
-      <label>B站视频链接 *</label>
-      <input type="text" id="mVideo" placeholder="https://b23.tv/xxxxx">
-    </div>
-    <div class="form-group">
-      <label>封面图片 URL（选填）</label>
-      <input type="text" id="mImage" placeholder="https://...">
-    </div>
-    <button onclick="saveWork()">保 存</button>
-  </div>
-</div>
-
-<!-- 提示 -->
-<div class="toast" id="toast"></div>
+<div id="msg"></div>
 
 <script>
-// 数据存储
-var works = [];
+// 数据
+var works = JSON.parse(localStorage.getItem('works') || '[{"id":1,"title":"【我用GH6拍了一部荒野大镖客】","desc":"361° 品牌 TVC","bvid":"BV1Zf421i7zq","img":"images/work-361.jpg"}]');
 
-// 页面加载时初始化
-window.onload = function() {
-  // 从localStorage读取数据
-  var saved = localStorage.getItem('xr_works');
-  if (saved) {
-    works = JSON.parse(saved);
-  } else {
-    // 默认数据
-    works = [{
-      id: 1,
-      title: '【我用GH6拍了一部荒野大镖客】',
-      desc: '361° 品牌 TVC',
-      video: 'https://b23.tv/xi4SUa1',
-      bvid: 'BV1Zf421i7zq',
-      image: 'images/work-361.jpg'
-    }];
-    saveData();
-  }
-  
-  // 绑定回车登录
-  document.getElementById('pwd').onkeypress = function(e) {
-    if (e.keyCode === 13) login();
-  };
-};
+function $(id){return document.getElementById(id)}
 
-// 保存到localStorage
-function saveData() {
-  localStorage.setItem('xr_works', JSON.stringify(works));
+function showMsg(text){
+  var m=$('msg');
+  m.innerHTML=text;
+  m.style.display='block';
+  setTimeout(function(){m.style.display='none'},2000);
 }
 
-// 登录
-function login() {
-  var pwd = document.getElementById('pwd').value;
-  if (pwd === 'xuanran2024') {
-    document.getElementById('loginPage').style.display = 'none';
-    document.getElementById('adminPage').style.display = 'block';
+function login(){
+  if($('pwd').value=='xuanran2024'){
+    $('loginBox').className='hidden';
+    $('panel').className='';
     renderWorks();
-    showToast('登录成功');
-  } else {
-    document.getElementById('err').style.display = 'block';
+    showMsg('登录成功');
+  }else{
+    alert('密码错误');
   }
 }
 
-// 退出
-function logout() {
-  document.getElementById('loginPage').style.display = 'flex';
-  document.getElementById('adminPage').style.display = 'none';
-  document.getElementById('pwd').value = '';
-  document.getElementById('err').style.display = 'none';
+function logout(){
+  $('loginBox').className='';
+  $('panel').className='hidden';
+  $('pwd').value='';
 }
 
-// 渲染作品列表
-function renderWorks() {
-  var html = '';
-  for (var i = 0; i < works.length; i++) {
-    var w = works[i];
-    html += '<div class="work-item">';
-    html += '<div class="work-thumb">';
-    if (w.image) {
-      html += '<img src="' + w.image + '" onerror="this.style.display=\'none\'" alt="">';
-    }
-    html += '</div>';
-    html += '<div class="work-info">';
-    html += '<div class="title">' + w.title + '</div>';
-    html += '<div class="desc">' + w.desc + '</div>';
-    html += '</div>';
-    html += '<button onclick="delWork(' + w.id + ')">删除</button>';
-    html += '</div>';
+function renderWorks(){
+  var html='';
+  for(var i=0;i<works.length;i++){
+    var w=works[i];
+    html+='<div class="work-item">';
+    html+='<div class="work-info">';
+    html+='<div>'+w.title+'</div>';
+    html+='<small>'+w.desc+'</small>';
+    html+='</div>';
+    html+='<button class="delete-btn" onclick="del('+w.id+')">删除</button>';
+    html+='</div>';
   }
-  document.getElementById('worksList').innerHTML = html;
+  $('workList').innerHTML=html;
 }
 
-// 打开弹窗
-function openModal() {
-  document.getElementById('modal').classList.add('show');
+function showAdd(){
+  $('addForm').className='section';
 }
 
-// 关闭弹窗
-function closeModal() {
-  document.getElementById('modal').classList.remove('show');
-  document.getElementById('mTitle').value = '';
-  document.getElementById('mDesc').value = '';
-  document.getElementById('mVideo').value = '';
-  document.getElementById('mImage').value = '';
+function hideAdd(){
+  $('addForm').className='section hidden';
+  $('t1').value='';
+  $('t2').value='';
+  $('t3').value='';
+  $('t4').value='';
 }
 
-// 保存作品
-function saveWork() {
-  var title = document.getElementById('mTitle').value.trim();
-  var desc = document.getElementById('mDesc').value.trim();
-  var video = document.getElementById('mVideo').value.trim();
-  var image = document.getElementById('mImage').value.trim();
+function saveWork(){
+  var title=$('t1').value.trim();
+  var desc=$('t2').value.trim();
+  var url=$('t3').value.trim();
+  var img=$('t4').value.trim();
   
-  if (!title || !video) {
-    showToast('请填写标题和视频链接');
+  if(!title||!url){
+    alert('请填写标题和链接');
     return;
   }
   
-  // 提取BV号
-  var bvid = '';
-  var match = video.match(/BV[a-zA-Z0-9]+/);
-  if (match) {
-    bvid = match[0];
-  }
+  var bvid='';
+  var m=url.match(/BV[a-zA-Z0-9]+/);
+  if(m)bvid=m[0];
   
   works.push({
-    id: Date.now(),
-    title: title,
-    desc: desc,
-    video: video,
-    bvid: bvid,
-    image: image
+    id:Date.now(),
+    title:title,
+    desc:desc,
+    bvid:bvid,
+    img:img
   });
   
-  saveData();
+  localStorage.setItem('works',JSON.stringify(works));
   renderWorks();
-  closeModal();
-  showToast('添加成功');
+  hideAdd();
+  showMsg('添加成功');
 }
 
-// 删除作品
-function delWork(id) {
-  if (confirm('确定删除此作品？')) {
-    var newWorks = [];
-    for (var i = 0; i < works.length; i++) {
-      if (works[i].id !== id) {
-        newWorks.push(works[i]);
-      }
-    }
-    works = newWorks;
-    saveData();
-    renderWorks();
-    showToast('已删除');
+function del(id){
+  if(!confirm('确定删除？'))return;
+  var arr=[];
+  for(var i=0;i<works.length;i++){
+    if(works[i].id!=id)arr.push(works[i]);
   }
+  works=arr;
+  localStorage.setItem('works',JSON.stringify(works));
+  renderWorks();
+  showMsg('已删除');
 }
 
-// 显示提示
-function showToast(msg) {
-  var t = document.getElementById('toast');
-  t.innerHTML = msg;
-  t.classList.add('show');
-  setTimeout(function() {
-    t.classList.remove('show');
-  }, 2500);
-}
-
-// 生成网站HTML
-function generateSite() {
-  var data = {
-    company: document.getElementById('cName').value,
-    tagline: document.getElementById('cTagline').value,
-    desc: document.getElementById('cDesc').value,
-    years: document.getElementById('sYears').value,
-    projects: document.getElementById('sProjects').value,
-    likes: document.getElementById('sLikes').value,
-    phone: document.getElementById('cPhone').value,
-    wechat: document.getElementById('cWechat').value,
-    email: document.getElementById('cEmail').value
-  };
-  
-  // 构建作品HTML
-  var worksHtml = '';
-  for (var i = 0; i < works.length; i++) {
-    var w = works[i];
-    var bg = w.image ? 'background-image:url(' + w.image + ')' : 'background:#222';
-    worksHtml += '<div class="work-item" style="' + bg + ';background-size:cover;background-position:center" onclick="play(\'' + w.bvid + '\')">';
-    worksHtml += '<div class="work-overlay"><h4>' + (w.desc || w.title) + '</h4><p>点击播放 →</p></div>';
-    worksHtml += '</div>';
-  }
-  
-  // 完整HTML
-  var html = '<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>' + data.company + '</title>';
-  html += '<style>*{margin:0;padding:0;box-sizing:border-box}:root{--bg:#0a0a0a;--card:#111;--text:#fff;--text2:#888;--accent:#d4a55c;--border:#222}body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif;background:var(--bg);color:var(--text)}';
-  html += 'nav{position:fixed;top:0;width:100%;padding:1.2rem 5%;display:flex;justify-content:space-between;align-items:center;z-index:1000;background:linear-gradient(to bottom,rgba(10,10,10,0.95),transparent)}';
-  html += '.logo{font-size:1.4rem;font-weight:700}.logo span{color:var(--accent)}.nav-links{display:flex;gap:2rem;list-style:none}.nav-links a{color:var(--text2);text-decoration:none;font-size:0.9rem}';
-  html += '.hero{height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;background:radial-gradient(ellipse at 20% 80%,rgba(212,165,92,0.1) 0%,transparent 50%)}';
-  html += '.hero h1{font-size:clamp(2.5rem,7vw,5rem);font-weight:700;letter-spacing:0.15em}';
-  html += '.hero .subtitle{color:var(--accent);letter-spacing:0.5em;margin:1rem 0 2rem;font-size:1rem}';
-  html += '.hero p{color:var(--text2);max-width:500px;margin:0 auto 2rem;padding:0 20px}';
-  html += '.btn{display:inline-block;padding:0.8rem 2rem;border:1px solid var(--accent);color:var(--accent);text-decoration:none;font-size:0.9rem}';
-  html += '.about,.services{padding:6rem 5%;background:var(--card)}.works{padding:6rem 5%}';
-  html += '.container{max-width:1000px;margin:0 auto}.section-title{color:var(--accent);font-size:0.75rem;letter-spacing:0.3em;margin-bottom:0.5rem}';
-  html += '.section-heading{font-size:clamp(1.5rem,4vw,2.5rem);margin-bottom:2rem}';
-  html += '.about-content{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center}';
-  html += '.about-text p{color:var(--text2);line-height:1.8;margin-bottom:1rem}';
-  html += '.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:2rem}';
-  html += '.stat-item h3{font-size:2rem;color:var(--accent)}.stat-item p{font-size:0.8rem;color:var(--text2)}';
-  html += '.works-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}';
-  html += '.work-item{aspect-ratio:16/9;border:1px solid var(--border);position:relative;overflow:hidden;cursor:pointer}';
-  html += '.work-overlay{position:absolute;bottom:0;left:0;right:0;padding:1rem;background:linear-gradient(to top,rgba(0,0,0,0.9),transparent);transform:translateY(100%);transition:0.3s}';
-  html += '.work-item:hover .work-overlay{transform:translateY(0)}';
-  html += '.services-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem}';
-  html += '.service-item{padding:1.5rem;background:var(--bg);border:1px solid var(--border)}';
-  html += '.service-num{color:var(--accent);font-size:0.75rem;margin-bottom:0.5rem}';
-  html += '.service-item h3{font-size:1rem;margin-bottom:0.5rem}.service-item p{font-size:0.85rem;color:var(--text2)}';
-  html += '.contact{padding:6rem 5%;text-align:center}.contact-info{display:flex;justify-content:center;gap:3rem;margin-top:2rem}';
-  html += '.contact-item h4{font-size:0.7rem;color:var(--text2);margin-bottom:0.3rem}.contact-item p{font-size:1rem}';
-  html += 'footer{padding:2rem;background:var(--card);border-top:1px solid var(--border);text-align:center;color:var(--text2);font-size:0.8rem}';
-  html += '@media(max-width:768px){.about-content,.services-grid{grid-template-columns:1fr}.works-grid{grid-template-columns:1fr}.contact-info{flex-direction:column;gap:1rem}.nav-links{display:none}}';
-  html += '</style></head><body>';
-  
-  // 导航
-  html += '<nav><div class="logo">渲染<span>.</span></div><ul class="nav-links"><li><a href="#about">关于</a></li><li><a href="#works">作品</a></li><li><a href="#services">服务</a></li><li><a href="#contact">联系</a></li></ul></nav>';
-  
-  // Hero
-  html += '<section class="hero"><h1>' + data.company.replace('有限公司','') + '</h1>';
-  html += '<div class="subtitle">XUANRAN CULTURE</div>';
-  html += '<p>' + data.tagline + '<br>' + data.desc.substring(0,30) + '...</p>';
-  html += '<a href="#works" class="btn">查看作品</a></section>';
-  
-  // 关于
-  html += '<section class="about" id="about"><div class="container">';
-  html += '<div class="section-title">ABOUT US</div><h2 class="section-heading">关于我们</h2>';
-  html += '<div class="about-content">';
-  html += '<div class="about-text"><p>' + data.desc + '</p>';
-  html += '<div class="stats">';
-  html += '<div class="stat-item"><h3>' + data.years + '</h3><p>年行业经验</p></div>';
-  html += '<div class="stat-item"><h3>' + data.projects + '</h3><p>完成项目</p></div>';
-  html += '<div class="stat-item"><h3>' + data.likes + '</h3><p>获赞收藏</p></div>';
-  html += '</div></div>';
-  html += '<div style="background:var(--card);aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;color:var(--text2)">[团队照片]</div>';
-  html += '</div></div></section>';
-  
-  // 作品
-  html += '<section class="works" id="works"><div class="container">';
-  html += '<div class="section-title">SELECTED WORKS</div><h2 class="section-heading">精选作品</h2>';
-  html += '<div class="works-grid">' + worksHtml + '</div>';
-  html += '</div></section>';
-  
-  // 服务
-  html += '<section class="services" id="services"><div class="container">';
-  html += '<div class="section-title">SERVICES</div><h2 class="section-heading">服务范围</h2>';
-  html += '<div class="services-grid">';
-  html += '<div class="service-item"><div class="service-num">01</div><h3>TVC广告</h3><p>品牌电视广告拍摄</p></div>';
-  html += '<div class="service-item"><div class="service-num">02</div><h3>宣传片</h3><p>企业宣传片制作</p></div>';
-  html += '<div class="service-item"><div class="service-num">03</div><h3>短视频</h3><p>社交媒体内容</p></div>';
-  html += '<div class="service-item"><div class="service-num">04</div><h3>剧情片</h3><p>电影感叙事</p></div>';
-  html += '</div></div></section>';
-  
-  // 联系
-  html += '<section class="contact" id="contact"><div class="container">';
-  html += '<div class="section-title">CONTACT</div><h2 class="section-heading">联系我们</h2>';
-  html += '<p style="color:var(--text2)">如果您有项目需求或合作意向<br>欢迎随时与我们联系</p>';
-  html += '<div class="contact-info">';
-  html += '<div class="contact-item"><h4>电话</h4><p>' + data.phone + '</p></div>';
-  if (data.wechat) html += '<div class="contact-item"><h4>微信</h4><p>' + data.wechat + '</p></div>';
-  if (data.email) html += '<div class="contact-item"><h4>邮箱</h4><p>' + data.email + '</p></div>';
-  html += '</div></div></section>';
-  
-  // 底部
-  html += '<footer><p>© 2024 ' + data.company + ' | XUANRAN CULTURE</p></footer>';
-  
-  // 播放脚本
-  html += '<script>function play(bvid){var d=document.createElement("div");d.style.cssText="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.95);z-index:9999;display:flex;justify-content:center;align-items:center";var c=document.createElement("button");c.innerHTML="✕";c.style.cssText="position:absolute;top:20px;right:20px;background:none;border:2px solid rgba(255,255,255,0.3);color:#fff;font-size:20px;width:40px;height:40px;border-radius:50%;cursor:pointer";c.onclick=function(){document.body.removeChild(d)};var b=document.createElement("div");b.style.cssText="width:90%;max-width:900px;aspect-ratio:16/9";var a=document.createElement("iframe");a.src="https://player.bilibili.com/player.html?bvid="+bvid+"\u0026page=1";a.style.cssText="width:100%;height:100%;border:none;border-radius:8px";a.allowFullscreen=true;b.appendChild(a);d.appendChild(c);d.appendChild(b);document.body.appendChild(d);d.onclick=function(e){if(e.target===d){document.body.removeChild(d)}}}</script>';
-  
-  html += '</body></html>';
-  return html;
-}
-
-// 发布
-function publish() {
-  var token = document.getElementById('token').value.trim();
-  if (!token) {
-    showToast('请输入 GitHub Token');
+function publish(){
+  var token=$('token').value.trim();
+  if(!token){
+    alert('请输入Token');
     return;
   }
+  showMsg('发布中...');
   
-  showToast('正在发布...');
+  // 生成HTML代码（简化版）
+  var c1=$('c1').value,c2=$('c2').value,c3=$('c3').value;
+  var c4=$('c4').value,c5=$('c5').value,c6=$('c6').value;
+  var p1=$('p1').value,p2=$('p2').value,p3=$('p3').value;
   
-  var html = generateSite();
+  var worksHtml='';
+  for(var i=0;i<works.length;i++){
+    var w=works[i];
+    var style=w.img?'background-image:url('+w.img+')':'background:#222';
+    worksHtml+='<div style="'+style+';background-size:cover" onclick="play(\''+w.bvid+'\')">';
+    worksHtml+='<div style="padding:20px;background:linear-gradient(to top,rgba(0,0,0,0.8),transparent)">'+w.desc+'</div>';
+    worksHtml+='</div>';
+  }
   
-  // 先获取SHA
-  var xhr1 = new XMLHttpRequest();
-  xhr1.open('GET', 'https://api.github.com/repos/jiang72353093-ai/xuanran-culture/contents/index.html', true);
-  xhr1.setRequestHeader('Authorization', 'token ' + token);
-  xhr1.onreadystatechange = function() {
-    if (xhr1.readyState === 4) {
-      var sha = '';
-      if (xhr1.status === 200) {
-        var res = JSON.parse(xhr1.responseText);
-        sha = res.sha;
-      }
-      
-      // 上传
-      var content = btoa(unescape(encodeURIComponent(html)));
-      var data = JSON.stringify({
-        message: 'Update from admin',
-        content: content,
-        sha: sha
-      });
-      
-      var xhr2 = new XMLHttpRequest();
-      xhr2.open('PUT', 'https://api.github.com/repos/jiang72353093-ai/xuanran-culture/contents/index.html', true);
-      xhr2.setRequestHeader('Authorization', 'token ' + token);
-      xhr2.setRequestHeader('Content-Type', 'application/json');
-      xhr2.onreadystatechange = function() {
-        if (xhr2.readyState === 4) {
-          if (xhr2.status === 200 || xhr2.status === 201) {
-            showToast('发布成功！30秒后生效');
-          } else {
-            showToast('发布失败，检查Token');
-          }
-        }
-      };
-      xhr2.send(data);
+  var html='<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+c1+'</title>';
+  html+='<style>body{font-family:sans-serif;background:#0a0a0a;color:#fff;margin:0}a{color:#d4a55c;text-decoration:none}.hero{height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}';
+  html+='.works{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;padding:40px}.work{aspect-ratio:16/9;border:1px solid #333;cursor:pointer}</style></head><body>';
+  html+='<div class="hero"><h1>'+c1+'</h1><p>'+c2+'</p><a href="#works">查看作品</a></div>';
+  html+='<div class="works" id="works">'+worksHtml+'</div>';
+  html+='<script>function play(bvid){var d=document.createElement("div");d.style.cssText="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);z-index:9999;display:flex;justify-content:center;align-items:center";d.innerHTML="<iframe src=\\'//player.bilibili.com/player.html?bvid="+bvid+"\\' style=\\'width:90%;max-width:800px;aspect-ratio:16/9;border:none\\'></iframe><button onclick=\\'this.parentElement.remove()\\' style=\\'position:absolute;top:20px;right:20px;background:none;border:2px solid #fff;color:#fff;padding:10px 20px;cursor:pointer\\'>关闭</button>";document.body.appendChild(d)}<\/script>';
+  html+='</body></html>';
+  
+  // 上传
+  var xhr=new XMLHttpRequest();
+  xhr.open('GET','https://api.github.com/repos/jiang72353093-ai/xuanran-culture/contents/index.html',true);
+  xhr.setRequestHeader('Authorization','token '+token);
+  xhr.onload=function(){
+    var sha='';
+    if(xhr.status==200){
+      sha=JSON.parse(xhr.responseText).sha;
     }
+    var data=JSON.stringify({
+      message:'Update',
+      content:btoa(unescape(encodeURIComponent(html))),
+      sha:sha
+    });
+    var x=new XMLHttpRequest();
+    x.open('PUT','https://api.github.com/repos/jiang72353093-ai/xuanran-culture/contents/index.html',true);
+    x.setRequestHeader('Authorization','token '+token);
+    x.setRequestHeader('Content-Type','application/json');
+    x.onload=function(){
+      if(x.status==200||x.status==201){
+        showMsg('发布成功！');
+      }else{
+        showMsg('发布失败');
+      }
+    };
+    x.send(data);
   };
-  xhr1.send();
+  xhr.send();
 }
 </script>
 
