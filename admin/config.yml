@@ -1,0 +1,41 @@
+backend:
+  name: github
+  repo: jiang72353093-ai/xuanran-culture
+  branch: main
+
+media_folder: "images"
+public_folder: "images"
+
+collections:
+  - name: "works"
+    label: "作品"
+    folder: "_works"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "标题", name: "title", widget: "string"}
+      - {label: "描述", name: "description", widget: "string"}
+      - {label: "B站视频链接", name: "video_url", widget: "string"}
+      - {label: "封面图片", name: "thumbnail", widget: "image", required: false}
+      - {label: "发布日期", name: "date", widget: "datetime"}
+
+  - name: "settings"
+    label: "网站设置"
+    files:
+      - name: "company"
+        label: "公司信息"
+        file: "_data/company.json"
+        fields:
+          - {label: "公司名称", name: "name", widget: "string"}
+          - {label: "品牌口号", name: "tagline", widget: "string"}
+          - {label: "公司简介", name: "description", widget: "text"}
+          - {label: "年数", name: "years", widget: "string"}
+          - {label: "项目数", name: "projects", widget: "string"}
+          - {label: "获赞收藏", name: "likes", widget: "string"}
+      - name: "contact"
+        label: "联系方式"
+        file: "_data/contact.json"
+        fields:
+          - {label: "电话", name: "phone", widget: "string"}
+          - {label: "微信", name: "wechat", widget: "string", required: false}
+          - {label: "邮箱", name: "email", widget: "string", required: false}
