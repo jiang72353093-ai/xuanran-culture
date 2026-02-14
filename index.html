@@ -418,6 +418,14 @@
                         <p>点击查看原片（阿里云盘）→</p>
                     </div>
                 </div>
+                
+                <!-- 作品3 - 阿里云VOD原片 -->
+                <div class="work-item" style="background-image: url('images/work-new-video.jpg');" onclick="playAliVideo('https://outin-8d90832209d811f1b83300163e1c94a4.oss-cn-shanghai.aliyuncs.com/sv/8fa5ac9-19c5d95e955/8fa5ac9-19c5d95e955.mov?Expires=1771100628&OSSAccessKeyId=LTAIwkKSLcUfI2u4&Signature=%2FxBdwGO4PFLfWyRB3yyvb5Ao7KQ%3D')">
+                    <div class="work-overlay">
+                        <h4>品牌广告原片</h4>
+                        <p>4K画质 · 点击播放 ▶️</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -522,6 +530,26 @@
             var frame = document.getElementById('videoFrame');
             modal.classList.remove('active');
             frame.src = '';
+            document.body.style.overflow = '';
+        }
+        
+        // 播放阿里云视频（4K原片）
+        function playAliVideo(videoUrl) {
+            var modal = document.getElementById('videoModal');
+            var container = document.querySelector('.video-container');
+            // 使用video标签播放原片
+            container.innerHTML = '<button class="close-btn" onclick="closeAliVideo()">×</button><video controls autoplay style="width:100%;height:100%;border-radius:8px;background:#000;"><source src="' + videoUrl + '" type="video/quicktime">您的浏览器不支持视频播放</video>';
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        // 关闭阿里云视频
+        function closeAliVideo() {
+            var modal = document.getElementById('videoModal');
+            var container = document.querySelector('.video-container');
+            modal.classList.remove('active');
+            // 恢复iframe结构
+            container.innerHTML = '<button class="close-btn" onclick="closeVideo()">×</button><iframe id="videoFrame" src="" allowfullscreen></iframe>';
             document.body.style.overflow = '';
         }
     </script>
