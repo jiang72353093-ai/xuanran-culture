@@ -35,7 +35,7 @@
         .login-box p.subtitle { color: #888; margin-bottom: 30px; }
         .form-group { margin-bottom: 20px; text-align: left; }
         .form-group label { display: block; margin-bottom: 8px; color: #888; font-size: 14px; }
-        .form-group input {
+        .form-group input, .form-group textarea {
             width: 100%;
             padding: 12px 15px;
             background: #1a1a1a;
@@ -43,7 +43,9 @@
             color: #fff;
             border-radius: 4px;
             font-size: 16px;
+            font-family: inherit;
         }
+        .form-group textarea { min-height: 80px; resize: vertical; }
         .btn {
             width: 100%;
             padding: 14px;
@@ -55,15 +57,209 @@
             font-weight: 600;
             cursor: pointer;
         }
+        .btn:hover { opacity: 0.9; }
         .error { color: #ff4444; margin-top: 15px; display: none; }
         
         /* 管理页 */
-        #adminPage { 
-            display: none; 
-            padding: 30px; 
-            max-width: 1000px; 
-            margin: 0 auto; 
+        #adminPage { display: none; padding: 20px; max-width: 1000px; margin: 0 auto; }
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #222;
         }
+        .admin-header h2 { font-size: 20px; }
+        .admin-header h2 span { color: #d4a55c; }
+        .logout-btn {
+            padding: 8px 20px;
+            background: transparent;
+            border: 1px solid #444;
+            color: #888;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        
+        /* 卡片 */
+        .card {
+            background: #111;
+            border: 1px solid #222;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .card h3 {
+            color: #d4a55c;
+            font-size: 16px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #222;
+        }
+        
+        /* 表单 */
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        @media (max-width: 600px) {
+            .form-row { grid-template-columns: 1fr; }
+        }
+        .field { margin-bottom: 15px; }
+        .field label {
+            display: block;
+            margin-bottom: 5px;
+            color: #888;
+            font-size: 13px;
+        }
+        .field input {
+            width: 100%;
+            padding: 10px 12px;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            color: #fff;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        
+        /* 作品列表 */
+        .work-item {
+            display: flex;
+            gap: 15px;
+            padding: 15px;
+            background: #1a1a1a;
+            border-radius: 6px;
+            margin-bottom: 12px;
+            align-items: center;
+        }
+        .work-thumb {
+            width: 100px;
+            height: 56px;
+            background: #222;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 11px;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+        .work-thumb img { width: 100%; height: 100%; object-fit: cover; }
+        .work-info { flex: 1; min-width: 0; }
+        .work-info h4 {
+            font-size: 14px;
+            margin-bottom: 3px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .work-info p {
+            font-size: 12px;
+            color: #888;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .btn-small {
+            padding: 6px 12px;
+            font-size: 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .btn-delete { background: transparent; border: 1px solid #ff4444; color: #ff4444; }
+        
+        /* 添加按钮 */
+        .add-btn {
+            width: 100%;
+            padding: 15px;
+            background: transparent;
+            border: 2px dashed #333;
+            color: #888;
+            cursor: pointer;
+            border-radius: 6px;
+            margin-bottom: 15px;
+        }
+        .add-btn:hover { border-color: #d4a55c; color: #d4a55c; }
+        
+        /* 发布区域 */
+        .publish-box {
+            background: #0d0d0d;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .publish-box h4 { color: #d4a55c; margin-bottom: 10px; }
+        .publish-box p { font-size: 12px; color: #666; margin-bottom: 15px; }
+        .publish-box input {
+            width: 100%;
+            padding: 10px 12px;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            color: #fff;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+        .btn-publish { background: #2ea043; color: #fff; }
+        
+        /* 弹窗 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .modal.active { display: flex; }
+        .modal-content {
+            background: #111;
+            border: 1px solid #333;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 500px;
+            padding: 25px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .modal-close {
+            background: none;
+            border: none;
+            color: #888;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        
+        /* Toast */
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 12px 20px;
+            background: #d4a55c;
+            color: #000;
+            border-radius: 4px;
+            font-weight: 500;
+            transform: translateX(150%);
+            transition: transform 0.3s;
+            z-index: 10000;
+        }
+        .toast.show { transform: translateX(0); }
     </style>
 </head>
 <body>
@@ -83,59 +279,320 @@
 
     <!-- 管理页 -->
     <div id="adminPage">
-        <h2 style="margin-bottom: 30px;">渲染<span style="color: #d4a55c;">文化</span> - 管理后台</h2>
-        <p>登录成功！管理功能开发中...</p>
-        <button onclick="logout()" style="margin-top: 20px; padding: 10px 20px; background: #333; color: #fff; border: none; border-radius: 4px; cursor: pointer;">退出登录</button>
+        <div class="admin-header">
+            <h2>渲染<span>文化</span> - 管理后台</h2>
+            <button class="logout-btn" id="logoutBtn">退出</button>
+        </div>
+
+        <!-- 作品管理 -->
+        <div class="card">
+            <h3>作品管理</h3>
+            <button class="add-btn" id="addWorkBtn">+ 添加新作品</button>
+            <div id="worksList"></div>
+        </div>
+
+        <!-- 公司信息 -->
+        <div class="card">
+            <h3>公司信息</h3>
+            <div class="form-row">
+                <div class="field">
+                    <label>公司名称</label>
+                    <input type="text" id="cName" value="成都渲染文化传媒有限公司">
+                </div>
+                <div class="field">
+                    <label>品牌口号</label>
+                    <input type="text" id="cTagline" value="用电影语言讲述品牌故事">
+                </div>
+            </div>
+            <div class="field">
+                <label>公司简介</label>
+                <textarea id="cDesc">成都渲染文化传媒有限公司，成立于2019年，是一家专注于影像创作的专业团队。</textarea>
+            </div>
+            <div class="form-row">
+                <div class="field">
+                    <label>年数</label>
+                    <input type="text" id="sYears" value="5+">
+                </div>
+                <div class="field">
+                    <label>项目数</label>
+                    <input type="text" id="sProjects" value="200+">
+                </div>
+            </div>
+            <div class="field">
+                <label>获赞收藏</label>
+                <input type="text" id="sLikes" value="2.5万+">
+            </div>
+        </div>
+
+        <!-- 联系方式 -->
+        <div class="card">
+            <h3>联系方式</h3>
+            <div class="form-row">
+                <div class="field">
+                    <label>电话</label>
+                    <input type="text" id="cPhone" value="185 8249 3173">
+                </div>
+                <div class="field">
+                    <label>微信</label>
+                    <input type="text" id="cWechat" placeholder="选填">
+                </div>
+            </div>
+            <div class="field">
+                <label>邮箱</label>
+                <input type="text" id="cEmail" placeholder="选填">
+            </div>
+        </div>
+
+        <!-- 发布 -->
+        <div class="publish-box">
+            <h4>发布网站</h4>
+            <p>输入 GitHub Token 后点击发布，即可更新网站</p>
+            <input type="password" id="ghToken" placeholder="ghp_xxxxxxxxxxxx">
+            <button class="btn btn-publish" id="publishBtn">🚀 发布网站</button>
+        </div>
     </div>
 
+    <!-- 添加作品弹窗 -->
+    <div class="modal" id="workModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>添加作品</h3>
+                <button class="modal-close" id="closeModalBtn">×</button>
+            </div>
+            <div class="field">
+                <label>作品标题</label>
+                <input type="text" id="wTitle" placeholder="例如：361° 品牌 TVC">
+            </div>
+            <div class="field">
+                <label>作品描述</label>
+                <input type="text" id="wDesc" placeholder="简短描述">
+            </div>
+            <div class="field">
+                <label>B站视频链接</label>
+                <input type="text" id="wVideo" placeholder="https://b23.tv/xxxxx">
+            </div>
+            <div class="field">
+                <label>封面图片 URL（选填）</label>
+                <input type="text" id="wImage" placeholder="https://...">
+            </div>
+            <button class="btn" id="saveWorkBtn">保存</button>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
     <script>
-        // 等待页面加载完成
+        // 数据
+        var works = [
+            { id: 1, title: '【我用GH6拍了一部荒野大镖客】', desc: '361° 品牌 TVC', video: 'https://b23.tv/xi4SUa1', bvid: 'BV1Zf421i7zq', image: 'images/work-361.jpg' }
+        ];
+
+        // 页面加载完成后绑定事件
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('页面加载完成');
+            // 登录按钮
+            document.getElementById('loginBtn').addEventListener('click', doLogin);
             
-            // 绑定登录按钮点击事件
-            var loginBtn = document.getElementById('loginBtn');
-            if (loginBtn) {
-                loginBtn.addEventListener('click', function() {
-                    console.log('点击登录按钮');
-                    doLogin();
-                });
-            }
+            // 回车登录
+            document.getElementById('pwdInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') doLogin();
+            });
             
-            // 绑定回车键
-            var pwdInput = document.getElementById('pwdInput');
-            if (pwdInput) {
-                pwdInput.addEventListener('keypress', function(e) {
-                    if (e.key === 'Enter') {
-                        doLogin();
-                    }
-                });
-            }
+            // 退出按钮
+            document.getElementById('logoutBtn').addEventListener('click', doLogout);
+            
+            // 添加作品按钮
+            document.getElementById('addWorkBtn').addEventListener('click', showModal);
+            
+            // 关闭弹窗
+            document.getElementById('closeModalBtn').addEventListener('click', hideModal);
+            
+            // 保存作品
+            document.getElementById('saveWorkBtn').addEventListener('click', saveWork);
+            
+            // 发布按钮
+            document.getElementById('publishBtn').addEventListener('click', doPublish);
         });
-        
-        // 登录函数
+
+        // 登录
         function doLogin() {
-            console.log('执行登录函数');
-            var password = document.getElementById('pwdInput').value;
-            console.log('输入的密码:', password);
-            
-            if (password === 'xuanran2024') {
-                console.log('密码正确，准备跳转');
+            var pwd = document.getElementById('pwdInput').value;
+            if (pwd === 'xuanran2024') {
                 document.getElementById('loginPage').style.display = 'none';
                 document.getElementById('adminPage').style.display = 'block';
-                console.log('跳转完成');
+                renderWorks();
+                showToast('登录成功');
             } else {
-                console.log('密码错误');
                 document.getElementById('errorMsg').style.display = 'block';
             }
         }
-        
-        // 退出函数
-        function logout() {
+
+        // 退出
+        function doLogout() {
             document.getElementById('loginPage').style.display = 'flex';
             document.getElementById('adminPage').style.display = 'none';
             document.getElementById('pwdInput').value = '';
             document.getElementById('errorMsg').style.display = 'none';
+        }
+
+        // 渲染作品列表
+        function renderWorks() {
+            var container = document.getElementById('worksList');
+            var html = '';
+            for (var i = 0; i < works.length; i++) {
+                var w = works[i];
+                html += '<div class="work-item">';
+                html += '<div class="work-thumb">';
+                if (w.image) {
+                    html += '<img src="' + w.image + '" alt="" onerror="this.style.display=\'none\'">';
+                } else {
+                    html += '[无封面]';
+                }
+                html += '</div>';
+                html += '<div class="work-info">';
+                html += '<h4>' + w.title + '</h4>';
+                html += '<p>' + w.desc + '</p>';
+                html += '</div>';
+                html += '<div><button class="btn-small btn-delete" onclick="deleteWork(' + w.id + ')">删除</button></div>';
+                html += '</div>';
+            }
+            container.innerHTML = html;
+        }
+
+        // 显示弹窗
+        function showModal() {
+            document.getElementById('workModal').classList.add('active');
+        }
+
+        // 隐藏弹窗
+        function hideModal() {
+            document.getElementById('workModal').classList.remove('active');
+            document.getElementById('wTitle').value = '';
+            document.getElementById('wDesc').value = '';
+            document.getElementById('wVideo').value = '';
+            document.getElementById('wImage').value = '';
+        }
+
+        // 保存作品
+        function saveWork() {
+            var title = document.getElementById('wTitle').value;
+            var desc = document.getElementById('wDesc').value;
+            var video = document.getElementById('wVideo').value;
+            var image = document.getElementById('wImage').value;
+
+            if (!title || !video) {
+                showToast('请填写标题和视频链接');
+                return;
+            }
+
+            // 提取BV号
+            var bvid = '';
+            var match = video.match(/BV[a-zA-Z0-9]+/);
+            if (match) {
+                bvid = match[0];
+            }
+
+            works.push({
+                id: Date.now(),
+                title: title,
+                desc: desc,
+                video: video,
+                bvid: bvid,
+                image: image
+            });
+
+            renderWorks();
+            hideModal();
+            showToast('添加成功');
+        }
+
+        // 删除作品
+        function deleteWork(id) {
+            if (confirm('确定删除？')) {
+                works = works.filter(function(w) { return w.id !== id; });
+                renderWorks();
+                showToast('已删除');
+            }
+        }
+
+        // 显示提示
+        function showToast(msg) {
+            var t = document.getElementById('toast');
+            t.textContent = msg;
+            t.classList.add('show');
+            setTimeout(function() { t.classList.remove('show'); }, 3000);
+        }
+
+        // 发布网站
+        function doPublish() {
+            var token = document.getElementById('ghToken').value;
+            if (!token) {
+                showToast('请输入 GitHub Token');
+                return;
+            }
+
+            showToast('正在发布...');
+
+            // 收集数据
+            var data = {
+                company: document.getElementById('cName').value,
+                tagline: document.getElementById('cTagline').value,
+                desc: document.getElementById('cDesc').value,
+                years: document.getElementById('sYears').value,
+                projects: document.getElementById('sProjects').value,
+                likes: document.getElementById('sLikes').value,
+                phone: document.getElementById('cPhone').value,
+                wechat: document.getElementById('cWechat').value,
+                email: document.getElementById('cEmail').value
+            };
+
+            // 生成HTML并上传
+            var html = buildHTML(data, works);
+            uploadToGitHub(token, html);
+        }
+
+        // 构建HTML
+        function buildHTML(data, worksList) {
+            var worksHtml = '';
+            for (var i = 0; i < worksList.length; i++) {
+                var w = worksList[i];
+                worksHtml += '<div class="work-item" style="background-image:url(' + "'" + (w.image || '') + "'" + ')" onclick="playVideo(' + "'" + w.bvid + "'" + ')">';
+                worksHtml += '<div class="work-info"><h4>' + (w.desc || w.title) + '</h4><p>点击播放 →</p></div></div>';
+            }
+
+            return '<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>' + data.company + '</title><style>*{margin:0;padding:0;box-sizing:border-box}:root{--bg:#0a0a0a;--card:#111;--text:#fff;--text2:#888;--accent:#d4a55c;--border:#222}body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text)}nav{position:fixed;top:0;width:100%;padding:1.5rem 5%;display:flex;justify-content:space-between;align-items:center;z-index:1000;background:linear-gradient(to bottom,rgba(10,10,10,0.9),transparent)}.logo{font-size:1.5rem;font-weight:700;letter-spacing:2px}.logo span{color:var(--accent)}.nav-links{display:flex;gap:2.5rem;list-style:none}.nav-links a{color:var(--text2);text-decoration:none;font-size:0.9rem;transition:color 0.3s}.nav-links a:hover{color:var(--accent)}.hero{height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;background:radial-gradient(ellipse at 20% 80%,rgba(212,165,92,0.1) 0%,transparent 50%),var(--bg)}.hero h1{font-size:clamp(3rem,8vw,6rem);font-weight:700;letter-spacing:0.2em;background:linear-gradient(135deg,#fff 0%,#888 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}.hero .subtitle{font-size:1.2rem;color:var(--accent);letter-spacing:0.5em;margin:1rem 0 2rem}.hero p{color:var(--text2);max-width:600px;margin:0 auto 3rem}.btn{display:inline-block;padding:1rem 3rem;border:1px solid var(--accent);color:var(--accent);text-decoration:none;font-size:0.9rem;letter-spacing:0.2em;transition:all 0.3s}.btn:hover{background:var(--accent);color:var(--bg)}.about{padding:10rem 5%;background:var(--card)}.container{max-width:1200px;margin:0 auto}.section-title{font-size:0.75rem;color:var(--accent);letter-spacing:0.3em;margin-bottom:1rem}.section-heading{font-size:clamp(2rem,5vw,3rem);font-weight:700;margin-bottom:3rem}.about-content{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}.about-text p{color:var(--text2);font-size:1rem;line-height:2;margin-bottom:1.5rem}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-top:3rem}.stat-item h3{font-size:2.5rem;color:var(--accent);font-weight:700}.stat-item p{font-size:0.8rem;color:var(--text2)}.works{padding:10rem 5%}.works-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}.work-item{aspect-ratio:16/9;background:var(--card);background-size:cover;background-position:center;border:1px solid var(--border);position:relative;overflow:hidden;cursor:pointer;transition:all 0.3s}.work-item::before{content:"";position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(to top,rgba(0,0,0,0.8),transparent);opacity:0;transition:opacity 0.3s}.work-item:hover::before{opacity:1}.work-item:hover{border-color:var(--accent);transform:translateY(-5px)}.work-info{position:absolute;bottom:0;left:0;right:0;padding:1.5rem;transform:translateY(100%);transition:transform 0.3s}.work-item:hover .work-info{transform:translateY(0)}.work-info h4{font-size:1rem;margin-bottom:0.3rem}.work-info p{font-size:0.75rem;color:var(--text2)}.services{padding:10rem 5%;background:var(--card)}.services-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem}.service-item{padding:2.5rem;background:var(--bg);border:1px solid var(--border)}.service-number{font-size:0.75rem;color:var(--accent);margin-bottom:1rem}.service-item h3{font-size:1.1rem;margin-bottom:1rem}.service-item p{font-size:0.85rem;color:var(--text2);line-height:1.8}.contact{padding:10rem 5%;text-align:center}.contact-content{max-width:600px;margin:0 auto}.contact-info{margin-top:3rem;display:flex;justify-content:center;gap:4rem}.contact-item h4{font-size:0.7rem;color:var(--text2);letter-spacing:0.2em;margin-bottom:0.5rem}.contact-item p{font-size:1rem}footer{padding:3rem 5%;background:var(--card);border-top:1px solid var(--border);text-align:center}footer p{color:var(--text2);font-size:0.8rem}@media(max-width:1024px){.about-content{grid-template-columns:1fr}.works-grid{grid-template-columns:repeat(2,1fr)}.services-grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:768px){.nav-links{display:none}.works-grid,.services-grid{grid-template-columns:1fr}.stats{grid-template-columns:1fr;text-align:center}.contact-info{flex-direction:column;gap:2rem}}</style></head><body><nav><div class="logo">渲染<span>.</span></div><ul class="nav-links"><li><a href="#about">关于</a></li><li><a href="#works">作品</a></li><li><a href="#services">服务</a></li><li><a href="#contact">联系</a></li></ul></nav><section class="hero"><h1>' + data.company.split('有限公司')[0] + '</h1><div class="subtitle">XUANRAN CULTURE</div><p>' + data.tagline + '<br>' + data.desc.split('。')[0] + '</p><a href="#works" class="btn">查看作品</a></section><section class="about" id="about"><div class="container"><div class="section-title">ABOUT US</div><h2 class="section-heading">关于我们</h2><div class="about-content"><div class="about-text"><p>' + data.desc + '</p><div class="stats"><div class="stat-item"><h3>' + data.years + '</h3><p>年行业经验</p></div><div class="stat-item"><h3>' + data.projects + '</h3><p>完成项目</p></div><div class="stat-item"><h3>' + data.likes + '</h3><p>获赞收藏</p></div></div></div><div style="aspect-ratio:4/3;background:var(--card);display:flex;align-items:center;justify-content:center;color:var(--text2)">[团队形象照]</div></div></div></section><section class="works" id="works"><div class="container"><div class="section-title">SELECTED WORKS</div><h2 class="section-heading">精选作品</h2><div class="works-grid">' + worksHtml + '</div></div></section><section class="services" id="services"><div class="container"><div class="section-title">SERVICES</div><h2 class="section-heading">服务范围</h2><div class="services-grid"><div class="service-item"><div class="service-number">01</div><h3>TVC广告片</h3><p>品牌电视广告、网络广告创意拍摄</p></div><div class="service-item"><div class="service-number">02</div><h3>品牌宣传片</h3><p>企业形象片、产品宣传片</p></div><div class="service-item"><div class="service-number">03</div><h3>短视频内容</h3><p>社交媒体短视频、病毒视频创意</p></div><div class="service-item"><div class="service-number">04</div><h3>剧情短片</h3><p>故事性影像创作，电影感叙事风格</p></div></div></div></section><section class="contact" id="contact"><div class="container"><div class="section-title">CONTACT</div><h2 class="section-heading">联系我们</h2><div class="contact-content"><p style="color:var(--text2)">如果您有项目需求或合作意向<br>欢迎随时与我们联系</p><div class="contact-info"><div class="contact-item"><h4>电话</h4><p>' + data.phone + '</p></div>' + (data.wechat ? '<div class="contact-item"><h4>微信</h4><p>' + data.wechat + '</p></div>' : '') + (data.email ? '<div class="contact-item"><h4>邮箱</h4><p>' + data.email + '</p></div>' : '') + '</div></div></div></section><footer><p>© 2024 ' + data.company + ' | XUANRAN CULTURE</p></footer><script>document.querySelectorAll("a[href^=\'#\']").forEach(a=>{a.addEventListener("click",e=>{e.preventDefault();document.querySelector(a.getAttribute("href")).scrollIntoView({behavior:"smooth"})})});function playVideo(bvid){var overlay=document.createElement("div");overlay.style.cssText="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.95);z-index:9999;display:flex;justify-content:center;align-items:center;";var closeBtn=document.createElement("button");closeBtn.innerHTML="✕";closeBtn.style.cssText="position:absolute;top:30px;right:40px;background:none;border:2px solid rgba(255,255,255,0.3);color:#fff;font-size:24px;cursor:pointer;width:50px;height:50px;border-radius:50%;";closeBtn.onclick=function(){document.body.removeChild(overlay);document.body.style.overflow=""};var container=document.createElement("div");container.style.cssText="width:90%;max-width:1200px;aspect-ratio:16/9;";var iframe=document.createElement("iframe");iframe.src="https://player.bilibili.com/player.html?bvid="+bvid+"\u0026page=1";iframe.style.cssText="width:100%;height:100%;border:none;border-radius:8px;";iframe.allowFullscreen=true;container.appendChild(iframe);overlay.appendChild(closeBtn);overlay.appendChild(container);document.body.appendChild(overlay);document.body.style.overflow="hidden";overlay.addEventListener("click",e=>{if(e.target===overlay){document.body.removeChild(overlay);document.body.style.overflow=""}})}</script></body></html>';
+        }
+
+        // 上传
+        function uploadToGitHub(token, content) {
+            fetch('https://api.github.com/repos/jiang72353093-ai/xuanran-culture/contents/index.html', {
+                headers: { 'Authorization': 'token ' + token }
+            })
+            .then(r => r.json())
+            .then(data => {
+                return fetch('https://api.github.com/repos/jiang72353093-ai/xuanran-culture/contents/index.html', {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': 'token ' + token,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        message: 'Update website',
+                        content: btoa(unescape(encodeURIComponent(content))),
+                        sha: data.sha
+                    })
+                });
+            })
+            .then(r => {
+                if (r.ok) {
+                    showToast('发布成功！30秒后生效');
+                } else {
+                    showToast('发布失败');
+                }
+            })
+            .catch(e => {
+                showToast('错误: ' + e.message);
+            });
         }
     </script>
 </body>
