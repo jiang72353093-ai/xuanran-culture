@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>渲染文化管理</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Arial,"Microsoft YaHei",sans-serif;background:#0a0a0a;color:#fff;padding:20px}
+.hidden{display:none !important}
+
+/* 登录 */
+#loginBox{max-width:300px;margin:100px auto;text-align:center}
+#loginBox h1{margin-bottom:30px;color:#d4a55c}
+#loginBox input{width:100%;padding:12px;margin-bottom:15px;border:1px solid #333;background:#1a1a1a;color:#fff;border-radius:4px}
+#loginBox button{width:100%;padding:12px;background:#d4a55c;color:#000;border:none;border-radius:4px;cursor:pointer;font-weight:bold}
+
+/* 管理面板 */
+#panel{max-width:800px;margin:0 auto}
+.header{display:flex;justify-content:space-between;align-items:center;margin-bottom:30px;padding-bottom:15px;border-bottom:1px solid #333}
+.header h2{font-size:18px}
+.header button{padding:8px 16px;background:transparent;border:1px solid #666;color:#fff;cursor:pointer}
+
+.section{background:#111;border:1px solid #222;padding:20px;margin-bottom:20px;border-radius:4px}
+.section h3{color:#d4a55c;margin-bottom:15px}
+
+input,textarea{width:100%;padding:10px;margin-bottom:10px;border:1px solid #333;background:#1a1a1a;color:#fff;border-radius:4px}
+textarea{height:80px}
+
+.work-item{display:flex;gap:10px;padding:10px;background:#1a1a1a;margin-bottom:10px;border-radius:4px;align-items:center}
+.work-info{flex:1}
+.work-info div{font-size:14px}
+.work-info small{color:#888;font-size:12px}
+.delete-btn{padding:5px 10px;background:#ff4444;color:#fff;border:none;border-radius:4px;cursor:pointer}
+
+.add-btn{width:100%;padding:15px;background:transparent;border:2px dashed #444;color:#888;margin-bottom:15px;cursor:pointer}
+
+.publish-box{background:#0a0a0a;border:1px solid #333;padding:20px;margin-top:20px}
+.publish-box button{width:100%;padding:12px;background:#2ea043;color:#fff;border:none;border-radius:4px;cursor:pointer;margin-top:10px}
+
+/* 图片上传 */
+.upload-area{border:2px dashed #444;padding:20px;text-align:center;border-radius:4px;margin-bottom:15px;cursor:pointer;transition:0.3s}
+.upload-area:hover{border-color:#d4a55c}
+.upload-area.dragover{background:#1a1a1a;border-color:#d4a55c}
+.upload-preview{max-width:200px;max-height:150px;margin:10px auto;display:none}
+.upload-status{color:#888;font-size:12px;margin-top:10px}
+
+#msg{position:fixed;top:20px;left:50%;transform:translateX(-50%);background:#d4a55c;color:#000;padding:10px 20px;border-radius:4px;display:none}
+</style>
+</head>
+<body>
+
+<!-- 登录 -->
+<div id="loginBox">
+  <h1>渲染文化</h1>
+  <input type="password" id="pwd" placeholder="密码">
+  <button onclick="login()">登录</button>
+</div>
+
+<!-- 管理面板 -->
+<div id="panel" class="hidden">
+  <div class="header">
+    <h2>管理后台</h2>
+    <button onclick="logout()">退出</button>
+  </div>
+
+  <!-- 作品 -->
+  <div class="section">
+    <h3>作品管理</h3>
+    <button class="add-btn" onclick="showAdd()">+ 添加作品</button>
+    <div id="workList"></div>
+  </div>
+
+  <!-- 添加作品表单 -->
+  <div class="section hidden" id="addForm">
+    <h3>添加新作品</h3>
+    <input type="text" id="t1" placeholder="作品标题">
+    <input type="text" id="t2" placeholder="作品描述">
+    <input type="text" id="t3" placeholder="B站视频链接">
+    
+    <!-- 图片上传区域 -->
+    <div class="upload-area" id="uploadArea" onclick="document.getElementById('fileInput').click()">
+      <p>📷 点击选择图片 或 拖拽图片到此处</p>
+      <p style="font-size:12px;color:#666">支持 JPG、PNG 格式</p>
+      <input type="file" id="fileInput" accept="image/*" class="hidden" onchange="handleFileSelect(event)">
+    </div>
+    <img id="imgPreview" class="upload-preview">
+    <p class="upload-status" id="uploadStatus"></p>
+    
+    <!-- 隐藏的输入框存储图片URL -->
+    <input type="hidden" id="t4" value="">
+    
+    <button onclick="saveWork()" style="background:#d4a55c;color:#000;padding:10px 20px;border:none;border-radius:4px;cursor:pointer">保存</button>
+    <button onclick="hideAdd()" style="background:transparent;border:1px solid #666;color:#fff;padding:10px 20px;border-radius:4px;cursor:pointer;margin-left:10px">取消</button>
+  </div>
+
+  <!-- 公司信息 -->
+  <div class="section">
+    <h3>公司信息</h3>
+    <input type="text" id="c1" value="成都渲染文化传媒有限公司" placeholder="公司名称">
+    <input type="text" id="c2" value="用电影语言讲述品牌故事" placeholder="品牌口号">
+    <textarea id="c3" placeholder="公司简介">成都渲染文化传媒有限公司，成立于2019年，是一家专注于影像创作的专业团队。</textarea>
+    <input type="text" id="c4" value="5+" placeholder="年数" style="width:30%;display:inline-block;margin-right:5%">
+    <input type="text" id="c5" value="200+" placeholder="项目数" style="width:30%;display:inline-block;margin-right:5%">
+    <input type="text" id="c6" value="2.5万+" placeholder="获赞收藏" style="width:30%;display:inline-block">
+  </div>
+
+  <!-- 联系方式 -->
+  <div class="section">
+    <h3>联系方式</h3>
+    <input type="text" id="p1" value="185 8249 3173" placeholder="电话">
+    <input type="text" id="p2" placeholder="微信（选填）">
+    <input type="text" id="p3" placeholder="邮箱（选填）">
+  </div>
+
+  <!-- 发布 -->
+  <div class="publish-box">
+    <h3 style="color:#d4a55c;margin-bottom:10px">发布网站</h3>
+    <p style="color:#666;font-size:12px;margin-bottom:10px">需要 GitHub Token 才能上传图片和发布</p>
+    <input type="password" id="token" placeholder="GitHub Token (ghp_xxxxxxxxxxxx)">
+    <button onclick="publish()">发布到网站</button>
+  </div>
+</div>
+
+<div id="msg"></div>
+
+<script>
+// 数据
+var works = JSON.parse(localStorage.getItem('works') || '[{"id":1,"title":"【我用GH6拍了一部荒野大镖客】","desc":"361° 品牌 TVC","bvid":"BV1Zf421i7zq","img":"images/work-361.jpg"}]');
+var githubToken = localStorage.getItem('gh_token') || '';
+
+function $(id){return document.getElementById(id)}
+
+function showMsg(text){
+  var m=$('msg');
+  m.innerHTML=text;
+  m.style.display='block';
+  setTimeout(function(){m.style.display='none'},2000);
+}
+
+function login(){
+  if($('pwd').value=='xuanran2024'){
+    $('loginBox').className='hidden';
+    $('panel').className='';
+    renderWorks();
+    // 恢复保存的token
+    if(githubToken) $('token').value = githubToken;
+    showMsg('登录成功');
+  }else{
+    alert('密码错误');
+  }
+}
+
+function logout(){
+  $('loginBox').className='';
+  $('panel').className='hidden';
+  $('pwd').value='';
+}
+
+function renderWorks(){
+  var html='';
+  for(var i=0;i<works.length;i++){
+    var w=works[i];
+    html+='<div class="work-item">';
+    html+='<div class="work-info">';
+    html+='<div>'+w.title+'</div>';
+    html+='<small>'+w.desc+'</small>';
+    html+='</div>';
+    html+='<button class="delete-btn" onclick="del('+w.id+')">删除</button>';
+    html+='</div>';
+  }
+  $('workList').innerHTML=html;
+}
+
+function showAdd(){
+  $('addForm').className='section';
+  // 重置上传状态
+  $('t4').value = '';
+  $('imgPreview').style.display = 'none';
+  $('imgPreview').src = '';
+  $('uploadStatus').innerHTML = '';
+}
+
+function hideAdd(){
+  $('addForm').className='section hidden';
+  $('t1').value='';
+  $('t2').value='';
+  $('t3').value='';
+  $('t4').value='';
+  $('imgPreview').style.display = 'none';
+  $('imgPreview').src = '';
+  $('uploadStatus').innerHTML = '';
+}
+
+// 处理文件选择
+function handleFileSelect(event){
+  var file = event.target.files[0];
+  if(!file) return;
+  
+  // 检查文件类型
+  if(!file.type.match('image.*')){
+    alert('请选择图片文件');
+    return;
+  }
+  
+  // 检查文件大小（最大5MB）
+  if(file.size > 5 * 1024 * 1024){
+    alert('图片大小不能超过5MB');
+    return;
+  }
+  
+  // 显示预览
+  var reader = new FileReader();
+  reader.onload = function(e){
+    $('imgPreview').src = e.target.result;
+    $('imgPreview').style.display = 'block';
+    $('uploadStatus').innerHTML = '图片已选择，保存时自动上传';
+  };
+  reader.readAsDataURL(file);
+}
+
+// 拖拽上传
+var uploadArea = $('uploadArea');
+uploadArea.addEventListener('dragover', function(e){
+  e.preventDefault();
+  this.classList.add('dragover');
+});
+uploadArea.addEventListener('dragleave', function(e){
+  e.preventDefault();
+  this.classList.remove('dragover');
+});
+uploadArea.addEventListener('drop', function(e){
+  e.preventDefault();
+  this.classList.remove('dragover');
+  var files = e.dataTransfer.files;
+  if(files.length > 0){
+    var fileInput = $('fileInput');
+    fileInput.files = files;
+    handleFileSelect({target: fileInput});
+  }
+});
+
+// 上传图片到GitHub
+function uploadImageToGitHub(file, callback){
+  var token = $('token').value.trim();
+  if(!token){
+    alert('请先输入 GitHub Token');
+    return;
+  }
+  
+  // 保存token
+  localStorage.setItem('gh_token', token);
+  githubToken = token;
+  
+  $('uploadStatus').innerHTML = '正在上传图片...';
+  
+  var reader = new FileReader();
+  reader.onload = function(e){
+    var base64 = e.target.result.split(',')[1];
+    var filename = 'images/work-' + Date.now() + '.' + file.name.split('.').pop();
+    
+    var xhr = new XMLHttpRequest();
+    xhr.open('PUT', 'https://api.github.com/repos/jiang72353093-ai/xuanran-culture/contents/' + filename, true);
+    xhr.setRequestHeader('Authorization', 'token ' + token);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onload = function(){
+      if(xhr.status == 200 || xhr.status == 201){
+        var res = JSON.parse(xhr.responseText);
+        callback(res.content.download_url);
+      }else{
+        $('uploadStatus').innerHTML = '图片上传失败';
+        alert('图片上传失败，请检查Token');
+      }
+    };
+    xhr.onerror = function(){
+      $('uploadStatus').innerHTML = '上传出错';
+    };
+    xhr.send(JSON.stringify({
+      message: 'Add image ' + filename,
+      content: base64
+    }));
+  };
+  reader.readAsDataURL(file);
+}
+
+function saveWork(){
+  var title=$('t1').value.trim();
+  var desc=$('t2').value.trim();
+  var url=$('t3').value.trim();
+  var fileInput = $('fileInput');
+  
+  if(!title||!url){
+    alert('请填写标题和链接');
+    return;
+  }
+  
+  // 提取BV号
+  var bvid='';
+  var m=url.match(/BV[a-zA-Z0-9]+/);
+  if(m)bvid=m[0];
+  
+  // 如果有图片文件，先上传
+  if(fileInput.files && fileInput.files[0]){
+    uploadImageToGitHub(fileInput.files[0], function(imageUrl){
+      // 上传完成后保存作品
+      works.push({
+        id:Date.now(),
+        title:title,
+        desc:desc,
+        bvid:bvid,
+        img:imageUrl
+      });
+      localStorage.setItem('works',JSON.stringify(works));
+      renderWorks();
+      hideAdd();
+      showMsg('添加成功');
+    });
+  }else{
+    // 没有图片，直接保存
+    works.push({
+      id:Date.now(),
+      title:title,
+      desc:desc,
+      bvid:bvid,
+      img:''
+    });
+    localStorage.setItem('works',JSON.stringify(works));
+    renderWorks();
+    hideAdd();
+    showMsg('添加成功');
+  }
+}
+
+function del(id){
+  if(!confirm('确定删除？'))return;
+  var arr=[];
+  for(var i=0;i<works.length;i++){
+    if(works[i].id!=id)arr.push(works[i]);
+  }
+  works=arr;
+  localStorage.setItem('works',JSON.stringify(works));
+  renderWorks();
+  showMsg('已删除');
+}
+
+function generateSite(){
+  var c1=$('c1').value,c2=$('c2').value,c3=$('c3').value;
+  var c4=$('c4').value,c5=$('c5').value,c6=$('c6').value;
+  var p1=$('p1').value,p2=$('p2').value,p3=$('p3').value;
+  
+  var worksHtml='';
+  for(var i=0;i<works.length;i++){
+    var w=works[i];
+    var style=w.img?'background-image:url('+w.img+')':'background:#222';
+    worksHtml+='<div style="'+style+';background-size:cover;cursor:pointer" onclick="play(\''+w.bvid+'\')">';
+    worksHtml+='<div style="padding:20px;background:linear-gradient(to top,rgba(0,0,0,0.8),transparent);color:#fff">'+(w.desc||w.title)+'</div>';
+    worksHtml+='</div>';
+  }
+  
+  var html='<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+c1+'</title>';
+  html+='<style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei",sans-serif;background:#0a0a0a;color:#fff}';
+  html+='.hero{height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;background:radial-gradient(ellipse at 20% 80%,rgba(212,165,92,0.1) 0%,transparent 50%)}';
+  html+='.hero h1{font-size:clamp(2.5rem,7vw,5rem);font-weight:700;letter-spacing:0.15em}.hero .subtitle{color:#d4a55c;letter-spacing:0.5em;margin:1rem 0 2rem}';
+  html+='.btn{display:inline-block;padding:0.8rem 2rem;border:1px solid #d4a55c;color:#d4a55c;text-decoration:none;font-size:0.9rem}';
+  html+='.works{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;padding:40px;max-width:1200px;margin:0 auto}';
+  html+='.work{aspect-ratio:16/9;border:1px solid #333;display:flex;align-items:flex-end;overflow:hidden}';
+  html+='</style></head><body>';
+  html+='<div class="hero"><h1>'+c1.replace('有限公司','')+'</h1><div class="subtitle">'+c2+'</div><a href="#works" class="btn">查看作品</a></div>';
+  html+='<div class="works" id="works">'+worksHtml+'</div>';
+  html+='<script>function play(bvid){var d=document.createElement("div");d.style.cssText="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.95);z-index:9999;display:flex;justify-content:center;align-items:center";d.innerHTML="<iframe src=\\'//player.bilibili.com/player.html?bvid="+bvid+"\\' style=\\'width:90%;max-width:900px;aspect-ratio:16/9;border:none\\'></iframe><button onclick=\\'this.parentElement.remove()\\' style=\\'position:absolute;top:20px;right:20px;background:none;border:2px solid #fff;color:#fff;width:40px;height:40px;border-radius:50%;cursor:pointer;font-size:18px\\'>×</button>";document.body.appendChild(d)}</script>';
+  html+='</body></html>';
+  return html;
+}
+
+function publish(){
+  var token=$('token').value.trim();
+  if(!token){
+    alert('请输入 GitHub Token');
+    return;
+  }
+  localStorage.setItem('gh_token', token);
+  showMsg('发布中...');
+  
+  var html=generateSite();
+  
+  var xhr=new XMLHttpRequest();
+  xhr.open('GET','https://api.github.com/repos/jiang72353093-ai/xuanran-culture/contents/index.html',true);
+  xhr.setRequestHeader('Authorization','token '+token);
+  xhr.onload=function(){
+    var sha='';
+    if(xhr.status==200){
+      sha=JSON.parse(xhr.responseText).sha;
+    }
+    var data=JSON.stringify({
+      message:'Update website',
+      content:btoa(unescape(encodeURIComponent(html))),
+      sha:sha
+    });
+    var x=new XMLHttpRequest();
+    x.open('PUT','https://api.github.com/repos/jiang72353093-ai/xuanran-culture/contents/index.html',true);
+    x.setRequestHeader('Authorization','token '+token);
+    x.setRequestHeader('Content-Type','application/json');
+    x.onload=function(){
+      if(x.status==200||x.status==201){
+        showMsg('发布成功！');
+      }else{
+        showMsg('发布失败');
+      }
+    };
+    x.send(data);
+  };
+  xhr.send();
+}
+</script>
+
+</body>
+</html>
