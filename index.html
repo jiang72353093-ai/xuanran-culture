@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>渲染文化 | 影像创作</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <title>成都渲染文化传媒有限公司 | XUANRAN CULTURE</title>
     <style>
         * {
             margin: 0;
@@ -13,19 +12,18 @@
         }
 
         :root {
-            --bg-primary: #0a0a0a;
-            --bg-secondary: #111111;
-            --text-primary: #ffffff;
-            --text-secondary: #888888;
+            --bg: #0a0a0a;
+            --card: #111;
+            --text: #fff;
+            --text-secondary: #888;
             --accent: #d4a55c;
-            --accent-hover: #e5b66d;
-            --border: #222222;
+            --border: #222;
         }
 
         body {
-            font-family: 'Noto Sans SC', sans-serif;
-            background-color: var(--bg-primary);
-            color: var(--text-primary);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background: var(--bg);
+            color: var(--text);
             line-height: 1.6;
             overflow-x: hidden;
         }
@@ -40,14 +38,13 @@
             justify-content: space-between;
             align-items: center;
             z-index: 1000;
-            background: linear-gradient(to bottom, rgba(10,10,10,0.9), transparent);
+            background: linear-gradient(to bottom, rgba(10,10,10,0.95), transparent);
         }
 
         .logo {
             font-size: 1.5rem;
             font-weight: 700;
             letter-spacing: 2px;
-            color: var(--text-primary);
         }
 
         .logo span {
@@ -64,16 +61,14 @@
             color: var(--text-secondary);
             text-decoration: none;
             font-size: 0.9rem;
-            font-weight: 400;
             transition: color 0.3s;
-            letter-spacing: 1px;
         }
 
         .nav-links a:hover {
             color: var(--accent);
         }
 
-        /* 首页 Hero */
+        /* 首屏 */
         .hero {
             height: 100vh;
             display: flex;
@@ -81,379 +76,272 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            position: relative;
             background: 
                 radial-gradient(ellipse at 20% 80%, rgba(212, 165, 92, 0.1) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 20%, rgba(212, 165, 92, 0.05) 0%, transparent 50%),
-                var(--bg-primary);
+                var(--bg);
         }
 
-        .hero-content h1 {
-            font-size: clamp(3rem, 8vw, 6rem);
+        .hero h1 {
+            font-size: clamp(2.5rem, 7vw, 5rem);
             font-weight: 700;
-            letter-spacing: 0.2em;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, #fff 0%, #888 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            letter-spacing: 0.15em;
         }
 
-        .hero-content .subtitle {
-            font-size: 1.2rem;
+        .hero .subtitle {
             color: var(--accent);
             letter-spacing: 0.5em;
-            margin-bottom: 2rem;
-            font-weight: 300;
-        }
-
-        .hero-content p {
+            margin: 1rem 0 2rem;
             font-size: 1rem;
-            color: var(--text-secondary);
-            max-width: 600px;
-            margin: 0 auto 3rem;
-            font-weight: 300;
-            line-height: 1.8;
         }
 
-        .cta-btn {
+        .hero p {
+            color: var(--text-secondary);
+            max-width: 500px;
+            margin: 0 auto 2rem;
+            padding: 0 20px;
+        }
+
+        .btn {
             display: inline-block;
-            padding: 1rem 3rem;
+            padding: 0.8rem 2rem;
             border: 1px solid var(--accent);
             color: var(--accent);
             text-decoration: none;
             font-size: 0.9rem;
-            letter-spacing: 0.2em;
             transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
         }
 
-        .cta-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
+        .btn:hover {
             background: var(--accent);
-            transition: left 0.3s;
-            z-index: -1;
+            color: var(--bg);
         }
 
-        .cta-btn:hover::before {
-            left: 0;
-        }
-
-        .cta-btn:hover {
-            color: var(--bg-primary);
-        }
-
-        .scroll-indicator {
-            position: absolute;
-            bottom: 3rem;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--text-secondary);
-            font-size: 0.75rem;
-            letter-spacing: 0.2em;
-        }
-
-        .scroll-line {
-            width: 1px;
-            height: 60px;
-            background: linear-gradient(to bottom, var(--accent), transparent);
-            animation: scrollPulse 2s infinite;
-        }
-
-        @keyframes scrollPulse {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 1; }
-        }
-
-        /* 关于部分 */
-        .about {
-            padding: 10rem 5%;
-            background: var(--bg-secondary);
+        /* 通用区块 */
+        section {
+            padding: 6rem 5%;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1000px;
             margin: 0 auto;
         }
 
         .section-title {
-            font-size: 0.75rem;
             color: var(--accent);
+            font-size: 0.75rem;
             letter-spacing: 0.3em;
-            margin-bottom: 1rem;
-            text-transform: uppercase;
+            margin-bottom: 0.5rem;
         }
 
         .section-heading {
-            font-size: clamp(2rem, 5vw, 3rem);
-            font-weight: 700;
-            margin-bottom: 3rem;
-            letter-spacing: 0.1em;
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            margin-bottom: 2rem;
+        }
+
+        /* 关于 */
+        .about {
+            background: var(--card);
         }
 
         .about-content {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 5rem;
+            gap: 3rem;
             align-items: center;
         }
 
         .about-text p {
             color: var(--text-secondary);
-            font-size: 1rem;
-            line-height: 2;
-            margin-bottom: 1.5rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
         }
 
         .stats {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-            margin-top: 3rem;
+            gap: 1.5rem;
+            margin-top: 2rem;
         }
 
         .stat-item h3 {
-            font-size: 2.5rem;
+            font-size: 2rem;
             color: var(--accent);
-            font-weight: 700;
-            margin-bottom: 0.5rem;
         }
 
         .stat-item p {
             font-size: 0.8rem;
             color: var(--text-secondary);
-            letter-spacing: 0.1em;
         }
 
-        .about-image {
-            aspect-ratio: 4/3;
-            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
-            border: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-
-        /* 作品展示 */
-        .works {
-            padding: 10rem 5%;
-            background: var(--bg-primary);
-        }
-
+        /* 作品 */
         .works-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 1.5rem;
         }
 
         .work-item {
             aspect-ratio: 16/9;
-            background: var(--bg-secondary);
-            background-size: cover;
-            background-position: center;
             border: 1px solid var(--border);
             position: relative;
             overflow: hidden;
             cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            background-size: cover;
+            background-position: center;
         }
 
-        .work-item::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .work-item:hover::before {
-            opacity: 1;
-        }
-
-        .work-item:hover {
-            border-color: var(--accent);
-            transform: translateY(-5px);
-        }
-
-        .work-placeholder {
-            color: var(--text-secondary);
-            font-size: 0.85rem;
-            letter-spacing: 0.1em;
-        }
-
-        .work-info {
+        .work-overlay {
             position: absolute;
             bottom: 0;
             left: 0;
             right: 0;
             padding: 1.5rem;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
             transform: translateY(100%);
             transition: transform 0.3s;
         }
 
-        .work-item:hover .work-info {
+        .work-item:hover .work-overlay {
             transform: translateY(0);
         }
 
-        .work-info h4 {
+        .work-overlay h4 {
             font-size: 1rem;
             margin-bottom: 0.3rem;
-            font-weight: 500;
         }
 
-        .work-info p {
+        .work-overlay p {
             font-size: 0.75rem;
             color: var(--text-secondary);
         }
 
         /* 服务 */
         .services {
-            padding: 10rem 5%;
-            background: var(--bg-secondary);
+            background: var(--card);
         }
 
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
         }
 
         .service-item {
-            padding: 2.5rem;
-            background: var(--bg-primary);
+            padding: 1.5rem;
+            background: var(--bg);
             border: 1px solid var(--border);
-            transition: all 0.3s;
-        }
-
-        .service-item:hover {
-            border-color: var(--accent);
         }
 
         .service-number {
-            font-size: 0.75rem;
             color: var(--accent);
-            margin-bottom: 1rem;
-            letter-spacing: 0.2em;
+            font-size: 0.75rem;
+            margin-bottom: 0.5rem;
         }
 
         .service-item h3 {
-            font-size: 1.1rem;
-            margin-bottom: 1rem;
-            font-weight: 500;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
         }
 
         .service-item p {
             font-size: 0.85rem;
             color: var(--text-secondary);
-            line-height: 1.8;
         }
 
         /* 联系 */
         .contact {
-            padding: 10rem 5%;
-            background: var(--bg-primary);
             text-align: center;
         }
 
-        .contact-content {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
         .contact-info {
-            margin-top: 3rem;
             display: flex;
             justify-content: center;
-            gap: 4rem;
+            gap: 3rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
         }
 
         .contact-item h4 {
             font-size: 0.7rem;
             color: var(--text-secondary);
-            letter-spacing: 0.2em;
-            margin-bottom: 0.5rem;
-            text-transform: uppercase;
+            margin-bottom: 0.3rem;
         }
 
         .contact-item p {
             font-size: 1rem;
-            color: var(--text-primary);
         }
 
-        /* 页脚 */
+        /* 底部 */
         footer {
-            padding: 3rem 5%;
-            background: var(--bg-secondary);
+            padding: 2rem;
+            background: var(--card);
             border-top: 1px solid var(--border);
             text-align: center;
-        }
-
-        footer p {
             color: var(--text-secondary);
             font-size: 0.8rem;
-            letter-spacing: 0.1em;
+        }
+
+        /* 视频弹窗 */
+        .video-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .video-modal.active {
+            display: flex;
+        }
+
+        .video-container {
+            width: 90%;
+            max-width: 900px;
+            aspect-ratio: 16/9;
+            position: relative;
+        }
+
+        .video-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: -50px;
+            right: 0;
+            background: none;
+            border: 2px solid rgba(255,255,255,0.3);
+            color: #fff;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 18px;
         }
 
         /* 响应式 */
-        @media (max-width: 1024px) {
-            .about-content {
-                grid-template-columns: 1fr;
-                gap: 3rem;
-            }
-
-            .works-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .services-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
         @media (max-width: 768px) {
             .nav-links {
                 display: none;
             }
-
-            .hero-content h1 {
-                font-size: 2.5rem;
-            }
-
-            .works-grid {
+            .about-content {
                 grid-template-columns: 1fr;
             }
-
-            .services-grid {
-                grid-template-columns: 1fr;
-            }
-
             .stats {
                 grid-template-columns: 1fr;
                 text-align: center;
             }
-
             .contact-info {
                 flex-direction: column;
-                gap: 2rem;
+                gap: 1rem;
             }
         }
     </style>
@@ -470,37 +358,29 @@
         </ul>
     </nav>
 
-    <!-- 首页 -->
+    <!-- 首屏 -->
     <section class="hero">
-        <div class="hero-content">
-            <h1>渲染文化</h1>
-            <p class="subtitle">XUANRAN CULTURE</p>
-            <p>用电影语言讲述品牌故事<br>以情绪表达触动观众内心</p>
-            <a href="#works" class="cta-btn">查看作品</a>
-        </div>
-        <div class="scroll-indicator">
-            <span>SCROLL</span>
-            <div class="scroll-line"></div>
-        </div>
+        <h1>成都渲染文化</h1>
+        <div class="subtitle">XUANRAN CULTURE</div>
+        <p>用电影语言讲述品牌故事<br>专注于影像创作的专业团队</p>
+        <a href="#works" class="btn">查看作品</a>
     </section>
 
     <!-- 关于 -->
     <section class="about" id="about">
         <div class="container">
-            <p class="section-title">ABOUT US</p>
+            <div class="section-title">ABOUT US</div>
             <h2 class="section-heading">关于我们</h2>
             <div class="about-content">
                 <div class="about-text">
                     <p>成都渲染文化传媒有限公司，成立于2019年，是一家专注于影像创作的专业团队。我们深耕广告视频领域，服务客户涵盖国际大牌到初创企业。</p>
-                    <p>以"情绪表达"为核心创作理念，我们将电影美学与商业需求完美融合。每一部作品，都是对客户品牌价值的深度诠释。</p>
-                    <p>从创意策划到后期交付，我们提供全流程一站式服务，确保每一个环节都达到最高标准。</p>
                     <div class="stats">
                         <div class="stat-item">
                             <h3>5+</h3>
                             <p>年行业经验</p>
                         </div>
                         <div class="stat-item">
-                            <h3>200+</h3>
+                            <h3>100+</h3>
                             <p>完成项目</p>
                         </div>
                         <div class="stat-item">
@@ -509,58 +389,33 @@
                         </div>
                     </div>
                 </div>
-                <div class="about-image">
-                    [ 团队形象照 / 工作照 ]
+                <div style="background: var(--card); aspect-ratio: 4/3; display: flex; align-items: center; justify-content: center; color: var(--text-secondary);">
+                    [团队形象照]
                 </div>
             </div>
         </div>
     </section>
 
     <!-- 作品 -->
-    <section class="works" id="works">
+    <section id="works">
         <div class="container">
-            <p class="section-title">SELECTED WORKS</p>
+            <div class="section-title">SELECTED WORKS</div>
             <h2 class="section-heading">精选作品</h2>
+            
             <div class="works-grid">
-                <div class="work-item" style="background-image: url('images/work-361.jpg');" onclick="openBiliVideo('//player.bilibili.com/player.html?bvid=BV1Zf421i7zq&page=1')">
-                    <div class="work-info">
-                        <h4>361° 品牌 TVC</h4>
-                        <p>点击查看视频 →</p>
+                <!-- 作品1 -->
+                <div class="work-item" style="background-image: url('images/work-canyon-town.jpg');" onclick="playVideo('BV1X4BpB2E44')">
+                    <div class="work-overlay">
+                        <h4>《峡谷镇-重庆店》预告片</h4>
+                        <p>一位赏金猎人在一望无际的沙漠中寻找神秘宝箱</p>
                     </div>
                 </div>
-                <div class="work-item">
-                    <span class="work-placeholder">[ 作品封面 2 ]</span>
-                    <div class="work-info">
-                        <h4>时尚短片</h4>
-                        <p>风格化影像创作</p>
-                    </div>
-                </div>
-                <div class="work-item">
-                    <span class="work-placeholder">[ 作品封面 3 ]</span>
-                    <div class="work-info">
-                        <h4>情绪短片</h4>
-                        <p>新疆旅拍作品</p>
-                    </div>
-                </div>
-                <div class="work-item">
-                    <span class="work-placeholder">[ 作品封面 4 ]</span>
-                    <div class="work-info">
-                        <h4>品牌宣传片</h4>
-                        <p>企业形象片</p>
-                    </div>
-                </div>
-                <div class="work-item">
-                    <span class="work-placeholder">[ 作品封面 5 ]</span>
-                    <div class="work-info">
-                        <h4>短视频</h4>
-                        <p>社交媒体内容</p>
-                    </div>
-                </div>
-                <div class="work-item">
-                    <span class="work-placeholder">[ 作品封面 6 ]</span>
-                    <div class="work-info">
-                        <h4>剧情短片</h4>
-                        <p>叙事类影像</p>
+                
+                <!-- 作品2 -->
+                <div class="work-item" style="background-image: url('images/work-361.jpg');" onclick="playVideo('BV1Zf421i7zq')">
+                    <div class="work-overlay">
+                        <h4>【我用GH6拍了一部荒野大镖客】</h4>
+                        <p>361° 品牌 TVC</p>
                     </div>
                 </div>
             </div>
@@ -570,28 +425,32 @@
     <!-- 服务 -->
     <section class="services" id="services">
         <div class="container">
-            <p class="section-title">SERVICES</p>
+            <div class="section-title">SERVICES</div>
             <h2 class="section-heading">服务范围</h2>
+            
             <div class="services-grid">
                 <div class="service-item">
-                    <p class="service-number">01</p>
-                    <h3>TVC 广告片</h3>
-                    <p>品牌电视广告、网络广告创意拍摄，从概念到成片的全流程制作</p>
+                    <div class="service-number">01</div>
+                    <h3>TVC广告片</h3>
+                    <p>品牌电视广告、网络广告创意拍摄</p>
                 </div>
+                
                 <div class="service-item">
-                    <p class="service-number">02</p>
+                    <div class="service-number">02</div>
                     <h3>品牌宣传片</h3>
-                    <p>企业形象片、产品宣传片，用影像传递品牌价值</p>
+                    <p>企业形象片、产品宣传片</p>
                 </div>
+                
                 <div class="service-item">
-                    <p class="service-number">03</p>
+                    <div class="service-number">03</div>
                     <h3>短视频内容</h3>
-                    <p>社交媒体短视频、病毒视频创意，适应多平台传播需求</p>
+                    <p>社交媒体短视频、病毒视频创意</p>
                 </div>
+                
                 <div class="service-item">
-                    <p class="service-number">04</p>
+                    <div class="service-number">04</div>
                     <h3>剧情短片</h3>
-                    <p>故事性影像创作，电影感叙事风格，情感深度表达</p>
+                    <p>故事性影像创作，电影感叙事风格</p>
                 </div>
             </div>
         </div>
@@ -600,40 +459,47 @@
     <!-- 联系 -->
     <section class="contact" id="contact">
         <div class="container">
-            <p class="section-title">CONTACT</p>
+            <div class="section-title">CONTACT</div>
             <h2 class="section-heading">联系我们</h2>
-            <div class="contact-content">
-                <p style="color: var(--text-secondary); font-size: 1.1rem; line-height: 1.8;">
-                    如果您有项目需求或合作意向<br>
-                    欢迎随时与我们联系
-                </p>
-                <div class="contact-info">
-                    <div class="contact-item">
-                        <h4>电话</h4>
-                        <p>185 8249 3173</p>
-                    </div>
-                    <div class="contact-item">
-                        <h4>微信</h4>
-                        <p>[ 你的微信号 ]</p>
-                    </div>
-                    <div class="contact-item">
-                        <h4>邮箱</h4>
-                        <p>[ 你的邮箱 ]</p>
-                    </div>
+            
+            <p style="color: var(--text-secondary);">如果您有项目需求或合作意向<br>欢迎随时与我们联系</p>
+            
+            <div class="contact-info">
+                <div class="contact-item">
+                    <h4>电话</h4>
+                    <p>18582493173</p>
+                </div>
+                
+                <div class="contact-item">
+                    <h4>微信</h4>
+                    <p>18582493173</p>
+                </div>
+                
+                <div class="contact-item">
+                    <h4>邮箱</h4>
+                    <p>18582493173@163.com</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 页脚 -->
+    <!-- 底部 -->
     <footer>
-        <p>&copy; 2024 成都渲染文化传媒有限公司 | XUANRAN CULTURE</p>
+        <p>© 2024 成都渲染文化传媒有限公司 | XUANRAN CULTURE</p>
     </footer>
+
+    <!-- 视频弹窗 -->
+    <div class="video-modal" id="videoModal" onclick="closeVideo()">
+        <div class="video-container">
+            <button class="close-btn" onclick="closeVideo()">×</button>
+            <iframe id="videoFrame" src="" allowfullscreen></iframe>
+        </div>
+    </div>
 
     <script>
         // 平滑滚动
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
+            anchor.addEventListener('click', function(e) {
                 e.preventDefault();
                 document.querySelector(this.getAttribute('href')).scrollIntoView({
                     behavior: 'smooth'
@@ -641,139 +507,22 @@
             });
         });
 
-        // 导航栏滚动效果
-        window.addEventListener('scroll', () => {
-            const nav = document.querySelector('nav');
-            if (window.scrollY > 100) {
-                nav.style.background = 'rgba(10, 10, 10, 0.95)';
-            } else {
-                nav.style.background = 'linear-gradient(to bottom, rgba(10,10,10,0.9), transparent)';
-            }
-        });
-
-        // 打开B站视频弹窗
-        function openBiliVideo(bvid) {
-            // 创建弹窗遮罩
-            const overlay = document.createElement('div');
-            overlay.id = 'video-overlay';
-            overlay.style.cssText = `
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: rgba(0,0,0,0.95);
-                z-index: 9999;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                backdrop-filter: blur(10px);
-            `;
-            
-            // 关闭按钮
-            const closeBtn = document.createElement('button');
-            closeBtn.innerHTML = '✕';
-            closeBtn.style.cssText = `
-                position: absolute;
-                top: 30px;
-                right: 40px;
-                background: none;
-                border: 2px solid rgba(255,255,255,0.3);
-                color: #fff;
-                font-size: 24px;
-                cursor: pointer;
-                z-index: 10000;
-                width: 50px;
-                height: 50px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                border-radius: 50%;
-                transition: all 0.3s;
-            `;
-            closeBtn.onmouseover = () => {
-                closeBtn.style.background = 'rgba(212, 165, 92, 0.2)';
-                closeBtn.style.borderColor = '#d4a55c';
-            };
-            closeBtn.onmouseout = () => {
-                closeBtn.style.background = 'none';
-                closeBtn.style.borderColor = 'rgba(255,255,255,0.3)';
-            };
-            
-            // 视频标题
-            const title = document.createElement('div');
-            title.innerHTML = '【我用GH6拍了一部荒野大镖客】';
-            title.style.cssText = `
-                position: absolute;
-                top: 40px;
-                left: 50%;
-                transform: translateX(-50%);
-                color: #fff;
-                font-size: 18px;
-                font-family: 'Microsoft YaHei', sans-serif;
-                letter-spacing: 1px;
-            `;
-            
-            // 视频容器
-            const videoContainer = document.createElement('div');
-            videoContainer.style.cssText = `
-                width: 90%;
-                max-width: 1200px;
-                aspect-ratio: 16/9;
-                background: #000;
-                border-radius: 8px;
-                overflow: hidden;
-                box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-            `;
-            
-            // B站嵌入iframe
-            const iframe = document.createElement('iframe');
-            iframe.src = 'https:' + bvid;
-            iframe.style.cssText = `
-                width: 100%;
-                height: 100%;
-                border: none;
-            `;
-            iframe.allowFullscreen = true;
-            iframe.scrolling = "no";
-            iframe.frameBorder = "0";
-            
-            videoContainer.appendChild(iframe);
-            overlay.appendChild(closeBtn);
-            overlay.appendChild(title);
-            overlay.appendChild(videoContainer);
-            document.body.appendChild(overlay);
-            
-            // 禁止背景滚动
+        // 播放视频
+        function playVideo(bvid) {
+            var modal = document.getElementById('videoModal');
+            var frame = document.getElementById('videoFrame');
+            frame.src = 'https://player.bilibili.com/player.html?bvid=' + bvid + '&page=1';
+            modal.classList.add('active');
             document.body.style.overflow = 'hidden';
-            
-            // 关闭函数
-            const closeOverlay = () => {
-                if (overlay.parentNode) {
-                    document.body.removeChild(overlay);
-                    document.body.style.overflow = '';
-                }
-            };
-            
-            // 点击遮罩关闭
-            overlay.addEventListener('click', (e) => {
-                if (e.target === overlay) {
-                    closeOverlay();
-                }
-            });
-            
-            // 点击关闭按钮
-            closeBtn.addEventListener('click', closeOverlay);
-            
-            // ESC键关闭
-            const escHandler = (e) => {
-                if (e.key === 'Escape') {
-                    closeOverlay();
-                    document.removeEventListener('keydown', escHandler);
-                }
-            };
-            document.addEventListener('keydown', escHandler);
+        }
+
+        // 关闭视频
+        function closeVideo() {
+            var modal = document.getElementById('videoModal');
+            var frame = document.getElementById('videoFrame');
+            modal.classList.remove('active');
+            frame.src = '';
+            document.body.style.overflow = '';
         }
     </script>
 </body>
