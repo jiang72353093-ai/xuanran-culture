@@ -222,14 +222,30 @@
 
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 1.5rem;
         }
 
-        .service-item {
-            padding: 1.5rem;
+        .service-card {
             background: var(--bg);
             border: 1px solid var(--border);
+            cursor: pointer;
+            transition: all 0.3s;
+            overflow: hidden;
+        }
+
+        .service-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .service-card.active {
+            border-color: var(--accent);
+        }
+
+        .service-header {
+            padding: 1.5rem;
+            position: relative;
         }
 
         .service-number {
@@ -238,14 +254,103 @@
             margin-bottom: 0.5rem;
         }
 
-        .service-item h3 {
+        .service-header h3 {
             font-size: 1rem;
             margin-bottom: 0.5rem;
         }
 
-        .service-item p {
+        .service-header p {
             font-size: 0.85rem;
             color: var(--text-secondary);
+        }
+
+        .toggle-icon {
+            position: absolute;
+            right: 1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 30px;
+            height: 30px;
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: var(--accent);
+            transition: all 0.3s;
+        }
+
+        .service-card.active .toggle-icon {
+            transform: translateY(-50%) rotate(45deg);
+            background: var(--accent);
+            color: var(--bg);
+        }
+
+        .service-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            background: rgba(0,0,0,0.3);
+        }
+
+        .service-card.active .service-content {
+            max-height: 500px;
+        }
+
+        .sub-items {
+            padding: 1rem;
+        }
+
+        /* 子内容中的视频项 */
+        .sub-video-item {
+            display: flex;
+            gap: 15px;
+            padding: 12px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 6px;
+            margin-bottom: 10px;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .sub-video-item:hover {
+            background: rgba(212, 165, 92, 0.1);
+        }
+
+        .sub-video-thumb {
+            width: 80px;
+            height: 45px;
+            background: #222;
+            border-radius: 4px;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .sub-video-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .sub-video-info {
+            flex: 1;
+        }
+
+        .sub-video-info h5 {
+            font-size: 14px;
+            margin-bottom: 3px;
+        }
+
+        .sub-video-info p {
+            font-size: 12px;
+            color: #888;
+        }
+
+        .sub-video-play {
+            color: var(--accent);
+            font-size: 12px;
         }
 
         /* 联系 */
@@ -437,28 +542,64 @@
             <h2 class="section-heading">服务范围</h2>
             
             <div class="services-grid">
-                <div class="service-item">
-                    <div class="service-number">01</div>
-                    <h3>TVC广告片</h3>
-                    <p>品牌电视广告、网络广告创意拍摄</p>
+                <!-- 服务1 - TVC广告片 -->
+                <div class="service-card" onclick="toggleService('service1')">
+                    <div class="service-header">
+                        <div class="service-number">01</div>
+                        <h3>TVC广告片</h3>
+                        <p>品牌电视广告、网络广告创意拍摄</p>
+                        <span class="toggle-icon">+</span>
+                    </div>
+                    <div class="service-content" id="service1">
+                        <div class="sub-items">
+                            <p style="color: #888; padding: 20px; text-align: center;">📹 子内容区域 - 可添加视频</p>
+                        </div>
+                    </div>
                 </div>
                 
-                <div class="service-item">
-                    <div class="service-number">02</div>
-                    <h3>品牌宣传片</h3>
-                    <p>企业形象片、产品宣传片</p>
+                <!-- 服务2 - 品牌宣传片 -->
+                <div class="service-card" onclick="toggleService('service2')">
+                    <div class="service-header">
+                        <div class="service-number">02</div>
+                        <h3>品牌宣传片</h3>
+                        <p>企业形象片、产品宣传片</p>
+                        <span class="toggle-icon">+</span>
+                    </div>
+                    <div class="service-content" id="service2">
+                        <div class="sub-items">
+                            <p style="color: #888; padding: 20px; text-align: center;">📹 子内容区域 - 可添加视频</p>
+                        </div>
+                    </div>
                 </div>
                 
-                <div class="service-item">
-                    <div class="service-number">03</div>
-                    <h3>短视频内容</h3>
-                    <p>社交媒体短视频、病毒视频创意</p>
+                <!-- 服务3 - 短视频内容 -->
+                <div class="service-card" onclick="toggleService('service3')">
+                    <div class="service-header">
+                        <div class="service-number">03</div>
+                        <h3>短视频内容</h3>
+                        <p>社交媒体短视频、病毒视频创意</p>
+                        <span class="toggle-icon">+</span>
+                    </div>
+                    <div class="service-content" id="service3">
+                        <div class="sub-items">
+                            <p style="color: #888; padding: 20px; text-align: center;">📹 子内容区域 - 可添加视频</p>
+                        </div>
+                    </div>
                 </div>
                 
-                <div class="service-item">
-                    <div class="service-number">04</div>
-                    <h3>剧情短片</h3>
-                    <p>故事性影像创作，电影感叙事风格</p>
+                <!-- 服务4 - 剧情短片 -->
+                <div class="service-card" onclick="toggleService('service4')">
+                    <div class="service-header">
+                        <div class="service-number">04</div>
+                        <h3>剧情短片</h3>
+                        <p>故事性影像创作，电影感叙事风格</p>
+                        <span class="toggle-icon">+</span>
+                    </div>
+                    <div class="service-content" id="service4">
+                        <div class="sub-items">
+                            <p style="color: #888; padding: 20px; text-align: center;">📹 子内容区域 - 可添加视频</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -551,6 +692,22 @@
             // 恢复iframe结构
             container.innerHTML = '<button class="close-btn" onclick="closeVideo()">×</button><iframe id="videoFrame" src="" allowfullscreen></iframe>';
             document.body.style.overflow = '';
+        }
+        
+        // 展开/收起服务卡片
+        function toggleService(serviceId) {
+            var card = document.getElementById(serviceId).parentElement;
+            var isActive = card.classList.contains('active');
+            
+            // 关闭所有其他卡片
+            document.querySelectorAll('.service-card').forEach(function(c) {
+                c.classList.remove('active');
+            });
+            
+            // 如果当前不是激活状态，则激活它
+            if (!isActive) {
+                card.classList.add('active');
+            }
         }
     </script>
 </body>
