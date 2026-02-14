@@ -522,7 +522,7 @@
             <p class="section-title">SELECTED WORKS</p>
             <h2 class="section-heading">精选作品</h2>
             <div class="works-grid">
-                <div class="work-item" style="background-image: url('images/work-361.jpg');" onclick="openVideo('https://b23.tv/xi4SUa1')">
+                <div class="work-item" style="background-image: url('images/work-361.jpg');" onclick="openBiliVideo('//player.bilibili.com/player.html?bvid=BV1Zf421i7zq&page=1')">
                     <div class="work-info">
                         <h4>361° 品牌 TVC</h4>
                         <p>点击查看视频 →</p>
@@ -651,19 +651,21 @@
             }
         });
 
-        // 打开视频弹窗
-        function openVideo(url) {
+        // 打开B站视频弹窗
+        function openBiliVideo(bvid) {
             // 创建弹窗遮罩
             const overlay = document.createElement('div');
+            overlay.id = 'video-overlay';
             overlay.style.cssText = `
                 position: fixed;
                 top: 0;
                 left: 0;
                 width: 100%;
                 height: 100%;
-                background: rgba(0,0,0,0.9);
+                background: rgba(0,0,0,0.95);
                 z-index: 9999;
                 display: flex;
+                flex-direction: column;
                 justify-content: center;
                 align-items: center;
                 backdrop-filter: blur(10px);
@@ -674,12 +676,12 @@
             closeBtn.innerHTML = '✕';
             closeBtn.style.cssText = `
                 position: absolute;
-                top: 20px;
+                top: 30px;
                 right: 40px;
                 background: none;
-                border: none;
+                border: 2px solid rgba(255,255,255,0.3);
                 color: #fff;
-                font-size: 30px;
+                font-size: 24px;
                 cursor: pointer;
                 z-index: 10000;
                 width: 50px;
@@ -688,10 +690,30 @@
                 align-items: center;
                 justify-content: center;
                 border-radius: 50%;
-                transition: background 0.3s;
+                transition: all 0.3s;
             `;
-            closeBtn.onmouseover = () => closeBtn.style.background = 'rgba(255,255,255,0.1)';
-            closeBtn.onmouseout = () => closeBtn.style.background = 'none';
+            closeBtn.onmouseover = () => {
+                closeBtn.style.background = 'rgba(212, 165, 92, 0.2)';
+                closeBtn.style.borderColor = '#d4a55c';
+            };
+            closeBtn.onmouseout = () => {
+                closeBtn.style.background = 'none';
+                closeBtn.style.borderColor = 'rgba(255,255,255,0.3)';
+            };
+            
+            // 视频标题
+            const title = document.createElement('div');
+            title.innerHTML = '【我用GH6拍了一部荒野大镖客】';
+            title.style.cssText = `
+                position: absolute;
+                top: 40px;
+                left: 50%;
+                transform: translateX(-50%);
+                color: #fff;
+                font-size: 18px;
+                font-family: 'Microsoft YaHei', sans-serif;
+                letter-spacing: 1px;
+            `;
             
             // 视频容器
             const videoContainer = document.createElement('div');
@@ -699,63 +721,59 @@
                 width: 90%;
                 max-width: 1200px;
                 aspect-ratio: 16/9;
-                position: relative;
+                background: #000;
+                border-radius: 8px;
+                overflow: hidden;
+                box-shadow: 0 20px 60px rgba(0,0,0,0.5);
             `;
             
-            // 嵌入B站视频（使用iframe）
-            // 将b23.tv短链接转换为嵌入iframe
+            // B站嵌入iframe
             const iframe = document.createElement('iframe');
-            iframe.src = url; // B站短链接，会自动跳转
+            iframe.src = 'https:' + bvid;
             iframe.style.cssText = `
                 width: 100%;
                 height: 100%;
                 border: none;
-                border-radius: 8px;
             `;
             iframe.allowFullscreen = true;
-            
-            // 如果iframe加载失败（跨域限制），显示跳转提示
-            const fallbackMsg = document.createElement('div');
-            fallbackMsg.style.cssText = `
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                text-align: center;
-                color: #fff;
-            `;
-            fallbackMsg.innerHTML = `
-                <p style="font-size: 18px; margin-bottom: 20px;">视频加载中...</p>
-                <a href="${url}" target="_blank" style="color: #d4a55c; text-decoration: none; font-size: 16px;">点击跳转B站观看 →</a>
-            `;
+            iframe.scrolling = "no";
+            iframe.frameBorder = "0";
             
             videoContainer.appendChild(iframe);
-            videoContainer.appendChild(fallbackMsg);
             overlay.appendChild(closeBtn);
+            overlay.appendChild(title);
             overlay.appendChild(videoContainer);
             document.body.appendChild(overlay);
+            
+            // 禁止背景滚动
+            document.body.style.overflow = 'hidden';
+            
+            // 关闭函数
+            const closeOverlay = () => {
+                if (overlay.parentNode) {
+                    document.body.removeChild(overlay);
+                    document.body.style.overflow = '';
+                }
+            };
             
             // 点击遮罩关闭
             overlay.addEventListener('click', (e) => {
                 if (e.target === overlay) {
-                    document.body.removeChild(overlay);
+                    closeOverlay();
                 }
             });
             
             // 点击关闭按钮
-            closeBtn.addEventListener('click', () => {
-                document.body.removeChild(overlay);
-            });
+            closeBtn.addEventListener('click', closeOverlay);
             
             // ESC键关闭
-            document.addEventListener('keydown', function escHandler(e) {
+            const escHandler = (e) => {
                 if (e.key === 'Escape') {
-                    if (overlay.parentNode) {
-                        document.body.removeChild(overlay);
-                        document.removeEventListener('keydown', escHandler);
-                    }
+                    closeOverlay();
+                    document.removeEventListener('keydown', escHandler);
                 }
-            });
+            };
+            document.addEventListener('keydown', escHandler);
         }
     </script>
 </body>
