@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>渲染文化 - 后台管理</title>
+    <title>渲染文化 - 作品管理</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -11,320 +11,191 @@
             background: #0a0a0a;
             color: #fff;
             padding: 2rem;
+            line-height: 1.6;
         }
-        .container { max-width: 1200px; margin: 0 auto; }
-        h1 { color: #d4a55c; margin-bottom: 2rem; font-size: 2rem; }
+        .container { max-width: 800px; margin: 0 auto; }
+        h1 { color: #d4a55c; margin-bottom: 2rem; text-align: center; }
         
-        /* 添加表单 */
-        .add-form {
+        .form-box {
             background: #111;
-            border: 1px solid #222;
+            border: 1px solid #333;
             border-radius: 8px;
             padding: 2rem;
             margin-bottom: 2rem;
         }
-        .form-group { margin-bottom: 1.5rem; }
+        
+        .form-box h2 {
+            color: #d4a55c;
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
         .form-group label {
             display: block;
             color: #888;
             margin-bottom: 0.5rem;
             font-size: 0.9rem;
         }
-        .form-group input, .form-group textarea {
+        
+        .form-group input {
             width: 100%;
-            padding: 0.8rem 1rem;
+            padding: 1rem;
             background: #1a1a1a;
             border: 1px solid #333;
             border-radius: 4px;
             color: #fff;
             font-size: 1rem;
         }
-        .form-group input:focus, .form-group textarea:focus {
+        
+        .form-group input:focus {
             outline: none;
             border-color: #d4a55c;
         }
         
-        /* 封面预览 */
-        .cover-preview {
-            width: 200px;
-            height: 120px;
-            background: #1a1a1a;
-            border: 2px dashed #333;
-            border-radius: 4px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #666;
-            margin-top: 0.5rem;
-            overflow: hidden;
-        }
-        .cover-preview img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        /* 按钮 */
         .btn {
-            padding: 0.8rem 2rem;
+            width: 100%;
+            padding: 1rem;
             background: #d4a55c;
             color: #0a0a0a;
             border: none;
             border-radius: 4px;
             font-size: 1rem;
-            font-weight: 600;
+            font-weight: bold;
             cursor: pointer;
-            transition: all 0.3s;
         }
-        .btn:hover { background: #e5b66d; }
-        .btn-secondary {
-            background: transparent;
-            border: 1px solid #d4a55c;
-            color: #d4a55c;
-            margin-left: 1rem;
-        }
-        .btn-secondary:hover { background: rgba(212, 165, 92, 0.1); }
         
-        /* 作品列表 */
-        .works-list {
-            background: #111;
-            border: 1px solid #222;
-            border-radius: 8px;
-            padding: 2rem;
+        .btn:hover {
+            background: #e5b66d;
         }
-        .work-item {
-            display: flex;
-            gap: 1rem;
-            padding: 1rem;
+        
+        .output {
             background: #1a1a1a;
+            border: 1px solid #333;
             border-radius: 4px;
-            margin-bottom: 1rem;
-            align-items: center;
+            padding: 1rem;
+            margin-top: 1rem;
+            min-height: 100px;
+            white-space: pre-wrap;
+            word-break: break-all;
+            font-family: monospace;
+            font-size: 0.85rem;
+            color: #888;
         }
-        .work-thumb {
-            width: 120px;
-            height: 68px;
-            background: #222;
-            border-radius: 4px;
-            overflow: hidden;
-            flex-shrink: 0;
-        }
-        .work-thumb img { width: 100%; height: 100%; object-fit: cover; }
-        .work-info { flex: 1; }
-        .work-info h4 { font-size: 1rem; margin-bottom: 0.3rem; }
-        .work-info p { font-size: 0.8rem; color: #888; word-break: break-all; }
-        .work-actions { display: flex; gap: 0.5rem; }
-        .btn-small {
-            padding: 0.4rem 1rem;
-            font-size: 0.8rem;
-        }
-        .btn-danger {
-            background: transparent;
-            border: 1px solid #ff4444;
-            color: #ff4444;
-        }
-        .btn-danger:hover { background: rgba(255, 68, 68, 0.1); }
         
-        /* 导出区域 */
-        .export-area {
+        .tips {
             margin-top: 2rem;
-            padding: 2rem;
-            background: #111;
-            border: 1px solid #222;
-            border-radius: 8px;
-            text-align: center;
+            padding: 1.5rem;
+            background: rgba(212, 165, 92, 0.1);
+            border-left: 3px solid #d4a55c;
+            border-radius: 0 4px 4px 0;
         }
-        .export-area h3 { color: #d4a55c; margin-bottom: 1rem; }
-        .export-area p { color: #888; margin-bottom: 1.5rem; font-size: 0.9rem; }
         
-        .empty-state {
-            text-align: center;
-            padding: 3rem;
-            color: #666;
+        .tips h3 {
+            color: #d4a55c;
+            margin-bottom: 0.5rem;
+        }
+        
+        .tips li {
+            margin-left: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #aaa;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>🎬 渲染文化 - 作品管理后台</h1>
+        <h1>🎬 作品管理后台</h1>
         
-        <!-- 添加新作品 -->
-        <div class="add-form">
-            <h3 style="margin-bottom: 1.5rem; color: #d4a55c;">➕ 添加新作品</h3>
+        <div class="form-box">
+            <h2>添加新作品</h2>
             
             <div class="form-group">
-                <label>作品标题</label>
-                <input type="text" id="workTitle" placeholder="例如：热干面">
+                <label>作品标题 *</label>
+                <input type="text" id="title" placeholder="例如：热干面">
             </div>
             
             <div class="form-group">
-                <label>阿里云视频链接 (.mov)</label>
+                <label>阿里云视频链接 *</label>
                 <input type="text" id="videoUrl" placeholder="https://outin-xxx.oss-xxx.aliyuncs.com/xxx.mov">
             </div>
             
             <div class="form-group">
-                <label>封面图片</label>
-                <input type="file" id="coverFile" accept="image/*" style="display:none;">
-                <input type="text" id="coverUrl" placeholder="粘贴图片URL 或点击上传">
-                <div class="cover-preview" id="coverPreview">
-                    <span>封面预览</span>
-                </div>
+                <label>封面图片链接（可选，留空使用默认）</label>
+                <input type="text" id="coverUrl" placeholder="https://... 或直接输入图片文件名如 work-reganmian.jpg">
             </div>
             
-            <button class="btn" onclick="addWork()">添加作品</button>
-            <button class="btn btn-secondary" onclick="previewWork()">预览效果</button>
-        </div>
-        
-        <!-- 作品列表 -->
-        <div class="works-list">
-            <h3 style="margin-bottom: 1rem; color: #d4a55c;">📋 现有作品列表</h3>
-            <div id="worksContainer">
-                <div class="empty-state">暂无作品，请添加</div>
+            <button class="btn" onclick="generateCode()">生成配置代码</button>
+            
+            <div class="output" id="output">
+                点击上方按钮，生成代码后复制发送给助手...
             </div>
         </div>
         
-        <!-- 导出 -->
-        <div class="export-area">
-            <h3>🚀 部署更新</h3>
-            <p>确认作品列表无误后，点击导出并发送至助手进行部署</p>
-            <button class="btn" onclick="exportData()">📤 导出作品数据</button>
-            <button class="btn btn-secondary" onclick="copyToClipboard()">📋 复制配置代码</button>
+        <div class="tips">
+            <h3>📋 使用说明</h3>
+            <ol>
+                <li>填写作品标题和视频链接（必填）</li>
+                <li>封面图可留空，或使用默认图片</li>
+                <li>点击「生成配置代码」</li>
+                <li>复制生成的代码</li>
+                <li>发送给助手，助手会帮您更新网站</li>
+            </ol>
         </div>
     </div>
 
     <script>
-        // 存储的作品列表
-        let works = JSON.parse(localStorage.getItem('xuanran_works') || '[]');
-        
-        // 初始化显示
-        renderWorks();
-        
-        // 封面预览
-        document.getElementById('coverUrl').addEventListener('input', function(e) {
-            const url = e.target.value;
-            const preview = document.getElementById('coverPreview');
-            if (url) {
-                preview.innerHTML = `<img src="${url}" onerror="this.style.display='none'; this.parentElement.innerHTML='<span>无效图片</span>'">`;
-            }
-        });
-        
-        // 添加作品
-        function addWork() {
-            const title = document.getElementById('workTitle').value.trim();
-            const videoUrl = document.getElementById('videoUrl').value.trim();
-            const coverUrl = document.getElementById('coverUrl').value.trim();
+        function generateCode() {
+            var title = document.getElementById('title').value.trim();
+            var videoUrl = document.getElementById('videoUrl').value.trim();
+            var coverUrl = document.getElementById('coverUrl').value.trim();
             
             if (!title || !videoUrl) {
                 alert('请填写标题和视频链接');
                 return;
             }
             
-            const work = {
-                id: Date.now(),
-                title: title,
-                videoUrl: videoUrl,
-                coverUrl: coverUrl || 'images/work-default.jpg',
-                date: new Date().toLocaleDateString()
-            };
-            
-            works.push(work);
-            localStorage.setItem('xuanran_works', JSON.stringify(works));
-            
-            // 清空表单
-            document.getElementById('workTitle').value = '';
-            document.getElementById('videoUrl').value = '';
-            document.getElementById('coverUrl').value = '';
-            document.getElementById('coverPreview').innerHTML = '<span>封面预览</span>';
-            
-            renderWorks();
-            alert('作品已添加！');
-        }
-        
-        // 渲染作品列表
-        function renderWorks() {
-            const container = document.getElementById('worksContainer');
-            
-            if (works.length === 0) {
-                container.innerHTML = '<div class="empty-state">暂无作品，请添加</div>';
-                return;
+            // 如果没有封面，使用默认
+            if (!coverUrl) {
+                coverUrl = 'images/work-default.jpg';
             }
             
-            container.innerHTML = works.map(work => `
-                <div class="work-item">
-                    <div class="work-thumb">
-                        <img src="${work.coverUrl}" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 120 68%22><rect fill=%22%23333%22 width=%22120%22 height=%2268%22/><text fill=%22%23666%22 x=%2260%22 y=%2234%22 text-anchor=%22middle%22>无封面</text></svg>'">
-                    </div>
-                    <div class="work-info">
-                        <h4>${work.title}</h4>
-                        <p>${work.videoUrl.substring(0, 60)}...</p>
-                    </div>
-                    <div class="work-actions">
-                        <button class="btn btn-small btn-danger" onclick="deleteWork(${work.id})">删除</button>
-                    </div>
-                </div>
-            `).join('');
+            // 生成 HTML 代码
+            var html = '<!-- ' + title + ' -->\n';
+            html += '<div class="work-item" style="background-image: url(\'' + coverUrl + '\');" onclick="playAliVideo(\'' + videoUrl + '\')">\n';
+            html += '    <div class="work-overlay">\n';
+            html += '        <h4>' + title + '</h4>\n';
+            html += '        <p>4K画质 · 点击播放 </p>\n';
+            html += '    </div>\n';
+            html += '</div>';
+            
+            // 显示输出
+            document.getElementById('output').textContent = html;
+            document.getElementById('output').style.color = '#d4a55c';
+            
+            // 自动复制
+            copyToClipboard(html);
         }
         
-        // 删除作品
-        function deleteWork(id) {
-            if (!confirm('确定删除这个作品吗？')) return;
-            works = works.filter(w => w.id !== id);
-            localStorage.setItem('xuanran_works', JSON.stringify(works));
-            renderWorks();
-        }
-        
-        // 导出数据
-        function exportData() {
-            if (works.length === 0) {
-                alert('没有作品可导出');
-                return;
+        function copyToClipboard(text) {
+            var textarea = document.createElement('textarea');
+            textarea.value = text;
+            textarea.style.position = 'fixed';
+            textarea.style.opacity = '0';
+            document.body.appendChild(textarea);
+            textarea.select();
+            
+            try {
+                document.execCommand('copy');
+                alert('代码已生成并复制到剪贴板！\n\n请直接粘贴发送给助手即可。');
+            } catch (err) {
+                alert('代码已生成！请手动复制上方代码发送给助手。');
             }
             
-            const data = JSON.stringify(works, null, 2);
-            const blob = new Blob([data], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'xuanran_works_export.json';
-            a.click();
-            
-            alert('数据已导出！请将文件发送给助手进行部署更新。');
-        }
-        
-        // 复制配置代码
-        function copyToClipboard() {
-            if (works.length === 0) {
-                alert('没有作品可复制');
-                return;
-            }
-            
-            // 生成 HTML 代码片段
-            const htmlCode = works.map(work => `
-<!-- ${work.title} -->
-<div class="work-item" style="background-image: url('${work.coverUrl}');" onclick="playAliVideo('${work.videoUrl}')">
-    <div class="work-overlay">
-        <h4>${work.title}</h4>
-        <p>4K画质 · 点击播放 ▶️</p>
-    </div>
-</div>`).join('\n');
-            
-            navigator.clipboard.writeText(htmlCode).then(() => {
-                alert('HTML代码已复制到剪贴板！可直接粘贴到 index.html 中。');
-            });
-        }
-        
-        // 预览效果
-        function previewWork() {
-            const title = document.getElementById('workTitle').value;
-            const coverUrl = document.getElementById('coverUrl').value;
-            
-            if (!title) {
-                alert('请先填写标题');
-                return;
-            }
-            
-            alert(`预览：${title}\n\n实际效果请添加后查看网站。`);
+            document.body.removeChild(textarea);
         }
     </script>
 </body>
