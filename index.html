@@ -3,390 +3,384 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>成都渲染文化传媒有限公司 | XUANRAN CULTURE</title>
+    <title>渲染文化 | XUANRAN CULTURE</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
+        
         :root {
             --bg: #0a0a0a;
-            --card: #111;
-            --text: #fff;
-            --text-secondary: #888;
-            --accent: #d4a55c;
-            --border: #222;
+            --accent: #c9a962;
+            --text: #ffffff;
+            --text-muted: rgba(255,255,255,0.6);
         }
-
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            font-family: 'Inter', sans-serif;
             background: var(--bg);
             color: var(--text);
             line-height: 1.6;
             overflow-x: hidden;
         }
-
-        /* 导航 */
+        
+        /* Navigation */
         nav {
             position: fixed;
             top: 0;
             width: 100%;
-            padding: 1.5rem 5%;
+            padding: 2rem 4%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            z-index: 1000;
-            background: linear-gradient(to bottom, rgba(10,10,10,0.95), transparent);
+            z-index: 100;
+            mix-blend-mode: difference;
         }
-
+        
         .logo {
-            font-size: 1.5rem;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
             font-weight: 700;
-            letter-spacing: 2px;
+            letter-spacing: 0.1em;
+            color: var(--text);
+            text-decoration: none;
         }
-
-        .logo span {
-            color: var(--accent);
-        }
-
+        
         .nav-links {
             display: flex;
-            gap: 2.5rem;
+            gap: 3rem;
             list-style: none;
         }
-
+        
         .nav-links a {
-            color: var(--text-secondary);
+            color: var(--text);
             text-decoration: none;
-            font-size: 0.9rem;
-            transition: color 0.3s;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            opacity: 0.7;
+            transition: opacity 0.3s;
         }
-
+        
         .nav-links a:hover {
-            color: var(--accent);
+            opacity: 1;
         }
-
-        /* 首屏 */
+        
+        /* Hero Section - Full Screen Video */
         .hero {
             height: 100vh;
+            width: 100%;
+            position: relative;
             display: flex;
-            flex-direction: column;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .hero-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            opacity: 0.6;
+        }
+        
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(10,10,10,0.3), rgba(10,10,10,0.9));
+            z-index: 0;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
             text-align: center;
-            background: 
-                radial-gradient(ellipse at 20% 80%, rgba(212, 165, 92, 0.1) 0%, transparent 50%),
-                var(--bg);
+            max-width: 900px;
+            padding: 0 4%;
         }
-
-        .hero h1 {
-            font-size: clamp(2.5rem, 7vw, 5rem);
-            font-weight: 700;
-            letter-spacing: 0.15em;
-        }
-
-        .hero .subtitle {
+        
+        .hero-subtitle {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.4em;
             color: var(--accent);
-            letter-spacing: 0.5em;
-            margin: 1rem 0 2rem;
-            font-size: 1rem;
-        }
-
-        .hero p {
-            color: var(--text-secondary);
-            max-width: 500px;
-            margin: 0 auto 2rem;
-            padding: 0 20px;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 0.8rem 2rem;
-            border: 1px solid var(--accent);
-            color: var(--accent);
-            text-decoration: none;
-            font-size: 0.9rem;
-            transition: all 0.3s;
-        }
-
-        .btn:hover {
-            background: var(--accent);
-            color: var(--bg);
-        }
-
-        /* 通用区块 */
-        section {
-            padding: 6rem 5%;
-        }
-
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .section-title {
-            color: var(--accent);
-            font-size: 0.75rem;
-            letter-spacing: 0.3em;
-            margin-bottom: 0.5rem;
-        }
-
-        .section-heading {
-            font-size: clamp(1.5rem, 4vw, 2.5rem);
             margin-bottom: 2rem;
         }
-
-        /* 关于 */
-        .about {
-            background: var(--card);
+        
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3rem, 8vw, 7rem);
+            font-weight: 400;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
         }
-
-        .about-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
+        
+        .hero-desc {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            font-weight: 300;
+        }
+        
+        .scroll-indicator {
+            position: absolute;
+            bottom: 3rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
             align-items: center;
+            gap: 0.5rem;
+            color: var(--text-muted);
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
         }
-
-        .about-text p {
-            color: var(--text-secondary);
-            line-height: 1.8;
-            margin-bottom: 1rem;
+        
+        .scroll-line {
+            width: 1px;
+            height: 60px;
+            background: linear-gradient(to bottom, var(--accent), transparent);
+            animation: scrollPulse 2s infinite;
         }
-
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
-            margin-top: 2rem;
+        
+        @keyframes scrollPulse {
+            0%, 100% { opacity: 0.3; transform: scaleY(0.8); }
+            50% { opacity: 1; transform: scaleY(1); }
         }
-
-        .stat-item h3 {
-            font-size: 2rem;
-            color: var(--accent);
+        
+        /* Works Section */
+        .works {
+            padding: 10rem 4%;
         }
-
-        .stat-item p {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 4rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
         }
-
-        /* 作品 */
+        
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            font-weight: 400;
+        }
+        
+        .section-count {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+        }
+        
+        /* Work Grid - Masonry Style */
         .works-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 2rem;
         }
-
+        
         .work-item {
-            aspect-ratio: 16/9;
-            border: 1px solid var(--border);
             position: relative;
             overflow: hidden;
             cursor: pointer;
+            background: #111;
+        }
+        
+        .work-item:nth-child(1) { grid-column: span 7; aspect-ratio: 16/9; }
+        .work-item:nth-child(2) { grid-column: span 5; aspect-ratio: 4/5; }
+        .work-item:nth-child(3) { grid-column: span 5; aspect-ratio: 1/1; }
+        .work-item:nth-child(4) { grid-column: span 7; aspect-ratio: 21/9; }
+        .work-item:nth-child(5) { grid-column: span 6; aspect-ratio: 16/9; }
+        .work-item:nth-child(6) { grid-column: span 6; aspect-ratio: 16/9; }
+        
+        .work-thumb {
+            width: 100%;
+            height: 100%;
             background-size: cover;
             background-position: center;
+            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
-
+        
+        .work-item:hover .work-thumb {
+            transform: scale(1.05);
+        }
+        
         .work-overlay {
             position: absolute;
             bottom: 0;
             left: 0;
             right: 0;
-            padding: 1.5rem;
+            padding: 3rem;
             background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
-            transform: translateY(100%);
-            transition: transform 0.3s;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
-
+        
         .work-item:hover .work-overlay {
             transform: translateY(0);
+            opacity: 1;
         }
-
-        .work-overlay h4 {
-            font-size: 1rem;
-            margin-bottom: 0.3rem;
-        }
-
-        .work-overlay p {
-            font-size: 0.75rem;
-            color: var(--text-secondary);
-        }
-
-        /* 服务 */
-        .services {
-            background: var(--card);
-        }
-
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .service-card {
-            background: var(--bg);
-            border: 1px solid var(--border);
-            cursor: pointer;
-            transition: all 0.3s;
-            overflow: hidden;
-        }
-
-        .service-card:hover {
-            border-color: var(--accent);
-            transform: translateY(-2px);
-        }
-
-        .service-card.active {
-            border-color: var(--accent);
-        }
-
-        .service-header {
-            padding: 1.5rem;
-            position: relative;
-        }
-
-        .service-number {
+        
+        .work-category {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3em;
             color: var(--accent);
-            font-size: 0.75rem;
             margin-bottom: 0.5rem;
         }
-
-        .service-header h3 {
-            font-size: 1rem;
-            margin-bottom: 0.5rem;
+        
+        .work-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 400;
         }
-
-        .service-header p {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-        }
-
-        .toggle-icon {
+        
+        .work-play {
             position: absolute;
-            right: 1.5rem;
             top: 50%;
-            transform: translateY(-50%);
-            width: 30px;
-            height: 30px;
-            border: 1px solid var(--border);
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.8);
+            width: 80px;
+            height: 80px;
+            border: 1px solid rgba(255,255,255,0.3);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.2rem;
-            color: var(--accent);
-            transition: all 0.3s;
+            opacity: 0;
+            transition: all 0.5s;
         }
-
-        .service-card.active .toggle-icon {
-            transform: translateY(-50%) rotate(45deg);
-            background: var(--accent);
-            color: var(--bg);
+        
+        .work-item:hover .work-play {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
         }
-
-        .service-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease-out;
-            background: rgba(0,0,0,0.3);
+        
+        .work-play::after {
+            content: '';
+            width: 0;
+            height: 0;
+            border-left: 15px solid white;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            margin-left: 5px;
         }
-
-        .service-card.active .service-content {
-            max-height: 500px;
-        }
-
-        .sub-items {
-            padding: 1rem;
-        }
-
-        /* 子内容中的视频项 */
-        .sub-video-item {
-            display: flex;
-            gap: 15px;
-            padding: 12px;
-            background: rgba(255,255,255,0.05);
-            border-radius: 6px;
-            margin-bottom: 10px;
+        
+        /* About Section */
+        .about {
+            padding: 10rem 4%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8rem;
             align-items: center;
-            cursor: pointer;
-            transition: all 0.3s;
         }
-
-        .sub-video-item:hover {
-            background: rgba(212, 165, 92, 0.1);
+        
+        .about-content h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 400;
+            margin-bottom: 2rem;
         }
-
-        .sub-video-thumb {
-            width: 80px;
-            height: 45px;
-            background: #222;
-            border-radius: 4px;
+        
+        .about-content p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            line-height: 2;
+            margin-bottom: 1.5rem;
+            font-weight: 300;
+        }
+        
+        .about-image {
+            aspect-ratio: 3/4;
+            background: #111;
+            position: relative;
             overflow: hidden;
-            flex-shrink: 0;
         }
-
-        .sub-video-thumb img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+        
+        .about-image::before {
+            content: 'TEAM';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Playfair Display', serif;
+            font-size: 5rem;
+            opacity: 0.1;
+            letter-spacing: 0.5em;
         }
-
-        .sub-video-info {
-            flex: 1;
-        }
-
-        .sub-video-info h5 {
-            font-size: 14px;
-            margin-bottom: 3px;
-        }
-
-        .sub-video-info p {
-            font-size: 12px;
-            color: #888;
-        }
-
-        .sub-video-play {
-            color: var(--accent);
-            font-size: 12px;
-        }
-
-        /* 联系 */
+        
+        /* Contact Section */
         .contact {
+            padding: 10rem 4%;
             text-align: center;
+            background: radial-gradient(ellipse at center, rgba(201,169,98,0.1) 0%, transparent 70%);
         }
-
+        
+        .contact h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 400;
+            margin-bottom: 3rem;
+        }
+        
+        .contact-email {
+            font-size: clamp(1.5rem, 3vw, 2.5rem);
+            color: var(--accent);
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.3s;
+        }
+        
+        .contact-email:hover {
+            border-bottom-color: var(--accent);
+        }
+        
         .contact-info {
+            margin-top: 4rem;
             display: flex;
             justify-content: center;
-            gap: 3rem;
-            margin-top: 2rem;
-            flex-wrap: wrap;
+            gap: 4rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
         }
-
-        .contact-item h4 {
-            font-size: 0.7rem;
-            color: var(--text-secondary);
-            margin-bottom: 0.3rem;
+        
+        .contact-info span {
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
         }
-
-        .contact-item p {
-            font-size: 1rem;
-        }
-
-        /* 底部 */
+        
+        /* Footer */
         footer {
-            padding: 2rem;
-            background: var(--card);
-            border-top: 1px solid var(--border);
+            padding: 3rem 4%;
             text-align: center;
-            color: var(--text-secondary);
-            font-size: 0.8rem;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            border-top: 1px solid rgba(255,255,255,0.1);
         }
-
-        /* 视频弹窗 */
+        
+        /* Video Modal */
         .video-modal {
             display: none;
             position: fixed;
@@ -395,55 +389,63 @@
             width: 100%;
             height: 100%;
             background: rgba(0,0,0,0.95);
-            z-index: 9999;
-            justify-content: center;
+            z-index: 1000;
             align-items: center;
+            justify-content: center;
         }
-
+        
         .video-modal.active {
             display: flex;
         }
-
+        
         .video-container {
             width: 90%;
-            max-width: 900px;
+            max-width: 1400px;
             aspect-ratio: 16/9;
             position: relative;
         }
-
-        .video-container iframe {
+        
+        .video-container video, .video-container iframe {
             width: 100%;
             height: 100%;
             border: none;
-            border-radius: 8px;
         }
-
+        
         .close-btn {
             position: absolute;
             top: -50px;
             right: 0;
             background: none;
-            border: 2px solid rgba(255,255,255,0.3);
-            color: #fff;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
+            border: none;
+            color: white;
+            font-size: 2rem;
             cursor: pointer;
-            font-size: 18px;
+            opacity: 0.7;
+            transition: opacity 0.3s;
         }
-
-        /* 响应式 */
+        
+        .close-btn:hover {
+            opacity: 1;
+        }
+        
+        /* Responsive */
         @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-            .about-content {
+            .nav-links { display: none; }
+            
+            .works-grid {
                 grid-template-columns: 1fr;
             }
-            .stats {
-                grid-template-columns: 1fr;
-                text-align: center;
+            
+            .work-item {
+                grid-column: span 1 !important;
+                aspect-ratio: 16/9 !important;
             }
+            
+            .about {
+                grid-template-columns: 1fr;
+                gap: 4rem;
+            }
+            
             .contact-info {
                 flex-direction: column;
                 gap: 1rem;
@@ -452,217 +454,148 @@
     </style>
 </head>
 <body>
-    <!-- 导航 -->
+    <!-- Navigation -->
     <nav>
-        <div class="logo">渲染<span>.</span></div>
+        <a href="#" class="logo">XUANRAN</a>
         <ul class="nav-links">
-            <li><a href="#about">关于</a></li>
-            <li><a href="#works">作品</a></li>
-            <li><a href="#services">服务</a></li>
-            <li><a href="#contact">联系</a></li>
+            <li><a href="#works">Works</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
         </ul>
     </nav>
-
-    <!-- 首屏 -->
+    
+    <!-- Hero Section -->
     <section class="hero">
-        <h1>成都渲染文化</h1>
-        <div class="subtitle">XUANRAN CULTURE</div>
-        <p>用电影语言讲述品牌故事<br>专注于影像创作的专业团队</p>
-        <a href="#works" class="btn">查看作品</a>
+        <video class="hero-video" autoplay muted loop playsinline poster="images/hero-poster.jpg">
+            <source src="videos/hero-reel.mp4" type="video/mp4">
+        </video>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <p class="hero-subtitle">Film & Commercial Production</p>
+            <h1 class="hero-title">We Craft<br>Visual Stories</h1>
+            <p class="hero-desc">专注于情感类品牌广告与高端商业影像创作，用镜头讲述触动人心的故事</p>
+        </div>
+        <div class="scroll-indicator">
+            <span>Scroll</span>
+            <div class="scroll-line"></div>
+        </div>
     </section>
-
-    <!-- 关于 -->
+    
+    <!-- Works Section -->
+    <section class="works" id="works">
+        <div class="section-header">
+            <h2 class="section-title">Selected Works</h2>
+            <span class="section-count">05 Projects</span>
+        </div>
+        
+        <div class="works-grid">
+            <!-- Work 1 - 奔驰AMG -->
+            <div class="work-item" onclick="playVideo('https://outin-328782e90b1b11f1ba2900163e0adb94.oss-ap-southeast-1.aliyuncs.com/sv/4746f812-19c65d7139b/4746f812-19c65d7139b.mov?Expires=1771241165&OSSAccessKeyId=LTAI3DkxtsbUyNYV&Signature=aPSfygYGXZ1cHg6L7JoYTjALZGg%3D')">
+                <div class="work-thumb" style="background-image: url('images/work-benz-amg.jpg')"></div>
+                <div class="work-play"></div>
+                <div class="work-overlay">
+                    <p class="work-category">Automotive</p>
+                    <h3 class="work-title">Mercedes-AMG</h3>
+                </div>
+            </div>
+            
+            <!-- Work 2 - lululemon -->
+            <div class="work-item" onclick="playVideo('https://outin-8d90832209d811f1b83300163e1c94a4.oss-cn-shanghai.aliyuncs.com/sv/1914ee2e-19c5d95e942/1914ee2e-19c5d95e942.mov?Expires=1771101289&OSSAccessKeyId=LTAIwkKSLcUfI2u4&Signature=hBkjxFFObHViAgqRLqs65Wj2clI%3D')">
+                <div class="work-thumb" style="background-image: url('images/work-lululemon-2.jpg')"></div>
+                <div class="work-play"></div>
+                <div class="work-overlay">
+                    <p class="work-category">Lifestyle</p>
+                    <h3 class="work-title">lululemon</h3>
+                </div>
+            </div>
+            
+            <!-- Work 3 - 热干面 -->
+            <div class="work-item" onclick="playVideo('https://outin-328782e90b1b11f1ba2900163e0adb94.oss-ap-southeast-1.aliyuncs.com/sv/47e7761b-19c65d7139c/47e7761b-19c65d7139c.mov?Expires=1771239131&OSSAccessKeyId=LTAI3DkxtsbUyNYV&Signature=dPJUzwNxInhBrQ8pqnEb4rYeXl8%3D')">
+                <div class="work-thumb" style="background-image: url('images/work-reganmian.jpg')"></div>
+                <div class="work-play"></div>
+                <div class="work-overlay">
+                    <p class="work-category">Food</p>
+                    <h3 class="work-title">热干面</h3>
+                </div>
+            </div>
+            
+            <!-- Work 4 - 品牌广告 -->
+            <div class="work-item" onclick="playVideo('https://outin-8d90832209d811f1b83300163e1c94a4.oss-cn-shanghai.aliyuncs.com/sv/8fa5ac9-19c5d95e955/8fa5ac9-19c5d95e955.mov?Expires=1771100628&OSSAccessKeyId=LTAIwkKSLcUfI2u4&Signature=%2FxBdwGO4PFLfWyRB3yyvb5Ao7KQ%3D')">
+                <div class="work-thumb" style="background-image: url('images/work-new-video.jpg')"></div>
+                <div class="work-play"></div>
+                <div class="work-overlay">
+                    <p class="work-category">Commercial</p>
+                    <h3 class="work-title">品牌广告原片</h3>
+                </div>
+            </div>
+            
+            <!-- Work 5 - 创意短片 -->
+            <div class="work-item" onclick="playVideo('https://outin-8d90832209d811f1b83300163e1c94a4.oss-cn-shanghai.aliyuncs.com/sv/2f771657-19c5d95e93c/2f771657-19c5d95e93c.mov?Expires=1771101085&OSSAccessKeyId=LTAIwkKSLcUfI2u4&Signature=QfznTTSeXIdqCrBoUCDPLODvlaE%3D')">
+                <div class="work-thumb" style="background-image: url('images/work-video-4.jpg')"></div>
+                <div class="work-play"></div>
+                <div class="work-overlay">
+                    <p class="work-category">Short Film</p>
+                    <h3 class="work-title">创意短片</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- About Section -->
     <section class="about" id="about">
-        <div class="container">
-            <div class="section-title">ABOUT US</div>
-            <h2 class="section-heading">关于我们</h2>
-            <div class="about-content">
-                <div class="about-text">
-                    <p>成都渲染文化传媒有限公司，成立于2019年，是一家专注于影像创作的专业团队。我们深耕广告视频领域，服务客户涵盖国际大牌到初创企业。</p>
-                    <div class="stats">
-                        <div class="stat-item">
-                            <h3>5+</h3>
-                            <p>年行业经验</p>
-                        </div>
-                        <div class="stat-item">
-                            <h3>100+</h3>
-                            <p>完成项目</p>
-                        </div>
-                        <div class="stat-item">
-                            <h3>2.5万+</h3>
-                            <p>获赞收藏</p>
-                        </div>
-                    </div>
-                </div>
-                <div style="background: var(--card); aspect-ratio: 4/3; display: flex; align-items: center; justify-content: center; color: var(--text-secondary);">
-                    [团队形象照]
-                </div>
-            </div>
+        <div class="about-content">
+            <h2>About Us</h2>
+            <p>渲染文化是一家专注于情感类品牌广告与高端商业影像创作的工作室。我们相信，好的影像不仅仅是画面的堆砌，更是情感的传递。</p>
+            <p>从汽车广告到美食纪录片，从运动品牌到生活方式，我们用镜头捕捉那些触动人心的瞬间，为品牌讲述有温度的故事。</p>
+            <p>4K画质 · 电影感叙事 · 情感共鸣</p>
         </div>
+        <div class="about-image"></div>
     </section>
-
-    <!-- 作品 -->
-    <section id="works">
-        <div class="container">
-            <div class="section-title">SELECTED WORKS</div>
-            <h2 class="section-heading">精选作品</h2>
-            
-            <div class="works-grid">
-                <!-- 阿里云VOD原片 1 -->
-                <div class="work-item" style="background-image: url('images/work-new-video.jpg');" onclick="playAliVideo('https://outin-8d90832209d811f1b83300163e1c94a4.oss-cn-shanghai.aliyuncs.com/sv/8fa5ac9-19c5d95e955/8fa5ac9-19c5d95e955.mov?Expires=1771100628&OSSAccessKeyId=LTAIwkKSLcUfI2u4&Signature=%2FxBdwGO4PFLfWyRB3yyvb5Ao7KQ%3D')">
-                    <div class="work-overlay">
-                        <h4>品牌广告原片</h4>
-                        <p>4K画质 · 点击播放 ▶️</p>
-                    </div>
-                </div>
-                
-                <!-- 阿里云VOD原片 2 -->
-                <div class="work-item" style="background-image: url('images/work-video-4.jpg');" onclick="playAliVideo('https://outin-8d90832209d811f1b83300163e1c94a4.oss-cn-shanghai.aliyuncs.com/sv/2f771657-19c5d95e93c/2f771657-19c5d95e93c.mov?Expires=1771101085&OSSAccessKeyId=LTAIwkKSLcUfI2u4&Signature=QfznTTSeXIdqCrBoUCDPLODvlaE%3D')">
-                    <div class="work-overlay">
-                        <h4>创意短片</h4>
-                        <p>4K画质 · 点击播放 ▶️</p>
-                    </div>
-                </div>
-                
-                <!-- 阿里云VOD原片 3 - lululemon -->
-                <div class="work-item" style="background-image: url('images/work-lululemon-2.jpg');" onclick="playAliVideo('https://outin-8d90832209d811f1b83300163e1c94a4.oss-cn-shanghai.aliyuncs.com/sv/1914ee2e-19c5d95e942/1914ee2e-19c5d95e942.mov?Expires=1771101289&OSSAccessKeyId=LTAIwkKSLcUfI2u4&Signature=hBkjxFFObHViAgqRLqs65Wj2clI%3D')">
-                    <div class="work-overlay">
-                        <h4>lululemon</h4>
-                        <p>4K画质 · 点击播放 ▶️</p>
-                    </div>
-                </div>
-                
-                <!-- 阿里云VOD原片 4 - 热干面 -->
-                <div class="work-item" style="background-image: url('images/work-reganmian.jpg'); background-size: cover; background-position: center;" onclick="playAliVideo('https://outin-328782e90b1b11f1ba2900163e0adb94.oss-ap-southeast-1.aliyuncs.com/sv/47e7761b-19c65d7139c/47e7761b-19c65d7139c.mov?Expires=1771239131&OSSAccessKeyId=LTAI3DkxtsbUyNYV&Signature=dPJUzwNxInhBrQ8pqnEb4rYeXl8%3D')">
-                    <div class="work-overlay">
-                        <h4>热干面</h4>
-                        <p>4K画质 · 点击播放 ▶️</p>
-                    </div>
-                </div>
-                
-                <!-- 奔驰AMG -->
-                <div class="work-item" style="background-image: url('images/work-benz-amg.jpg'); background-size: cover; background-position: center;" onclick="playAliVideo('https://outin-328782e90b1b11f1ba2900163e0adb94.oss-ap-southeast-1.aliyuncs.com/sv/4746f812-19c65d7139b/4746f812-19c65d7139b.mov?Expires=1771241165&OSSAccessKeyId=LTAI3DkxtsbUyNYV&Signature=aPSfygYGXZ1cHg6L7JoYTjALZGg%3D')">
-                    <div class="work-overlay">
-                        <h4>奔驰AMG</h4>
-                        <p>4K画质 · 点击播放 ▶️</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 服务 -->
-    <section class="services" id="services">
-        <div class="container">
-            <div class="section-title">SERVICES</div>
-            <h2 class="section-heading">服务范围</h2>
-            
-            <div class="services-grid">
-                <!-- 服务1 - TVC广告片 -->
-                <div class="service-card" onclick="toggleService('service1')">
-                    <div class="service-header">
-                        <div class="service-number">01</div>
-                        <h3>TVC广告片</h3>
-                        <p>品牌电视广告、网络广告创意拍摄</p>
-                        <span class="toggle-icon">+</span>
-                    </div>
-                    <div class="service-content" id="service1">
-                        <div class="sub-items">
-                            <p style="color: #888; padding: 20px; text-align: center;">📹 子内容区域 - 可添加视频</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- 服务2 - 品牌宣传片 -->
-                <div class="service-card" onclick="toggleService('service2')">
-                    <div class="service-header">
-                        <div class="service-number">02</div>
-                        <h3>品牌宣传片</h3>
-                        <p>企业形象片、产品宣传片</p>
-                        <span class="toggle-icon">+</span>
-                    </div>
-                    <div class="service-content" id="service2">
-                        <div class="sub-items">
-                            <p style="color: #888; padding: 20px; text-align: center;">📹 子内容区域 - 可添加视频</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- 服务3 - 短视频内容 -->
-                <div class="service-card" onclick="toggleService('service3')">
-                    <div class="service-header">
-                        <div class="service-number">03</div>
-                        <h3>短视频内容</h3>
-                        <p>社交媒体短视频、病毒视频创意</p>
-                        <span class="toggle-icon">+</span>
-                    </div>
-                    <div class="service-content" id="service3">
-                        <div class="sub-items">
-                            <p style="color: #888; padding: 20px; text-align: center;">📹 子内容区域 - 可添加视频</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- 服务4 - 剧情短片 -->
-                <div class="service-card" onclick="toggleService('service4')">
-                    <div class="service-header">
-                        <div class="service-number">04</div>
-                        <h3>剧情短片</h3>
-                        <p>故事性影像创作，电影感叙事风格</p>
-                        <span class="toggle-icon">+</span>
-                    </div>
-                    <div class="service-content" id="service4">
-                        <div class="sub-items">
-                            <p style="color: #888; padding: 20px; text-align: center;">📹 子内容区域 - 可添加视频</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 联系 -->
+    
+    <!-- Contact Section -->
     <section class="contact" id="contact">
-        <div class="container">
-            <div class="section-title">CONTACT</div>
-            <h2 class="section-heading">联系我们</h2>
-            
-            <p style="color: var(--text-secondary);">如果您有项目需求或合作意向<br>欢迎随时与我们联系</p>
-            
-            <div class="contact-info">
-                <div class="contact-item">
-                    <h4>电话</h4>
-                    <p>18582493173</p>
-                </div>
-                
-                <div class="contact-item">
-                    <h4>微信</h4>
-                    <p>18582493173</p>
-                </div>
-                
-                <div class="contact-item">
-                    <h4>邮箱</h4>
-                    <p>18582493173@163.com</p>
-                </div>
-            </div>
+        <h2>Let's Create Together</h2>
+        <a href="mailto:18582493173@163.com" class="contact-email">18582493173@163.com</a>
+        <div class="contact-info">
+            <span>WeChat: 18582493173</span>
+            <span>Tel: 18582493173</span>
+            <span>Chengdu, China</span>
         </div>
     </section>
-
-    <!-- 底部 -->
+    
+    <!-- Footer -->
     <footer>
         <p>© 2024 成都渲染文化传媒有限公司 | XUANRAN CULTURE</p>
     </footer>
-
-    <!-- 视频弹窗 -->
+    
+    <!-- Video Modal -->
     <div class="video-modal" id="videoModal" onclick="closeVideo()">
         <div class="video-container">
             <button class="close-btn" onclick="closeVideo()">×</button>
-            <iframe id="videoFrame" src="" allowfullscreen></iframe>
+            <video id="videoPlayer" controls></video>
         </div>
     </div>
-
+    
     <script>
-        // 平滑滚动
+        // Play video
+        function playVideo(url) {
+            const modal = document.getElementById('videoModal');
+            const player = document.getElementById('videoPlayer');
+            player.src = url;
+            modal.classList.add('active');
+            player.play();
+        }
+        
+        // Close video
+        function closeVideo() {
+            const modal = document.getElementById('videoModal');
+            const player = document.getElementById('videoPlayer');
+            modal.classList.remove('active');
+            player.pause();
+            player.src = '';
+        }
+        
+        // Smooth scroll
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -671,60 +604,6 @@
                 });
             });
         });
-
-        // 播放视频
-        function playVideo(bvid) {
-            var modal = document.getElementById('videoModal');
-            var frame = document.getElementById('videoFrame');
-            frame.src = 'https://player.bilibili.com/player.html?bvid=' + bvid + '&page=1';
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        // 关闭视频
-        function closeVideo() {
-            var modal = document.getElementById('videoModal');
-            var frame = document.getElementById('videoFrame');
-            modal.classList.remove('active');
-            frame.src = '';
-            document.body.style.overflow = '';
-        }
-        
-        // 播放阿里云视频（4K原片）
-        function playAliVideo(videoUrl) {
-            var modal = document.getElementById('videoModal');
-            var container = document.querySelector('.video-container');
-            // 使用video标签播放原片
-            container.innerHTML = '<button class="close-btn" onclick="closeAliVideo()">×</button><video controls autoplay style="width:100%;height:100%;border-radius:8px;background:#000;"><source src="' + videoUrl + '" type="video/quicktime">您的浏览器不支持视频播放</video>';
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-        
-        // 关闭阿里云视频
-        function closeAliVideo() {
-            var modal = document.getElementById('videoModal');
-            var container = document.querySelector('.video-container');
-            modal.classList.remove('active');
-            // 恢复iframe结构
-            container.innerHTML = '<button class="close-btn" onclick="closeVideo()">×</button><iframe id="videoFrame" src="" allowfullscreen></iframe>';
-            document.body.style.overflow = '';
-        }
-        
-        // 展开/收起服务卡片
-        function toggleService(serviceId) {
-            var card = document.getElementById(serviceId).parentElement;
-            var isActive = card.classList.contains('active');
-            
-            // 关闭所有其他卡片
-            document.querySelectorAll('.service-card').forEach(function(c) {
-                c.classList.remove('active');
-            });
-            
-            // 如果当前不是激活状态，则激活它
-            if (!isActive) {
-                card.classList.add('active');
-            }
-        }
     </script>
 </body>
 </html>
