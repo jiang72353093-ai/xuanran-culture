@@ -3,199 +3,443 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>渲染文化 - 作品管理</title>
+    <title>视频管理后台 | 姜林均作品集</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: #0a0a0a;
-            color: #fff;
-            padding: 2rem;
-            line-height: 1.6;
-        }
-        .container { max-width: 800px; margin: 0 auto; }
-        h1 { color: #d4a55c; margin-bottom: 2rem; text-align: center; }
+        :root { --bg: #0a0a0a; --card: #141414; --text: #fff; --muted: #888; --accent: #c9a962; --border: #2a2a2a; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; padding: 2rem; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        h1 { font-size: 1.8rem; margin-bottom: 0.5rem; }
+        .subtitle { color: var(--muted); margin-bottom: 2rem; }
         
-        .form-box {
-            background: #111;
-            border: 1px solid #333;
-            border-radius: 8px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-        }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+        @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
         
-        .form-box h2 {
-            color: #d4a55c;
-            margin-bottom: 1.5rem;
-            font-size: 1.2rem;
-        }
+        /* Form Section */
+        .form-section { background: var(--card); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--border); }
+        .form-section h2 { font-size: 1.1rem; margin-bottom: 1.5rem; color: var(--accent); }
         
-        .form-group {
-            margin-bottom: 1.5rem;
+        .form-group { margin-bottom: 1.2rem; }
+        label { display: block; font-size: 0.85rem; color: var(--muted); margin-bottom: 0.5rem; }
+        input, select, textarea {
+            width: 100%; padding: 0.8rem 1rem; background: var(--bg);
+            border: 1px solid var(--border); border-radius: 8px; color: var(--text);
+            font-size: 0.9rem; transition: border-color 0.2s;
         }
-        
-        .form-group label {
-            display: block;
-            color: #888;
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
-        }
-        
-        .form-group input {
-            width: 100%;
-            padding: 1rem;
-            background: #1a1a1a;
-            border: 1px solid #333;
-            border-radius: 4px;
-            color: #fff;
-            font-size: 1rem;
-        }
-        
-        .form-group input:focus {
-            outline: none;
-            border-color: #d4a55c;
-        }
+        input:focus, select:focus, textarea:focus { outline: none; border-color: var(--accent); }
+        textarea { min-height: 80px; resize: vertical; }
         
         .btn {
-            width: 100%;
-            padding: 1rem;
-            background: #d4a55c;
-            color: #0a0a0a;
-            border: none;
-            border-radius: 4px;
-            font-size: 1rem;
-            font-weight: bold;
-            cursor: pointer;
+            width: 100%; padding: 1rem; background: var(--accent); color: #000;
+            border: none; border-radius: 8px; font-size: 0.9rem; font-weight: 600;
+            cursor: pointer; transition: opacity 0.2s;
+        }
+        .btn:hover { opacity: 0.9; }
+        .btn-secondary { background: #2a2a2a; color: var(--text); margin-top: 0.5rem; }
+        
+        /* Video List */
+        .video-list { background: var(--card); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--border); }
+        .video-list h2 { font-size: 1.1rem; margin-bottom: 1rem; }
+        
+        .video-item {
+            background: var(--bg); padding: 1rem; border-radius: 8px;
+            border: 1px solid var(--border); margin-bottom: 0.8rem;
+            display: flex; align-items: center; gap: 1rem;
+        }
+        .video-thumb {
+            width: 80px; height: 45px; background: #1a1a1a; border-radius: 4px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.7rem; color: var(--muted);
+        }
+        .video-info { flex: 1; }
+        .video-title { font-size: 0.9rem; font-weight: 500; }
+        .video-meta { font-size: 0.75rem; color: var(--muted); margin-top: 0.2rem; }
+        .video-actions { display: flex; gap: 0.5rem; }
+        .btn-small {
+            padding: 0.4rem 0.8rem; font-size: 0.75rem; background: #2a2a2a;
+            border: none; border-radius: 4px; color: var(--text); cursor: pointer;
+        }
+        .btn-small:hover { background: #3a3a3a; }
+        .btn-small.danger { color: #ff6b6b; }
+        
+        /* Output Section */
+        .output-section {
+            margin-top: 2rem; background: var(--card); padding: 1.5rem;
+            border-radius: 12px; border: 1px solid var(--border);
+        }
+        .output-section h2 { font-size: 1.1rem; margin-bottom: 1rem; color: var(--accent); }
+        
+        .tabs { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+        .tab {
+            padding: 0.6rem 1.2rem; background: var(--bg); border: 1px solid var(--border);
+            border-radius: 6px; color: var(--muted); cursor: pointer; font-size: 0.85rem;
+        }
+        .tab.active { color: var(--text); border-color: var(--accent); }
+        
+        pre {
+            background: #0a0a0a; padding: 1rem; border-radius: 8px;
+            overflow-x: auto; font-size: 0.8rem; line-height: 1.6;
+            border: 1px solid var(--border); max-height: 400px; overflow-y: auto;
+        }
+        code { color: #7ee787; }
+        
+        .copy-btn {
+            position: absolute; right: 2rem; margin-top: -3rem;
+            padding: 0.5rem 1rem; background: var(--accent); color: #000;
+            border: none; border-radius: 6px; font-size: 0.8rem; cursor: pointer;
         }
         
-        .btn:hover {
-            background: #e5b66d;
+        /* Quick Actions */
+        .quick-actions {
+            display: flex; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap;
+        }
+        .action-card {
+            flex: 1; min-width: 200px; background: var(--card); padding: 1.2rem;
+            border-radius: 12px; border: 1px solid var(--border); cursor: pointer;
+            transition: border-color 0.2s;
+        }
+        .action-card:hover { border-color: var(--accent); }
+        .action-card h3 { font-size: 0.9rem; margin-bottom: 0.3rem; }
+        .action-card p { font-size: 0.75rem; color: var(--muted); }
+        
+        .empty-state {
+            text-align: center; padding: 3rem; color: var(--muted);
+        }
+        .empty-state svg {
+            width: 48px; height: 48px; margin-bottom: 1rem; opacity: 0.5;
         }
         
-        .output {
-            background: #1a1a1a;
-            border: 1px solid #333;
-            border-radius: 4px;
-            padding: 1rem;
-            margin-top: 1rem;
-            min-height: 100px;
-            white-space: pre-wrap;
-            word-break: break-all;
-            font-family: monospace;
-            font-size: 0.85rem;
-            color: #888;
+        /* Toast */
+        .toast {
+            position: fixed; bottom: 2rem; right: 2rem;
+            background: var(--accent); color: #000; padding: 1rem 1.5rem;
+            border-radius: 8px; font-weight: 500; transform: translateY(100px);
+            transition: transform 0.3s; z-index: 1000;
         }
-        
-        .tips {
-            margin-top: 2rem;
-            padding: 1.5rem;
-            background: rgba(212, 165, 92, 0.1);
-            border-left: 3px solid #d4a55c;
-            border-radius: 0 4px 4px 0;
-        }
-        
-        .tips h3 {
-            color: #d4a55c;
-            margin-bottom: 0.5rem;
-        }
-        
-        .tips li {
-            margin-left: 1.5rem;
-            margin-bottom: 0.5rem;
-            color: #aaa;
-        }
+        .toast.show { transform: translateY(0); }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>🎬 作品管理后台</h1>
+        <h1>🎬 视频管理后台</h1>
+        <p class="subtitle">批量添加视频和封面，一键生成网站代码</p>
         
-        <div class="form-box">
-            <h2>添加新作品</h2>
-            
-            <div class="form-group">
-                <label>作品标题 *</label>
-                <input type="text" id="title" placeholder="例如：热干面">
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+            <div class="action-card" onclick="loadExample()">
+                <h3>📋 加载示例数据</h3>
+                <p>查看示例视频配置</p>
             </div>
-            
-            <div class="form-group">
-                <label>阿里云视频链接 *</label>
-                <input type="text" id="videoUrl" placeholder="https://outin-xxx.oss-xxx.aliyuncs.com/xxx.mov">
+            <div class="action-card" onclick="clearAll()">
+                <h3>🗑️ 清空所有</h3>
+                <p>重新开始添加</p>
             </div>
-            
-            <div class="form-group">
-                <label>封面图片链接（可选，留空使用默认）</label>
-                <input type="text" id="coverUrl" placeholder="https://... 或直接输入图片文件名如 work-reganmian.jpg">
-            </div>
-            
-            <button class="btn" onclick="generateCode()">生成配置代码</button>
-            
-            <div class="output" id="output">
-                点击上方按钮，生成代码后复制发送给助手...
+            <div class="action-card" onclick="exportData()">
+                <h3>💾 导出配置</h3>
+                <p>保存为JSON文件</p>
             </div>
         </div>
         
-        <div class="tips">
-            <h3>📋 使用说明</h3>
-            <ol>
-                <li>填写作品标题和视频链接（必填）</li>
-                <li>封面图可留空，或使用默认图片</li>
-                <li>点击「生成配置代码」</li>
-                <li>复制生成的代码</li>
-                <li>发送给助手，助手会帮您更新网站</li>
-            </ol>
+        <div class="grid">
+            <!-- Add Video Form -->
+            <div class="form-section">
+                <h2>➕ 添加视频</h2>
+                
+                <div class="form-group">
+                    <label>视频标题 *</label>
+                    <input type="text" id="videoTitle" placeholder="例如：奔驰AMG" onkeypress="handleEnter(event)">
+                </div>
+                
+                <div class="form-group">
+                    <label>视频链接 (阿里云OSS) *</label>
+                    <input type="url" id="videoUrl" placeholder="https://outin-...aliyuncs.com/..." onkeypress="handleEnter(event)">
+                </div>
+                
+                <div class="form-group">
+                    <label>封面图片链接</label>
+                    <input type="url" id="coverUrl" placeholder="https://.../cover.jpg (可选)" onkeypress="handleEnter(event)">
+                </div>
+                
+                <div class="form-group">
+                    <label>分类</label>
+                    <select id="videoCategory">
+                        <option value="Commercial">Commercial 商业广告</option>
+                        <option value="Brand Film">Brand Film 品牌影片</option>
+                        <option value="Documentary">Documentary 纪录片</option>
+                        <option value="TVC">TVC 电视广告</option>
+                        <option value="Short Film">Short Film 短片</option>
+                        <option value="Music Video">Music Video 音乐录影带</option>
+                        <option value="Visual">Visual 视觉</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>描述 (可选)</label>
+                    <textarea id="videoDesc" placeholder="简短描述..."></textarea>
+                </div>
+                
+                <button class="btn" onclick="addVideo()">添加视频</button>
+                <button class="btn btn-secondary" onclick="batchAdd()">📥 批量粘贴添加</button>
+            </div>
+            
+            <!-- Video List -->
+            <div class="video-list">
+                <h2>📁 视频列表 (<span id="videoCount">0</span>)</h2>
+                <div id="videoListContainer">
+                    <div class="empty-state">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+                            <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                            <path d="M21 15l-5-5L5 21"></path>
+                        </svg>
+                        <p>暂无视频，请添加</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Output Code -->
+        <div class="output-section">
+            <h2>📄 生成代码</h2>
+            
+            <div class="tabs">
+                <div class="tab active" onclick="switchTab('html')">HTML 代码</div>
+                <div class="tab" onclick="switchTab('json')">JSON 数据</div>
+            </div>
+            
+            <button class="copy-btn" onclick="copyCode()">复制</button>
+            
+            <pre><code id="outputCode"><!-- 添加视频后生成代码 -->
+</div>></code></pre>
         </div>
     </div>
+    
+    <div class="toast" id="toast">已复制到剪贴板！</div>
 
     <script>
-        function generateCode() {
-            var title = document.getElementById('title').value.trim();
-            var videoUrl = document.getElementById('videoUrl').value.trim();
-            var coverUrl = document.getElementById('coverUrl').value.trim();
+        let videos = JSON.parse(localStorage.getItem('videos') || '[]');
+        let currentTab = 'html';
+        
+        // 初始化
+        renderVideos();
+        updateOutput();
+        
+        function handleEnter(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                addVideo();
+            }
+        }
+        
+        function addVideo() {
+            const title = document.getElementById('videoTitle').value.trim();
+            const url = document.getElementById('videoUrl').value.trim();
+            const cover = document.getElementById('coverUrl').value.trim();
+            const category = document.getElementById('videoCategory').value;
+            const desc = document.getElementById('videoDesc').value.trim();
             
-            if (!title || !videoUrl) {
-                alert('请填写标题和视频链接');
+            if (!title || !url) {
+                showToast('请填写标题和视频链接！', 'error');
                 return;
             }
             
-            // 如果没有封面，使用默认
-            if (!coverUrl) {
-                coverUrl = 'images/work-default.jpg';
-            }
+            videos.push({
+                id: Date.now(),
+                title,
+                url,
+                cover: cover || '',
+                category,
+                desc,
+                addedAt: new Date().toLocaleString('zh-CN')
+            });
             
-            // 生成 HTML 代码
-            var html = '<!-- ' + title + ' -->\n';
-            html += '<div class="work-item" style="background-image: url(\'' + coverUrl + '\');" onclick="playAliVideo(\'' + videoUrl + '\')">\n';
-            html += '    <div class="work-overlay">\n';
-            html += '        <h4>' + title + '</h4>\n';
-            html += '        <p>4K画质 · 点击播放 </p>\n';
-            html += '    </div>\n';
-            html += '</div>';
-            
-            // 显示输出
-            document.getElementById('output').textContent = html;
-            document.getElementById('output').style.color = '#d4a55c';
-            
-            // 自动复制
-            copyToClipboard(html);
+            saveVideos();
+            clearForm();
+            renderVideos();
+            updateOutput();
+            showToast('添加成功！');
         }
         
-        function copyToClipboard(text) {
-            var textarea = document.createElement('textarea');
-            textarea.value = text;
-            textarea.style.position = 'fixed';
-            textarea.style.opacity = '0';
-            document.body.appendChild(textarea);
-            textarea.select();
+        function batchAdd() {
+            const input = prompt('批量添加格式：\n标题|视频链接|封面链接|分类\n\n每行一个视频，用 | 分隔\n例如：\n奔驰AMG|https://...mov|https://...jpg|Commercial\nlululemon|https://...mov||Brand Film');
             
-            try {
-                document.execCommand('copy');
-                alert('代码已生成并复制到剪贴板！\n\n请直接粘贴发送给助手即可。');
-            } catch (err) {
-                alert('代码已生成！请手动复制上方代码发送给助手。');
+            if (!input) return;
+            
+            const lines = input.trim().split('\n');
+            let added = 0;
+            
+            lines.forEach(line => {
+                const parts = line.split('|').map(p => p.trim());
+                if (parts.length >= 2 && parts[0] && parts[1]) {
+                    videos.push({
+                        id: Date.now() + Math.random(),
+                        title: parts[0],
+                        url: parts[1],
+                        cover: parts[2] || '',
+                        category: parts[3] || 'Commercial',
+                        desc: '',
+                        addedAt: new Date().toLocaleString('zh-CN')
+                    });
+                    added++;
+                }
+            });
+            
+            if (added > 0) {
+                saveVideos();
+                renderVideos();
+                updateOutput();
+                showToast(`成功添加 ${added} 个视频！`);
+            }
+        }
+        
+        function deleteVideo(id) {
+            videos = videos.filter(v => v.id !== id);
+            saveVideos();
+            renderVideos();
+            updateOutput();
+        }
+        
+        function clearForm() {
+            document.getElementById('videoTitle').value = '';
+            document.getElementById('videoUrl').value = '';
+            document.getElementById('coverUrl').value = '';
+            document.getElementById('videoDesc').value = '';
+        }
+        
+        function clearAll() {
+            if (!confirm('确定要清空所有视频吗？')) return;
+            videos = [];
+            saveVideos();
+            renderVideos();
+            updateOutput();
+            showToast('已清空');
+        }
+        
+        function renderVideos() {
+            const container = document.getElementById('videoListContainer');
+            document.getElementById('videoCount').textContent = videos.length;
+            
+            if (videos.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+                            <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                            <path d="M21 15l-5-5L5 21"></path>
+                        </svg>
+                        <p>暂无视频，请添加</p>
+                    </div>
+                `;
+                return;
             }
             
-            document.body.removeChild(textarea);
+            container.innerHTML = videos.map(v => `
+                <div class="video-item">
+                    <div class="video-thumb">${v.cover ? '封面' : '无封面'}</div>
+                    <div class="video-info">
+                        <div class="video-title">${v.title}</div>
+                        <div class="video-meta">${v.category} · ${v.addedAt}</div>
+                    </div>
+                    <div class="video-actions">
+                        <button class="btn-small" onclick="previewVideo('${v.url}')">预览</button>
+                        <button class="btn-small danger" onclick="deleteVideo(${v.id})">删除</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function updateOutput() {
+            const codeEl = document.getElementById('outputCode');
+            
+            if (currentTab === 'html') {
+                codeEl.textContent = generateHTML();
+            } else {
+                codeEl.textContent = JSON.stringify(videos, null, 2);
+            }
+        }
+        
+        function generateHTML() {
+            if (videos.length === 0) return '<!-- 添加视频后生成代码 -->';
+            
+            return videos.map((v, i) => `            <!-- ${v.title} -->
+            <div class="work-item" onclick="openVideo('${v.url}')">
+                <div class="work-thumb"${v.cover ? ` style="background-image:url('${v.cover}')"` : ''}>
+                    ${!v.cover ? `<span class="work-placeholder">${v.title}</span>` : ''}
+                </div>
+                <div class="play-icon"></div>
+                <div class="work-info">
+                    <p class="work-category">${v.category}</p>
+                    <h3 class="work-name">${v.title}</h3>
+                </div>
+            </div>`).join('\n');
+        }
+        
+        function switchTab(tab) {
+            currentTab = tab;
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+            updateOutput();
+        }
+        
+        function copyCode() {
+            const code = document.getElementById('outputCode').textContent;
+            navigator.clipboard.writeText(code).then(() => {
+                showToast('已复制到剪贴板！');
+            });
+        }
+        
+        function saveVideos() {
+            localStorage.setItem('videos', JSON.stringify(videos));
+        }
+        
+        function loadExample() {
+            videos = [
+                {
+                    id: 1,
+                    title: '奔驰AMG',
+                    url: 'https://outin-328782e90b1b11f1ba2900163e0adb94.oss-ap-southeast-1.aliyuncs.com/sv/4746f812-19c65d7139b/4746f812-19c65d7139b.mov',
+                    cover: '',
+                    category: 'Commercial',
+                    desc: '汽车广告',
+                    addedAt: new Date().toLocaleString('zh-CN')
+                },
+                {
+                    id: 2,
+                    title: 'lululemon',
+                    url: 'https://example.com/video2.mov',
+                    cover: '',
+                    category: 'Brand Film',
+                    desc: '运动品牌',
+                    addedAt: new Date().toLocaleString('zh-CN')
+                }
+            ];
+            saveVideos();
+            renderVideos();
+            updateOutput();
+            showToast('已加载示例数据');
+        }
+        
+        function exportData() {
+            const dataStr = JSON.stringify(videos, null, 2);
+            const blob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `videos-${new Date().toISOString().split('T')[0]}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+            showToast('已导出');
+        }
+        
+        function previewVideo(url) {
+            window.open(url, '_blank');
+        }
+        
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2500);
         }
     </script>
 </body>
