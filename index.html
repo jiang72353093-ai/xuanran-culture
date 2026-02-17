@@ -3,66 +3,535 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>渲染文化 | XUANRAN CULTURE</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <title>姜林均 | 导演/摄影师</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        :root { --bg: #0a0a0a; --accent: #c9a962; --text: #ffffff; --text-muted: rgba(255,255,255,0.6); }
-        html { scroll-behavior: smooth; }
-        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; overflow-x: hidden; }
-        nav { position: fixed; top: 0; width: 100%; padding: 2rem 4%; display: flex; justify-content: space-between; align-items: center; z-index: 100; mix-blend-mode: difference; }
-        .logo { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; letter-spacing: 0.1em; color: var(--text); text-decoration: none; }
-        .nav-links { display: flex; gap: 3rem; list-style: none; }
-        .nav-links a { color: var(--text); text-decoration: none; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.2em; opacity: 0.7; transition: opacity 0.3s; }
-        .nav-links a:hover { opacity: 1; }
-        .hero { height: 100vh; width: 100%; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-        .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, rgba(10,10,10,0.3), rgba(10,10,10,0.9)); z-index: 0; }
-        .hero-content { position: relative; z-index: 1; text-align: center; max-width: 900px; padding: 0 4%; }
-        .hero-subtitle { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.4em; color: var(--accent); margin-bottom: 2rem; }
-        .hero-title { font-family: 'Playfair Display', serif; font-size: clamp(3rem, 8vw, 7rem); font-weight: 400; line-height: 1.1; margin-bottom: 1.5rem; }
-        .hero-desc { font-size: 1.1rem; color: var(--text-muted); max-width: 600px; margin: 0 auto 3rem; font-weight: 300; }
-        .works { padding: 10rem 4%; }
-        .section-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 4rem; padding-bottom: 2rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
-        .section-title { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 400; }
-        .section-count { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.2em; }
-        .works-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 2rem; }
-        .work-item { position: relative; overflow: hidden; background: #111; }
-        .work-item:nth-child(1) { grid-column: span 7; aspect-ratio: 16/9; }
-        .work-item:nth-child(2) { grid-column: span 5; aspect-ratio: 4/5; }
-        .work-item:nth-child(3) { grid-column: span 5; aspect-ratio: 1/1; }
-        .work-item:nth-child(4) { grid-column: span 7; aspect-ratio: 21/9; }
-        .work-item:nth-child(5) { grid-column: span 6; aspect-ratio: 16/9; }
-        .work-thumb { width: 100%; height: 100%; background-size: cover; background-position: center; transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
-        .work-item:hover .work-thumb { transform: scale(1.05); }
-        .work-overlay { position: absolute; bottom: 0; left: 0; right: 0; padding: 3rem; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); transform: translateY(20px); opacity: 0; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
-        .work-item:hover .work-overlay { transform: translateY(0); opacity: 1; }
-        .work-category { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.3em; color: var(--accent); margin-bottom: 0.5rem; }
-        .work-title { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 400; }
-        .about { padding: 10rem 4%; display: grid; grid-template-columns: 1fr 1fr; gap: 8rem; align-items: center; }
-        .about-content h2 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 4vw, 3rem); font-weight: 400; margin-bottom: 2rem; }
-        .about-content p { color: var(--text-muted); font-size: 1.1rem; line-height: 2; margin-bottom: 1.5rem; font-weight: 300; }
-        .contact { padding: 10rem 4%; text-align: center; background: radial-gradient(ellipse at center, rgba(201,169,98,0.1) 0%, transparent 70%); }
-        .contact h2 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 4vw, 3rem); font-weight: 400; margin-bottom: 3rem; }
-        .contact-email { font-size: clamp(1.5rem, 3vw, 2.5rem); color: var(--accent); text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.3s; }
-        .contact-email:hover { border-bottom-color: var(--accent); }
-        .contact-info { margin-top: 4rem; display: flex; justify-content: center; gap: 4rem; font-size: 0.85rem; color: var(--text-muted); }
-        footer { padding: 3rem 4%; text-align: center; font-size: 0.75rem; color: var(--text-muted); border-top: 1px solid rgba(255,255,255,0.1); }
-        @media (max-width: 768px) { .nav-links { display: none; } .works-grid { grid-template-columns: 1fr; } .work-item { grid-column: span 1 !important; aspect-ratio: 16/9 !important; } .about { grid-template-columns: 1fr; gap: 4rem; } .contact-info { flex-direction: column; gap: 1rem; } }
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=Inter:wght@300;400;500&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --bg: #0a0a0a;
+            --text: #ffffff;
+            --text-muted: rgba(255,255,255,0.6);
+            --accent: #c9a962;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 2rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            mix-blend-mode: difference;
+        }
+        
+        .nav-name {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-decoration: none;
+            color: var(--text);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+        
+        .nav-links a:hover {
+            opacity: 1;
+        }
+        
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 5%;
+            position: relative;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(ellipse at 30% 20%, rgba(201,169,98,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 80%, rgba(201,169,98,0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5em;
+            color: var(--accent);
+            margin-bottom: 2rem;
+            display: block;
+        }
+        
+        .hero-title {
+            font-family: 'Noto Serif SC', serif;
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            font-weight: 400;
+            line-height: 1.3;
+            margin-bottom: 1.5rem;
+        }
+        
+        .hero-subtitle {
+            font-size: 1rem;
+            color: var(--text-muted);
+            font-weight: 300;
+            max-width: 500px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+        
+        .scroll-hint {
+            position: absolute;
+            bottom: 3rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            color: var(--text-muted);
+            font-size: 0.65rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+        }
+        
+        .scroll-line {
+            width: 1px;
+            height: 60px;
+            background: linear-gradient(to bottom, var(--accent), transparent);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; transform: scaleY(0.8); }
+            50% { opacity: 1; transform: scaleY(1); }
+        }
+        
+        /* Works Section */
+        .works {
+            padding: 8rem 5%;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+        
+        .section-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3em;
+            color: var(--accent);
+            margin-bottom: 1rem;
+            display: block;
+        }
+        
+        .section-title {
+            font-family: 'Noto Serif SC', serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 400;
+        }
+        
+        /* Masonry Grid */
+        .works-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 1.5rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .work-item {
+            position: relative;
+            overflow: hidden;
+            background: #111;
+            border-radius: 4px;
+        }
+        
+        .work-item:nth-child(1) {
+            grid-column: span 8;
+            aspect-ratio: 16/9;
+        }
+        
+        .work-item:nth-child(2) {
+            grid-column: span 4;
+            aspect-ratio: 3/4;
+        }
+        
+        .work-item:nth-child(3) {
+            grid-column: span 5;
+            aspect-ratio: 4/3;
+        }
+        
+        .work-item:nth-child(4) {
+            grid-column: span 7;
+            aspect-ratio: 16/9;
+        }
+        
+        .work-item:nth-child(5) {
+            grid-column: span 6;
+            aspect-ratio: 16/9;
+        }
+        
+        .work-item:nth-child(6) {
+            grid-column: span 6;
+            aspect-ratio: 16/9;
+        }
+        
+        .work-thumb {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        .work-item:hover .work-thumb {
+            transform: scale(1.03);
+            filter: brightness(1.1);
+        }
+        
+        .work-placeholder {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+        }
+        
+        .work-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 2rem;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+            transform: translateY(10px);
+            opacity: 0;
+            transition: all 0.4s ease;
+        }
+        
+        .work-item:hover .work-info {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        .work-category {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+        
+        .work-name {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1.3rem;
+            font-weight: 400;
+        }
+        
+        /* About Section */
+        .about {
+            padding: 10rem 5%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            align-items: center;
+        }
+        
+        .about-content {
+            padding-right: 2rem;
+        }
+        
+        .about-content h2 {
+            font-family: 'Noto Serif SC', serif;
+            font-size: clamp(1.8rem, 3vw, 2.5rem);
+            font-weight: 400;
+            margin-bottom: 2rem;
+            line-height: 1.4;
+        }
+        
+        .about-content p {
+            color: var(--text-muted);
+            font-size: 1rem;
+            line-height: 2;
+            margin-bottom: 1.5rem;
+        }
+        
+        .about-image {
+            aspect-ratio: 4/5;
+            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .about-image span {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+        }
+        
+        /* Contact Section */
+        .contact {
+            padding: 10rem 5%;
+            text-align: center;
+        }
+        
+        .contact-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3em;
+            color: var(--accent);
+            margin-bottom: 2rem;
+            display: block;
+        }
+        
+        .contact h2 {
+            font-family: 'Noto Serif SC', serif;
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            font-weight: 400;
+            margin-bottom: 3rem;
+            line-height: 1.5;
+        }
+        
+        .contact-email {
+            font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+            color: var(--accent);
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.3s;
+            display: inline-block;
+            margin-bottom: 3rem;
+        }
+        
+        .contact-email:hover {
+            border-bottom-color: var(--accent);
+        }
+        
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+        
+        .contact-links span {
+            letter-spacing: 0.1em;
+        }
+        
+        /* Footer */
+        footer {
+            padding: 3rem 5%;
+            text-align: center;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .works-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .work-item {
+                grid-column: span 1 !important;
+                aspect-ratio: 16/9 !important;
+            }
+            
+            .about {
+                grid-template-columns: 1fr;
+                gap: 4rem;
+            }
+            
+            .about-content {
+                padding-right: 0;
+            }
+            
+            .contact-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
     </style>
 </head>
 <body>
-    <nav><a href="#" class="logo">XUANRAN</a><ul class="nav-links"><li><a href="#works">Works</a></li><li><a href="#about">About</a></li><li><a href="#contact">Contact</a></li></ul></nav>
-    <section class="hero"><div class="hero-overlay"></div><div class="hero-content"><p class="hero-subtitle">Film & Commercial Production</p><h1 class="hero-title">We Craft<br>Visual Stories</h1><p class="hero-desc">专注于情感类品牌广告与高端商业影像创作，用镜头讲述触动人心的故事</p></div></section>
-    <section class="works" id="works"><div class="section-header"><h2 class="section-title">Selected Works</h2><span class="section-count">05 Projects</span></div><div class="works-grid">
-        <div class="work-item"><div class="work-thumb" style="background-image:url('images/work-benz-amg.jpg')"></div><div class="work-overlay"><p class="work-category">Automotive</p><h3 class="work-title">Mercedes-AMG</h3></div></div>
-        <div class="work-item"><div class="work-thumb" style="background-image:url('images/work-lululemon-2.jpg')"></div><div class="work-overlay"><p class="work-category">Lifestyle</p><h3 class="work-title">lululemon</h3></div></div>
-        <div class="work-item"><div class="work-thumb" style="background-image:url('images/work-reganmian.jpg')"></div><div class="work-overlay"><p class="work-category">Food</p><h3 class="work-title">热干面</h3></div></div>
-        <div class="work-item"><div class="work-thumb" style="background-image:url('images/work-new-video.jpg')"></div><div class="work-overlay"><p class="work-category">Commercial</p><h3 class="work-title">品牌广告原片</h3></div></div>
-        <div class="work-item"><div class="work-thumb" style="background-image:url('images/work-video-4.jpg')"></div><div class="work-overlay"><p class="work-category">Short Film</p><h3 class="work-title">创意短片</h3></div></div>
-    </div></section>
-    <section class="about" id="about"><div class="about-content"><h2>About Us</h2><p>渲染文化是一家专注于情感类品牌广告与高端商业影像创作的工作室。我们相信，好的影像不仅仅是画面的堆砌，更是情感的传递。</p><p>从汽车广告到美食纪录片，从运动品牌到生活方式，我们用镜头捕捉那些触动人心的瞬间，为品牌讲述有温度的故事。</p></div><div class="about-image"></div></section>
-    <section class="contact" id="contact"><h2>Let's Create Together</h2><a href="mailto:18582493173@163.com" class="contact-email">18582493173@163.com</a><div class="contact-info"><span>WeChat: 18582493173</span><span>Tel: 18582493173</span><span>Chengdu, China</span></div></section>
-    <footer><p>© 2024 成都渲染文化传媒有限公司 | XUANRAN CULTURE</p></footer>
+    <nav>
+        <a href="#" class="nav-name">姜林均</a>
+        <ul class="nav-links">
+            <li><a href="#works">作品</a></li>
+            <li><a href="#about">关于</a></li>
+            <li><a href="#contact">联系</a></li>
+        </ul>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <span class="hero-label">Director / Cinematographer</span>
+            <h1 class="hero-title">用镜头<br>讲述故事</h1>
+            <p class="hero-subtitle">专注于情感类品牌广告与商业影像创作，<br>在光影之间捕捉动人的瞬间。</p>
+        </div>
+        <div class="scroll-hint">
+            <span>Scroll</span>
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <section class="works" id="works">
+        <div class="section-header">
+            <span class="section-label">Selected Works</span>
+            <h2 class="section-title">精选作品</h2>
+        </div>
+        
+        <div class="works-grid">
+            <div class="work-item">
+                <div class="work-thumb">
+                    <span class="work-placeholder">作品 01</span>
+                </div>
+                <div class="work-info">
+                    <p class="work-category">Commercial</p>
+                    <h3 class="work-name">奔驰AMG</h3>
+                </div>
+            </div>
+            
+            <div class="work-item">
+                <div class="work-thumb">
+                    <span class="work-placeholder">作品 02</span>
+                </div>
+                <div class="work-info">
+                    <p class="work-category">Brand Film</p>
+                    <h3 class="work-name">lululemon</h3>
+                </div>
+            </div>
+            
+            <div class="work-item">
+                <div class="work-thumb">
+                    <span class="work-placeholder">作品 03</span>
+                </div>
+                <div class="work-info">
+                    <p class="work-category">Documentary</p>
+                    <h3 class="work-name">热干面</h3>
+                </div>
+            </div>
+            
+            <div class="work-item">
+                <div class="work-thumb">
+                    <span class="work-placeholder">作品 04</span>
+                </div>
+                <div class="work-info">
+                    <p class="work-category">TVC</p>
+                    <h3 class="work-name">品牌广告</h3>
+                </div>
+            </div>
+            
+            <div class="work-item">
+                <div class="work-thumb">
+                    <span class="work-placeholder">作品 05</span>
+                </div>
+                <div class="work-info">
+                    <p class="work-category">Short Film</p>
+                    <h3 class="work-name">创意短片</h3>
+                </div>
+            </div>
+            
+            <div class="work-item">
+                <div class="work-thumb">
+                    <span class="work-placeholder">作品 06</span>
+                </div>
+                <div class="work-info">
+                    <p class="work-category">Visual</p>
+                    <h3 class="work-name">最新项目</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="about" id="about">
+        <div class="about-content">
+            <h2>专注于情感叙事<br>与视觉美学</h2>
+            <p>作为一名导演和摄影师，我相信每一个品牌都有属于它的故事。我的工作就是找到那个触动人心的瞬间，用光影将它永恒定格。</p>
+            <p>从汽车广告到美食纪录片，从运动品牌到生活方式，我用镜头捕捉真实与美好的交汇点。</p>
+        </div>
+        <div class="about-image">
+            <span>形象照</span>
+        </div>
+    </section>
+
+    <section class="contact" id="contact">
+        <span class="contact-label">Get in Touch</span>
+        <h2>有项目想聊聊？<br>随时联系我</h2>
+        <a href="mailto:18582493173@163.com" class="contact-email">18582493173@163.com</a>
+        <div class="contact-links">
+            <span>微信: 18582493173</span>
+            <span>电话: 18582493173</span>
+            <span>成都, 中国</span>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2024 姜林均 | 导演/摄影师</p>
+    </footer>
 </body>
 </html>
