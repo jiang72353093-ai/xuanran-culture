@@ -7,492 +7,97 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=Inter:wght@300;400;500&display=swap');
         
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        :root {
-            --bg: #0a0a0a;
-            --text: #ffffff;
-            --text-muted: rgba(255,255,255,0.6);
-            --accent: #c9a962;
-        }
-        
-        html {
-            scroll-behavior: smooth;
-        }
-        
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --bg: #0a0a0a; --text: #ffffff; --text-muted: rgba(255,255,255,0.6); --accent: #c9a962; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; overflow-x: hidden; }
         
         /* Navigation */
-        nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            padding: 2rem 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 1000;
-            mix-blend-mode: difference;
-        }
+        nav { position: fixed; top: 0; left: 0; right: 0; padding: 2rem 5%; display: flex; justify-content: space-between; align-items: center; z-index: 1000; mix-blend-mode: difference; }
+        .nav-name { font-family: 'Noto Serif SC', serif; font-size: 1.1rem; font-weight: 700; letter-spacing: 0.15em; text-decoration: none; color: var(--text); }
+        .nav-links { display: flex; gap: 3rem; list-style: none; }
+        .nav-links a { color: var(--text); text-decoration: none; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.15em; opacity: 0.7; transition: opacity 0.3s; }
+        .nav-links a:hover { opacity: 1; }
         
-        .nav-name {
-            font-family: 'Noto Serif SC', serif;
-            font-size: 1.1rem;
-            font-weight: 700;
-            letter-spacing: 0.15em;
-            text-decoration: none;
-            color: var(--text);
-        }
+        /* Hero */
+        .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 0 5%; position: relative; }
+        .hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(ellipse at 30% 20%, rgba(201,169,98,0.15) 0%, transparent 50%), radial-gradient(ellipse at 70% 80%, rgba(201,169,98,0.1) 0%, transparent 50%); pointer-events: none; }
+        .hero-content { position: relative; z-index: 1; }
+        .hero-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.5em; color: var(--accent); margin-bottom: 2rem; display: block; }
+        .hero-title { font-family: 'Noto Serif SC', serif; font-size: clamp(2.5rem, 6vw, 5rem); font-weight: 400; line-height: 1.3; margin-bottom: 1.5rem; }
+        .hero-subtitle { font-size: 1rem; color: var(--text-muted); font-weight: 300; max-width: 500px; margin: 0 auto; line-height: 1.8; }
+        .scroll-hint { position: absolute; bottom: 3rem; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 1rem; color: var(--text-muted); font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; }
+        .scroll-line { width: 1px; height: 60px; background: linear-gradient(to bottom, var(--accent), transparent); animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 0.3; transform: scaleY(0.8); } 50% { opacity: 1; transform: scaleY(1); } }
         
-        .nav-links {
-            display: flex;
-            gap: 3rem;
-            list-style: none;
-        }
+        /* Works */
+        .works { padding: 8rem 5%; }
+        .section-header { text-align: center; margin-bottom: 5rem; }
+        .section-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.3em; color: var(--accent); margin-bottom: 1rem; display: block; }
+        .section-title { font-family: 'Noto Serif SC', serif; font-size: clamp(2rem, 4vw, 3rem); font-weight: 400; }
+        .works-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 1.5rem; max-width: 1400px; margin: 0 auto; }
+        .work-item { position: relative; overflow: hidden; background: #111; border-radius: 4px; cursor: pointer; }
         
-        .nav-links a {
-            color: var(--text);
-            text-decoration: none;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            opacity: 0.7;
-            transition: opacity 0.3s;
-        }
+        /* Grid Layout: 16:9 Aspect Ratio for ALL items, 2 per row */
+        .work-item:nth-child(n) { grid-column: span 6; aspect-ratio: 16/9; }
         
-        .nav-links a:hover {
-            opacity: 1;
-        }
+        .work-thumb { width: 100%; height: 100%; background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%); display: flex; align-items: center; justify-content: center; transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1); position: relative; z-index: 1; }
+        .work-item:hover .work-thumb { transform: scale(1.03); filter: brightness(1.1); }
+        .work-placeholder { font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.2em; }
         
-        /* Hero Section */
-        .hero {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 0 5%;
-            position: relative;
-        }
+        /* Play Button */
+        .play-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 60px; height: 60px; border: 2px solid var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s; background: rgba(0,0,0,0.5); z-index: 2; pointer-events: none; }
+        .play-icon::after { content: ''; width: 0; height: 0; border-left: 18px solid var(--accent); border-top: 10px solid transparent; border-bottom: 10px solid transparent; margin-left: 4px; }
+        .work-item:hover .play-icon { opacity: 1; }
         
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                radial-gradient(ellipse at 30% 20%, rgba(201,169,98,0.15) 0%, transparent 50%),
-                radial-gradient(ellipse at 70% 80%, rgba(201,169,98,0.1) 0%, transparent 50%);
-            pointer-events: none;
-        }
+        .work-info { position: absolute; bottom: 0; left: 0; right: 0; padding: 2rem; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); transform: translateY(10px); opacity: 0; transition: all 0.4s ease; z-index: 2; pointer-events: none; }
+        .work-item:hover .work-info { transform: translateY(0); opacity: 1; }
+        .work-category { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--accent); margin-bottom: 0.5rem; }
+        .work-name { font-family: 'Noto Serif SC', serif; font-size: 1.3rem; font-weight: 400; }
         
-        .hero-content {
-            position: relative;
-            z-index: 1;
+        /* Category View */
+        .category-view {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg); z-index: 1500; padding: 8rem 5%;
+            overflow-y: auto;
+            transform: translateY(100%);
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        
-        .hero-label {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5em;
-            color: var(--accent);
-            margin-bottom: 2rem;
-            display: block;
-        }
-        
-        .hero-title {
-            font-family: 'Noto Serif SC', serif;
-            font-size: clamp(2.5rem, 6vw, 5rem);
-            font-weight: 400;
-            line-height: 1.3;
-            margin-bottom: 1.5rem;
-        }
-        
-        .hero-subtitle {
-            font-size: 1rem;
-            color: var(--text-muted);
-            font-weight: 300;
-            max-width: 500px;
-            margin: 0 auto;
-            line-height: 1.8;
-        }
-        
-        .scroll-hint {
-            position: absolute;
-            bottom: 3rem;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1rem;
-            color: var(--text-muted);
-            font-size: 0.65rem;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-        }
-        
-        .scroll-line {
-            width: 1px;
-            height: 60px;
-            background: linear-gradient(to bottom, var(--accent), transparent);
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0%, 100% { opacity: 0.3; transform: scaleY(0.8); }
-            50% { opacity: 1; transform: scaleY(1); }
-        }
-        
-        /* Works Section */
-        .works {
-            padding: 8rem 5%;
-        }
-        
-        .section-header {
-            text-align: center;
-            margin-bottom: 5rem;
-        }
-        
-        .section-label {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 0.3em;
-            color: var(--accent);
-            margin-bottom: 1rem;
-            display: block;
-        }
-        
-        .section-title {
-            font-family: 'Noto Serif SC', serif;
-            font-size: clamp(2rem, 4vw, 3rem);
-            font-weight: 400;
-        }
-        
-        /* Masonry Grid */
-        .works-grid {
-            display: grid;
-            grid-template-columns: repeat(12, 1fr);
-            gap: 1.5rem;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-        
-        .work-item {
-            position: relative;
-            overflow: hidden;
-            background: #111;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        
-        .work-item:nth-child(n) {
-            grid-column: span 6;
-            aspect-ratio: 16/9;
-        }
-        
-        .work-thumb {
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-            position: relative;
-            z-index: 1;
-        }
+        .category-view.active { transform: translateY(0); }
+        .category-header { margin-bottom: 4rem; display: flex; flex-direction: column; gap: 2rem; }
+        .back-btn { align-self: flex-start; background: none; border: 1px solid var(--text-muted); color: var(--text); padding: 0.5rem 1.5rem; border-radius: 20px; cursor: pointer; font-size: 0.9rem; transition: all 0.3s; }
+        .back-btn:hover { border-color: var(--accent); color: var(--accent); }
+        .category-title { font-family: 'Noto Serif SC', serif; font-size: clamp(2rem, 4vw, 3.5rem); color: var(--accent); }
 
-        .work-preview {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: 0;
-            opacity: 0;
-            transition: opacity 0.5s ease;
-        }
-        
-        .work-item.playing .work-preview {
-            opacity: 1;
-        }
-        
-        .work-item.playing .work-thumb {
-            background: transparent !important; /* Hide background image when video plays */
-        }
-        
-        .work-item:hover .work-thumb {
-            transform: scale(1.03);
-            filter: brightness(1.1);
-        }
-        
-        .work-placeholder {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.2em;
-        }
-        
-        .play-icon {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 60px;
-            height: 60px;
-            border: 2px solid var(--accent);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: opacity 0.3s;
-            background: rgba(0,0,0,0.5);
-        }
-        
-        .play-icon::after {
-            content: '';
-            width: 0;
-            height: 0;
-            border-left: 18px solid var(--accent);
-            border-top: 10px solid transparent;
-            border-bottom: 10px solid transparent;
-            margin-left: 4px;
-        }
-        
-        .work-item:hover .play-icon {
-            opacity: 1;
-        }
-        
-        .work-info {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            padding: 2rem;
-            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
-            transform: translateY(10px);
-            opacity: 0;
-            transition: all 0.4s ease;
-        }
-        
-        .work-item:hover .work-info {
-            transform: translateY(0);
-            opacity: 1;
-        }
-        
-        .work-category {
-            font-size: 0.65rem;
-            text-transform: uppercase;
-            letter-spacing: 0.2em;
-            color: var(--accent);
-            margin-bottom: 0.5rem;
-        }
-        
-        .work-name {
-            font-family: 'Noto Serif SC', serif;
-            font-size: 1.3rem;
-            font-weight: 400;
-        }
-        
         /* Video Modal */
-        .video-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.95);
-            z-index: 2000;
-            align-items: center;
-            justify-content: center;
-        }
+        .video-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 2000; align-items: center; justify-content: center; }
+        .video-modal.active { display: flex; }
+        .video-container { width: 90%; max-width: 1200px; position: relative; }
+        .video-container video { width: 100%; height: auto; max-height: 80vh; display: block; }
+        .close-btn { position: absolute; top: -50px; right: 0; background: none; border: none; color: white; font-size: 2.5rem; cursor: pointer; opacity: 0.7; transition: opacity 0.3s; line-height: 1; }
+        .close-btn:hover { opacity: 1; }
         
-        .video-modal.active {
-            display: flex;
-        }
+        /* About */
+        .about { padding: 10rem 5%; display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; max-width: 1200px; margin: 0 auto; align-items: center; }
+        .about-content { padding-right: 2rem; }
+        .about-content h2 { font-family: 'Noto Serif SC', serif; font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 400; margin-bottom: 2rem; line-height: 1.4; }
+        .about-content p { color: var(--text-muted); font-size: 1rem; line-height: 2; margin-bottom: 1.5rem; }
+        .about-image { aspect-ratio: 4/5; background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%); border-radius: 4px; display: flex; align-items: center; justify-content: center; }
+        .about-image span { color: var(--text-muted); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.2em; }
         
-        .video-container {
-            width: 90%;
-            max-width: 1200px;
-            position: relative;
-        }
-        
-        .video-container video {
-            width: 100%;
-            height: auto;
-            max-height: 80vh;
-            display: block;
-        }
-        
-        .close-btn {
-            position: absolute;
-            top: -50px;
-            right: 0;
-            background: none;
-            border: none;
-            color: white;
-            font-size: 2.5rem;
-            cursor: pointer;
-            opacity: 0.7;
-            transition: opacity 0.3s;
-            line-height: 1;
-        }
-        
-        .close-btn:hover {
-            opacity: 1;
-        }
-        
-        /* About Section */
-        .about {
-            padding: 10rem 5%;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 6rem;
-            max-width: 1200px;
-            margin: 0 auto;
-            align-items: center;
-        }
-        
-        .about-content {
-            padding-right: 2rem;
-        }
-        
-        .about-content h2 {
-            font-family: 'Noto Serif SC', serif;
-            font-size: clamp(1.8rem, 3vw, 2.5rem);
-            font-weight: 400;
-            margin-bottom: 2rem;
-            line-height: 1.4;
-        }
-        
-        .about-content p {
-            color: var(--text-muted);
-            font-size: 1rem;
-            line-height: 2;
-            margin-bottom: 1.5rem;
-        }
-        
-        .about-image {
-            aspect-ratio: 4/5;
-            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
-            border-radius: 4px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .about-image span {
-            color: var(--text-muted);
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 0.2em;
-        }
-        
-        /* Contact Section */
-        .contact {
-            padding: 10rem 5%;
-            text-align: center;
-        }
-        
-        .contact-label {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 0.3em;
-            color: var(--accent);
-            margin-bottom: 2rem;
-            display: block;
-        }
-        
-        .contact h2 {
-            font-family: 'Noto Serif SC', serif;
-            font-size: clamp(1.5rem, 3vw, 2rem);
-            font-weight: 400;
-            margin-bottom: 3rem;
-            line-height: 1.5;
-        }
-        
-        .contact-email {
-            font-size: clamp(1.2rem, 2.5vw, 1.8rem);
-            color: var(--accent);
-            text-decoration: none;
-            border-bottom: 1px solid transparent;
-            transition: border-color 0.3s;
-            display: inline-block;
-            margin-bottom: 3rem;
-        }
-        
-        .contact-email:hover {
-            border-bottom-color: var(--accent);
-        }
-        
-        .contact-links {
-            display: flex;
-            justify-content: center;
-            gap: 3rem;
-            font-size: 0.8rem;
-            color: var(--text-muted);
-        }
-        
-        .contact-links span {
-            letter-spacing: 0.1em;
-        }
+        /* Contact */
+        .contact { padding: 10rem 5%; text-align: center; }
+        .contact-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.3em; color: var(--accent); margin-bottom: 2rem; display: block; }
+        .contact h2 { font-family: 'Noto Serif SC', serif; font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 400; margin-bottom: 3rem; line-height: 1.5; }
+        .contact-email { font-size: clamp(1.2rem, 2.5vw, 1.8rem); color: var(--accent); text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.3s; display: inline-block; margin-bottom: 3rem; }
+        .contact-email:hover { border-bottom-color: var(--accent); }
+        .contact-links { display: flex; justify-content: center; gap: 3rem; font-size: 0.8rem; color: var(--text-muted); }
         
         /* Footer */
-        footer {
-            padding: 3rem 5%;
-            text-align: center;
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            border-top: 1px solid rgba(255,255,255,0.1);
-        }
+        footer { padding: 3rem 5%; text-align: center; font-size: 0.75rem; color: var(--text-muted); border-top: 1px solid rgba(255,255,255,0.1); }
         
         /* Responsive */
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-            
-            .works-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .work-item {
-                grid-column: span 1 !important;
-                aspect-ratio: 16/9 !important;
-            }
-            
-            .about {
-                grid-template-columns: 1fr;
-                gap: 4rem;
-            }
-            
-            .about-content {
-                padding-right: 0;
-            }
-            
-            .contact-links {
-                flex-direction: column;
-                gap: 1rem;
-            }
-        }
+        @media (max-width: 768px) { .nav-links { display: none; } .works-grid { grid-template-columns: 1fr; } .work-item { grid-column: span 1 !important; aspect-ratio: 16/9 !important; } .about { grid-template-columns: 1fr; gap: 4rem; } .about-content { padding-right: 0; } .contact-links { flex-direction: column; gap: 1rem; } }
     </style>
 </head>
 <body>
@@ -524,77 +129,90 @@
         </div>
         
         <div class="works-grid">
-            <!-- 奔驰AMG - 可播放视频 -->
-            <div class="work-item" onclick="openVideo('https://outin-328782e90b1b11f1ba2900163e0adb94.oss-ap-southeast-1.aliyuncs.com/sv/4746f812-19c65d7139b/4746f812-19c65d7139b.mov?Expires=1771310903&OSSAccessKeyId=LTAI3DkxtsbUyNYV&Signature=tNDZCLdAJ93ttclOyrh4%2BXsNeTc%3D')">
+            <!-- 01 Automotive -->
+            <div class="work-item" data-preview-start="125" data-preview-end="130" data-video-url="https://outin-328782e90b1b11f1ba2900163e0adb94.oss-ap-southeast-1.aliyuncs.com/sv/4746f812-19c65d7139b/4746f812-19c65d7139b.mov?Expires=1771310903&OSSAccessKeyId=LTAI3DkxtsbUyNYV&Signature=tNDZCLdAJ93ttclOyrh4%2BXsNeTc%3D" onclick="showCategory('automotive')">
                 <div class="work-thumb">
-                    <span class="work-placeholder">奔驰AMG</span>
+                    <span class="work-placeholder">Automotive</span>
                 </div>
                 <div class="play-icon"></div>
                 <div class="work-info">
-                    <p class="work-category">Commercial</p>
-                    <h3 class="work-name">奔驰AMG</h3>
+                    <p class="work-category">Series</p>
+                    <h3 class="work-name">汽车广告系列</h3>
                 </div>
             </div>
             
-            <!-- lululemon - 可播放视频 -->
-            <div class="work-item" onclick="openVideo('https://outin-328782e90b1b11f1ba2900163e0adb94.oss-ap-southeast-1.aliyuncs.com/sv/5f647363-19c65db19a4/5f647363-19c65db19a4.mov?Expires=1771310971&OSSAccessKeyId=LTAI3DkxtsbUyNYV&Signature=%2FNy32P7kcYp0i1RYdjL7LZlZsv4%3D')">
+            <!-- 02 Lifestyle -->
+            <div class="work-item" data-preview-start="10" data-preview-end="15" data-video-url="https://outin-328782e90b1b11f1ba2900163e0adb94.oss-ap-southeast-1.aliyuncs.com/sv/5f647363-19c65db19a4/5f647363-19c65db19a4.mov?Expires=1771310971&OSSAccessKeyId=LTAI3DkxtsbUyNYV&Signature=%2FNy32P7kcYp0i1RYdjL7LZlZsv4%3D" onclick="showCategory('lifestyle')">
                 <div class="work-thumb">
-                    <span class="work-placeholder">lululemon</span>
+                    <span class="work-placeholder">Lifestyle</span>
                 </div>
                 <div class="play-icon"></div>
                 <div class="work-info">
-                    <p class="work-category">Commercial</p>
-                    <h3 class="work-name">lululemon</h3>
+                    <p class="work-category">Series</p>
+                    <h3 class="work-name">生活方式系列</h3>
                 </div>
             </div>
             
-            <!-- 迪卡侬 - Sports -->
-            <div class="work-item" onclick="openVideo('https://outin-328782e90b1b11f1ba2900163e0adb94.oss-ap-southeast-1.aliyuncs.com/sv/3eb5a9e2-19c65d713a6/3eb5a9e2-19c65d713a6.mov?Expires=1771310354&OSSAccessKeyId=LTAI3DkxtsbUyNYV&Signature=agLWNdl3TTCMZBFqeKIcL9ewkZA%3D')">
+            <!-- 03 Sports -->
+            <div class="work-item" data-video-url="https://outin-328782e90b1b11f1ba2900163e0adb94.oss-ap-southeast-1.aliyuncs.com/sv/3eb5a9e2-19c65d713a6/3eb5a9e2-19c65d713a6.mov?Expires=1771310354&OSSAccessKeyId=LTAI3DkxtsbUyNYV&Signature=agLWNdl3TTCMZBFqeKIcL9ewkZA%3D" onclick="showCategory('sports')">
                 <div class="work-thumb">
-                    <span class="work-placeholder">迪卡侬</span>
+                    <span class="work-placeholder">Sports</span>
                 </div>
                 <div class="play-icon"></div>
                 <div class="work-info">
-                    <p class="work-category">Sports</p>
-                    <h3 class="work-name">迪卡侬</h3>
+                    <p class="work-category">Series</p>
+                    <h3 class="work-name">运动品牌系列</h3>
                 </div>
             </div>
             
-            <!-- 品牌广告 - TVC -->
-            <div class="work-item" onclick="openVideo('https://outin-328782e90b1b11f1ba2900163e0adb94.oss-ap-southeast-1.aliyuncs.com/sv/1c5fa26f-19c65dd786f/1c5fa26f-19c65dd786f.mov?Expires=1771311010&OSSAccessKeyId=LTAI3DkxtsbUyNYV&Signature=EA5jBCqWDCzlGIIIcPwHe7nyij4%3D')">
+            <!-- 04 Documentary -->
+            <div class="work-item" data-preview-start="160" data-preview-end="165" data-video-url="https://outin-328782e90b1b11f1ba2900163e0adb94.oss-ap-southeast-1.aliyuncs.com/sv/3a3c5b1e-19c65de276c/3a3c5b1e-19c65de276c.mp4?Expires=1771312163&OSSAccessKeyId=LTAI3DkxtsbUyNYV&Signature=LARH22Ti9SIUJD%2BFQ%2F%2FBDPjC5Is%3D" onclick="showCategory('documentary')">
                 <div class="work-thumb">
-                    <span class="work-placeholder">品牌广告</span>
+                    <span class="work-placeholder">Documentary</span>
                 </div>
                 <div class="play-icon"></div>
                 <div class="work-info">
-                    <p class="work-category">TVC</p>
-                    <h3 class="work-name">品牌广告</h3>
+                    <p class="work-category">Series</p>
+                    <h3 class="work-name">纪录片系列</h3>
                 </div>
             </div>
             
-            <!-- 创意短片 - Short Film -->
-            <div class="work-item" onclick="openVideo('https://outin-328782e90b1b11f1ba2900163e0adb94.oss-ap-southeast-1.aliyuncs.com/sv/25e96850-19c65df0e2a/25e96850-19c65df0e2a.mp4?Expires=1771311048&OSSAccessKeyId=LTAI3DkxtsbUyNYV&Signature=nrAK%2FiO%2BsG1eIoXS5vVCc64lQbw%3D')">
+            <!-- 05 Creative -->
+            <div class="work-item" data-video-url="https://outin-328782e90b1b11f1ba2900163e0adb94.oss-ap-southeast-1.aliyuncs.com/sv/25e96850-19c65df0e2a/25e96850-19c65df0e2a.mp4?Expires=1771311048&OSSAccessKeyId=LTAI3DkxtsbUyNYV&Signature=nrAK%2FiO%2BsG1eIoXS5vVCc64lQbw%3D" onclick="showCategory('creative')">
                 <div class="work-thumb">
-                    <span class="work-placeholder">创意短片</span>
+                    <span class="work-placeholder">Creative</span>
                 </div>
                 <div class="play-icon"></div>
                 <div class="work-info">
-                    <p class="work-category">Short Film</p>
-                    <h3 class="work-name">创意短片</h3>
+                    <p class="work-category">Series</p>
+                    <h3 class="work-name">创意短片系列</h3>
                 </div>
             </div>
             
-            <div class="work-item">
+            <!-- 06 TVC -->
+            <div class="work-item" data-video-url="https://outin-328782e90b1b11f1ba2900163e0adb94.oss-ap-southeast-1.aliyuncs.com/sv/1c5fa26f-19c65dd786f/1c5fa26f-19c65dd786f.mov?Expires=1771311010&OSSAccessKeyId=LTAI3DkxtsbUyNYV&Signature=EA5jBCqWDCzlGIIIcPwHe7nyij4%3D" onclick="showCategory('tvc')">
                 <div class="work-thumb">
-                    <span class="work-placeholder">作品 06</span>
+                    <span class="work-placeholder">TVC</span>
                 </div>
+                <div class="play-icon"></div>
                 <div class="work-info">
-                    <p class="work-category">Visual</p>
-                    <h3 class="work-name">最新项目</h3>
+                    <p class="work-category">Series</p>
+                    <h3 class="work-name">商业广告系列</h3>
                 </div>
             </div>
         </div>
     </section>
+
+    <!-- Category Detail View -->
+    <div id="category-view" class="category-view">
+        <div class="category-header">
+            <button class="back-btn" onclick="hideCategory()">← 返回 Back</button>
+            <h2 id="category-title" class="category-title">Category</h2>
+        </div>
+        <div id="category-grid" class="works-grid">
+            <!-- Dynamic Content -->
+        </div>
+    </div>
 
     <section class="about" id="about">
         <div class="about-content">
@@ -631,6 +249,84 @@
     </div>
 
     <script>
+        // --- 配置中心：分类与视频列表 ---
+        const portfolioData = {
+            'automotive': {
+                title: 'Automotive / 汽车广告',
+                videos: [
+                    { title: '奔驰AMG', category: 'Commercial', cover: '', url: 'https://outin-328782e90b1b11f1ba2900163e0adb94.oss-ap-southeast-1.aliyuncs.com/sv/4746f812-19c65d7139b/4746f812-19c65d7139b.mov?Expires=1771310903&OSSAccessKeyId=LTAI3DkxtsbUyNYV&Signature=tNDZCLdAJ93ttclOyrh4%2BXsNeTc%3D' },
+                ]
+            },
+            'lifestyle': {
+                title: 'Lifestyle / 生活方式',
+                videos: [
+                    { title: 'lululemon', category: 'Brand Film', cover: '', url: 'https://outin-328782e90b1b11f1ba2900163e0adb94.oss-ap-southeast-1.aliyuncs.com/sv/5f647363-19c65db19a4/5f647363-19c65db19a4.mov?Expires=1771310971&OSSAccessKeyId=LTAI3DkxtsbUyNYV&Signature=%2FNy32P7kcYp0i1RYdjL7LZlZsv4%3D' },
+                ]
+            },
+            'sports': {
+                title: 'Sports / 运动品牌',
+                videos: [
+                    { title: '迪卡侬', category: 'Sports', cover: '', url: 'https://outin-328782e90b1b11f1ba2900163e0adb94.oss-ap-southeast-1.aliyuncs.com/sv/3eb5a9e2-19c65d713a6/3eb5a9e2-19c65d713a6.mov?Expires=1771310354&OSSAccessKeyId=LTAI3DkxtsbUyNYV&Signature=agLWNdl3TTCMZBFqeKIcL9ewkZA%3D' },
+                ]
+            },
+            'documentary': {
+                title: 'Documentary / 纪录片',
+                videos: [
+                    { title: '各有各的道-李小眼', category: 'Doc', cover: '', url: 'https://outin-328782e90b1b11f1ba2900163e0adb94.oss-ap-southeast-1.aliyuncs.com/sv/3a3c5b1e-19c65de276c/3a3c5b1e-19c65de276c.mp4?Expires=1771312163&OSSAccessKeyId=LTAI3DkxtsbUyNYV&Signature=LARH22Ti9SIUJD%2BFQ%2F%2FBDPjC5Is%3D' },
+                ]
+            },
+            'creative': {
+                title: 'Creative / 创意短片',
+                videos: [
+                    { title: '创意短片', category: 'Short Film', cover: '', url: 'https://outin-328782e90b1b11f1ba2900163e0adb94.oss-ap-southeast-1.aliyuncs.com/sv/25e96850-19c65df0e2a/25e96850-19c65df0e2a.mp4?Expires=1771311048&OSSAccessKeyId=LTAI3DkxtsbUyNYV&Signature=nrAK%2FiO%2BsG1eIoXS5vVCc64lQbw%3D' },
+                ]
+            },
+            'tvc': {
+                title: 'TVC / 商业广告',
+                videos: [
+                    { title: '品牌广告', category: 'TVC', cover: '', url: 'https://outin-328782e90b1b11f1ba2900163e0adb94.oss-ap-southeast-1.aliyuncs.com/sv/1c5fa26f-19c65dd786f/1c5fa26f-19c65dd786f.mov?Expires=1771311010&OSSAccessKeyId=LTAI3DkxtsbUyNYV&Signature=EA5jBCqWDCzlGIIIcPwHe7nyij4%3D' },
+                ]
+            }
+        };
+
+        // --- 核心逻辑 ---
+
+        function showCategory(key) {
+            const data = portfolioData[key];
+            if (!data) return;
+
+            const view = document.getElementById('category-view');
+            const title = document.getElementById('category-title');
+            const grid = document.getElementById('category-grid');
+
+            // 设置标题
+            title.textContent = data.title;
+
+            // 渲染视频列表（使用与主页相同的样式）
+            grid.innerHTML = data.videos.map(video => `
+                <div class="work-item" onclick="openVideo('${video.url}')">
+                    <div class="work-thumb" style="background-image:url('${video.cover || ''}')">
+                        ${!video.cover ? `<span class="work-placeholder">${video.title}</span>` : ''}
+                    </div>
+                    <div class="play-icon"></div>
+                    <div class="work-info">
+                        <p class="work-category">${video.category}</p>
+                        <h3 class="work-name">${video.title}</h3>
+                    </div>
+                </div>
+            `).join('');
+
+            // 显示子页面
+            view.classList.add('active');
+            document.body.style.overflow = 'hidden'; // 禁止背景滚动
+        }
+
+        function hideCategory() {
+            const view = document.getElementById('category-view');
+            view.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
         function openVideo(url) {
             console.log('Opening video:', url);
             const modal = document.getElementById('videoModal');
@@ -648,14 +344,13 @@
             player.src = '';
         }
         
-        // 点击模态框背景关闭
         document.getElementById('videoModal').addEventListener('click', function(e) {
             if (e.target === this) {
                 closeVideo();
             }
         });
 
-        // 自动预览功能：点击页面任意处后，所有视频开始静音循环播放前5秒
+        // 自动预览功能（仅针对主页列表）
         let previewInitialized = false;
         
         function initPreviews() {
@@ -663,56 +358,50 @@
             previewInitialized = true;
             console.log('Initializing video previews...');
             
-            const items = document.querySelectorAll('.work-item');
+            // 选择主页的 work-item (排除子页面的)
+            const items = document.querySelectorAll('.works > .works-grid > .work-item');
             
             items.forEach(item => {
-                const clickAttr = item.getAttribute('onclick');
-                if (!clickAttr) return;
+                // 现在URL存在data属性里
+                const videoUrl = item.getAttribute('data-video-url');
+                if (!videoUrl) return;
                 
-                // 从 openVideo('URL') 中提取 URL
-                const match = clickAttr.match(/openVideo\(['"]([^'"]+)['"]\)/);
-                if (!match) return;
-                
-                const url = match[1];
                 const thumb = item.querySelector('.work-thumb');
-                
-                // 检查是否已经添加了预览视频
                 if (thumb.querySelector('.work-preview')) return;
 
-                // 创建预览视频
+                const startAttr = item.getAttribute('data-preview-start');
+                const endAttr = item.getAttribute('data-preview-end');
+                const startTime = parseFloat(startAttr || '0');
+                const endTime = parseFloat(endAttr || '5');
+
                 const video = document.createElement('video');
                 video.className = 'work-preview';
-                video.src = url;
+                video.src = videoUrl;
                 video.muted = true;
                 video.loop = true;
                 video.playsInline = true;
                 
-                // 关键样式：pointer-events: none 让点击穿透到父元素，触发 openVideo
+                // 样式：允许点击穿透
                 video.style.position = 'absolute';
                 video.style.top = '0';
                 video.style.left = '0';
                 video.style.width = '100%';
                 video.style.height = '100%';
                 video.style.objectFit = 'cover';
-                video.style.zIndex = '1';  // 放在封面图之上
-                video.style.pointerEvents = 'none'; // 关键：允许点击穿透！
+                video.style.zIndex = '1'; 
+                video.style.pointerEvents = 'none'; 
                 
-                // 插入视频到 thumb 的最后面（覆盖在图片上）
                 thumb.appendChild(video);
+                video.currentTime = startTime;
                 
-                // 尝试播放
                 video.play().then(() => {
                     item.classList.add('playing');
-                    // 视频播放成功后，把封面图设为透明，展示视频
                     thumb.style.backgroundImage = 'none';
-                }).catch(e => {
-                    console.log('Autoplay blocked for item:', e);
-                });
+                }).catch(e => console.log('Autoplay blocked:', e));
                 
-                // 循环前5秒逻辑
                 video.addEventListener('timeupdate', function() {
-                    if (this.currentTime > 5) {
-                        this.currentTime = 0;
+                    if (this.currentTime >= endTime) {
+                        this.currentTime = startTime;
                         this.play();
                     }
                 });
@@ -723,7 +412,7 @@
             document.removeEventListener('scroll', initPreviews);
         }
 
-        // 监听点击和滚动来触发预览
+        // 监听交互触发预览
         document.addEventListener('click', initPreviews);
         document.addEventListener('scroll', initPreviews, { once: true });
     </script>
