@@ -197,6 +197,7 @@
             overflow: hidden;
             background: #111;
             border-radius: 4px;
+            cursor: pointer;
         }
         
         .work-item:nth-child(1) {
@@ -251,6 +252,37 @@
             letter-spacing: 0.2em;
         }
         
+        .play-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            border: 2px solid var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+            background: rgba(0,0,0,0.5);
+        }
+        
+        .play-icon::after {
+            content: '';
+            width: 0;
+            height: 0;
+            border-left: 18px solid var(--accent);
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            margin-left: 4px;
+        }
+        
+        .work-item:hover .play-icon {
+            opacity: 1;
+        }
+        
         .work-info {
             position: absolute;
             bottom: 0;
@@ -280,6 +312,55 @@
             font-family: 'Noto Serif SC', serif;
             font-size: 1.3rem;
             font-weight: 400;
+        }
+        
+        /* Video Modal */
+        .video-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .video-modal.active {
+            display: flex;
+        }
+        
+        .video-container {
+            width: 90%;
+            max-width: 1200px;
+            position: relative;
+        }
+        
+        .video-container video {
+            width: 100%;
+            height: auto;
+            max-height: 80vh;
+            display: block;
+        }
+        
+        .close-btn {
+            position: absolute;
+            top: -50px;
+            right: 0;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2.5rem;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+            line-height: 1;
+        }
+        
+        .close-btn:hover {
+            opacity: 1;
         }
         
         /* About Section */
@@ -446,10 +527,12 @@
         </div>
         
         <div class="works-grid">
-            <div class="work-item">
+            <!-- 奔驰AMG - 可播放视频 -->
+            <div class="work-item" onclick="openVideo('https://outin-328782e90b1b11f1ba2900163e0adb94.oss-ap-southeast-1.aliyuncs.com/sv/4746f812-19c65d7139b/4746f812-19c65d7139b.mov?Expires=1771300312&OSSAccessKeyId=LTAI3DkxtsbUyNYV&Signature=U2CS8tJyzmKGSVudPPeJKm240qk%3D')">
                 <div class="work-thumb">
-                    <span class="work-placeholder">作品 01</span>
+                    <span class="work-placeholder">奔驰AMG</span>
                 </div>
+                <div class="play-icon"></div>
                 <div class="work-info">
                     <p class="work-category">Commercial</p>
                     <h3 class="work-name">奔驰AMG</h3>
@@ -533,5 +616,38 @@
     <footer>
         <p>© 2024 姜林均 | 导演/摄影师</p>
     </footer>
+
+    <!-- Video Modal -->
+    <div class="video-modal" id="videoModal">
+        <div class="video-container">
+            <button class="close-btn" onclick="closeVideo()">×</button>
+            <video id="videoPlayer" controls></video>
+        </div>
+    </div>
+
+    <script>
+        function openVideo(url) {
+            const modal = document.getElementById('videoModal');
+            const player = document.getElementById('videoPlayer');
+            player.src = url;
+            modal.classList.add('active');
+            player.play();
+        }
+        
+        function closeVideo() {
+            const modal = document.getElementById('videoModal');
+            const player = document.getElementById('videoPlayer');
+            modal.classList.remove('active');
+            player.pause();
+            player.src = '';
+        }
+        
+        // 点击模态框背景关闭
+        document.getElementById('videoModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeVideo();
+            }
+        });
+    </script>
 </body>
 </html>
