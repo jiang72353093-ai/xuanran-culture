@@ -213,6 +213,28 @@
             align-items: center;
             justify-content: center;
             transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            z-index: 1;
+        }
+
+        .work-preview {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        .work-item.playing .work-preview {
+            opacity: 1;
+        }
+        
+        .work-item.playing .work-thumb {
+            background: transparent !important; /* Hide background image when video plays */
         }
         
         .work-item:hover .work-thumb {
@@ -503,7 +525,7 @@
         
         <div class="works-grid">
             <!-- 奔驰AMG - 可播放视频 -->
-            <div class="work-item" onclick="openVideo('https://outin-328782e90b1b11f1ba2900163e0adb94.oss-ap-southeast-1.aliyuncs.com/sv/4746f812-19c65d7139b/4746f812-19c65d7139b.mov?Expires=1771300312&OSSAccessKeyId=LTAI3DkxtsbUyNYV&Signature=U2CS8tJyzmKGSVudPPeJKm240qk%3D')">
+            <div class="work-item" onclick="openVideo('https://outin-328782e90b1b11f1ba2900163e0adb94.oss-ap-southeast-1.aliyuncs.com/sv/4746f812-19c65d7139b/4746f812-19c65d7139b.mov?Expires=1771310903&OSSAccessKeyId=LTAI3DkxtsbUyNYV&Signature=tNDZCLdAJ93ttclOyrh4%2BXsNeTc%3D')">
                 <div class="work-thumb">
                     <span class="work-placeholder">奔驰AMG</span>
                 </div>
@@ -515,8 +537,9 @@
             </div>
             
             <!-- lululemon - 可播放视频 -->
-            <div class="work-item" onclick="openVideo('https://outin-328782e90b1b11f1ba2900163e0adb94.oss-ap-southeast-1.aliyuncs.com/sv/5cd78d36-19c69bbcc8f/5cd78d36-19c69bbcc8f.mp4?Expires=1771304067&OSSAccessKeyId=LTAI3DkxtsbUyNYV&Signature=H0rmLf%2FiZ0uOmQG2HNiMk2OcVOI%3D')">
-                <div class="work-thumb" style="background-image:url('https://outin-328782e90b1b11f1ba2900163e0adb94.oss-ap-southeast-1.aliyuncs.com/image/default/B20B438D738449FBA656DE7506E46F2E-6-2.jpg?Expires=1771304098&OSSAccessKeyId=LTAI3DkxtsbUyNYV&Signature=9krsPuxNnJlptWdZi7t%2Fg6iXMXs%3D')">
+            <div class="work-item" onclick="openVideo('https://outin-328782e90b1b11f1ba2900163e0adb94.oss-ap-southeast-1.aliyuncs.com/sv/5f647363-19c65db19a4/5f647363-19c65db19a4.mov?Expires=1771310971&OSSAccessKeyId=LTAI3DkxtsbUyNYV&Signature=%2FNy32P7kcYp0i1RYdjL7LZlZsv4%3D')">
+                <div class="work-thumb">
+                    <span class="work-placeholder">lululemon</span>
                 </div>
                 <div class="play-icon"></div>
                 <div class="work-info">
@@ -525,30 +548,36 @@
                 </div>
             </div>
             
-            <div class="work-item">
+            <!-- 迪卡侬 - Sports -->
+            <div class="work-item" onclick="openVideo('https://outin-328782e90b1b11f1ba2900163e0adb94.oss-ap-southeast-1.aliyuncs.com/sv/3eb5a9e2-19c65d713a6/3eb5a9e2-19c65d713a6.mov?Expires=1771310354&OSSAccessKeyId=LTAI3DkxtsbUyNYV&Signature=agLWNdl3TTCMZBFqeKIcL9ewkZA%3D')">
                 <div class="work-thumb">
-                    <span class="work-placeholder">作品 03</span>
+                    <span class="work-placeholder">迪卡侬</span>
                 </div>
+                <div class="play-icon"></div>
                 <div class="work-info">
-                    <p class="work-category">Documentary</p>
-                    <h3 class="work-name">热干面</h3>
+                    <p class="work-category">Sports</p>
+                    <h3 class="work-name">迪卡侬</h3>
                 </div>
             </div>
             
-            <div class="work-item">
+            <!-- 品牌广告 - TVC -->
+            <div class="work-item" onclick="openVideo('https://outin-328782e90b1b11f1ba2900163e0adb94.oss-ap-southeast-1.aliyuncs.com/sv/1c5fa26f-19c65dd786f/1c5fa26f-19c65dd786f.mov?Expires=1771311010&OSSAccessKeyId=LTAI3DkxtsbUyNYV&Signature=EA5jBCqWDCzlGIIIcPwHe7nyij4%3D')">
                 <div class="work-thumb">
-                    <span class="work-placeholder">作品 04</span>
+                    <span class="work-placeholder">品牌广告</span>
                 </div>
+                <div class="play-icon"></div>
                 <div class="work-info">
                     <p class="work-category">TVC</p>
                     <h3 class="work-name">品牌广告</h3>
                 </div>
             </div>
             
-            <div class="work-item">
+            <!-- 创意短片 - Short Film -->
+            <div class="work-item" onclick="openVideo('https://outin-328782e90b1b11f1ba2900163e0adb94.oss-ap-southeast-1.aliyuncs.com/sv/25e96850-19c65df0e2a/25e96850-19c65df0e2a.mp4?Expires=1771311048&OSSAccessKeyId=LTAI3DkxtsbUyNYV&Signature=nrAK%2FiO%2BsG1eIoXS5vVCc64lQbw%3D')">
                 <div class="work-thumb">
-                    <span class="work-placeholder">作品 05</span>
+                    <span class="work-placeholder">创意短片</span>
                 </div>
+                <div class="play-icon"></div>
                 <div class="work-info">
                     <p class="work-category">Short Film</p>
                     <h3 class="work-name">创意短片</h3>
@@ -603,11 +632,12 @@
 
     <script>
         function openVideo(url) {
+            console.log('Opening video:', url);
             const modal = document.getElementById('videoModal');
             const player = document.getElementById('videoPlayer');
             player.src = url;
             modal.classList.add('active');
-            player.play();
+            player.play().catch(e => console.error('Play failed:', e));
         }
         
         function closeVideo() {
@@ -624,6 +654,78 @@
                 closeVideo();
             }
         });
+
+        // 自动预览功能：点击页面任意处后，所有视频开始静音循环播放前5秒
+        let previewInitialized = false;
+        
+        function initPreviews() {
+            if (previewInitialized) return;
+            previewInitialized = true;
+            console.log('Initializing video previews...');
+            
+            const items = document.querySelectorAll('.work-item');
+            
+            items.forEach(item => {
+                const clickAttr = item.getAttribute('onclick');
+                if (!clickAttr) return;
+                
+                // 从 openVideo('URL') 中提取 URL
+                const match = clickAttr.match(/openVideo\(['"]([^'"]+)['"]\)/);
+                if (!match) return;
+                
+                const url = match[1];
+                const thumb = item.querySelector('.work-thumb');
+                
+                // 检查是否已经添加了预览视频
+                if (thumb.querySelector('.work-preview')) return;
+
+                // 创建预览视频
+                const video = document.createElement('video');
+                video.className = 'work-preview';
+                video.src = url;
+                video.muted = true;
+                video.loop = true;
+                video.playsInline = true;
+                
+                // 关键样式：pointer-events: none 让点击穿透到父元素，触发 openVideo
+                video.style.position = 'absolute';
+                video.style.top = '0';
+                video.style.left = '0';
+                video.style.width = '100%';
+                video.style.height = '100%';
+                video.style.objectFit = 'cover';
+                video.style.zIndex = '1';  // 放在封面图之上
+                video.style.pointerEvents = 'none'; // 关键：允许点击穿透！
+                
+                // 插入视频到 thumb 的最后面（覆盖在图片上）
+                thumb.appendChild(video);
+                
+                // 尝试播放
+                video.play().then(() => {
+                    item.classList.add('playing');
+                    // 视频播放成功后，把封面图设为透明，展示视频
+                    thumb.style.backgroundImage = 'none';
+                }).catch(e => {
+                    console.log('Autoplay blocked for item:', e);
+                });
+                
+                // 循环前5秒逻辑
+                video.addEventListener('timeupdate', function() {
+                    if (this.currentTime > 5) {
+                        this.currentTime = 0;
+                        this.play();
+                    }
+                });
+            });
+            
+            // 移除监听器
+            document.removeEventListener('click', initPreviews);
+            document.removeEventListener('scroll', initPreviews);
+        }
+
+        // 监听点击和滚动来触发预览
+        document.addEventListener('click', initPreviews);
+        document.addEventListener('scroll', initPreviews, { once: true });
     </script>
 </body>
 </html>
